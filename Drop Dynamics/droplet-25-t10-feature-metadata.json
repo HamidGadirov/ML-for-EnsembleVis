@@ -1,0 +1,416 @@
+{
+    "025_Hyspin-Hexadecan_0.26mm_viewA": {
+        "shape": [53, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 21],
+                "name": "drop"
+            },
+			{
+                "range": [21, 38],
+                "name": "crown"
+            }
+        ]
+    },
+    "031_Hyspin-Hexadecan_0.24mm_viewA": {
+        "shape": [52, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{	
+                "range": [1, 20],
+                "name": "drop"
+            },
+			{
+                "range": [20, 37],
+                "name": "crown"
+            }
+        ]
+    },
+    "1039a_Hexahexa_0,250_viewA": {
+        "shape": [52, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{	
+                "range": [1, 20],
+                "name": "drop"
+            },
+			{
+                "range": [20, 41],
+                "name": "crown"
+            }
+        ]
+    },
+    "1204a_Hexahexa_0,502_viewA": {
+        "shape": [182, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{	
+                "range": [1, 11],
+                "name": "drop"
+            },
+			{
+                "range": [20, 42],
+                "name": "crown-splash"
+            },
+			{
+                "range": [42, 94],
+                "name": "bubble-splash"
+            },
+			{
+                "range": [94, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "1219a_Hexahexa_0,501_viewA": {
+        "shape": [84, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 15],
+                "name": "drop"
+            },
+			{
+                "range": [15, 20],
+                "name": "crown"
+            },
+			{
+                "range": [20, 40],
+                "name": "crown-splash"
+            },
+			{
+                "range": [40, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "1311a_Hexahexa_0,998_viewA": {
+        "shape": [135, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 13],
+                "name": "drop"
+            },
+			{
+                "range": [15, 21],
+                "name": "crown"
+            },
+			{
+                "range": [21, 56],
+                "name": "crown-splash"
+            },
+			{
+                "range": [56, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "1333a_Hexahexa_1,001_viewA": {
+        "shape": [155, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 18],
+                "name": "drop"
+            },
+			{
+                "range": [18, 59],
+                "name": "crown"
+            }
+        ]
+    },
+    "1338a_Hexahexa_1,002_viewA": {
+        "shape": [156, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 19],
+                "name": "drop"
+            },
+			{
+                "range": [19, 58],
+                "name": "crown"
+            }
+        ]
+    },
+    "1352a_Hexahexa_1,000_viewA": {
+        "shape": [169, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 16],
+                "name": "crown"
+            },
+			{
+                "range": [16, 68],
+                "name": "crown"
+            }
+        ]
+    },
+    "1366a_Hexahexa_1,250_viewA": {
+        "shape": [538, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 12],
+                "name": "drop"
+            },
+			{
+                "range": [12, 32],
+                "name": "crown"
+            },
+			{
+                "range": [32, 513],
+                "name": "bubble"
+            }
+        ]
+    },
+    "1390a_Hexahexa_1,250_viewA": {
+        "shape": [173, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 17],
+                "name": "drop"
+            },
+			{
+                "range": [17, 77],
+                "name": "crown"
+            }
+        ]
+    },
+    "1425a_Hexahexa_0,251_viewA": {
+        "shape": [56, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 20],
+                "name": "drop"
+            },
+			{
+                "range": [1, 34],
+                "name": "crown"
+            }
+        ]
+    },
+    "1440a_Hexahexa_0,500_viewA": {
+        "shape": [110, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 17],
+                "name": "drop"
+            },
+			{
+                "range": [17, 48],
+                "name": "crown"
+            }
+        ]
+    },
+    "1501a_Hexahexa_1,002_viewA": {
+        "shape": [126, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 18],
+                "name": "drop"
+            },
+			{
+                "range": [18, 57],
+                "name": "crown"
+            }
+        ]
+    },
+    "1539a_Hexahexa_1,252_viewA": {
+        "shape": [157, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 15],
+                "name": "drop"
+            },
+			{
+                "range": [15, 70],
+                "name": "crown"
+            }
+        ]
+    },
+    "1566a_Hexahexa_1,252_viewA": {
+        "shape": [184, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 15],
+                "name": "drop"
+            },
+			{
+                "range": [15, 68],
+                "name": "crown"
+            }
+        ]
+    },
+    "1583_Hexahexa_0,751_viewA": {
+        "shape": [448, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 12],
+                "name": "drop"
+            },
+			{
+                "range": [12, 34],
+                "name": "crown"
+            },
+			{
+                "range": [34, 48],
+                "name": "crown-splash"
+            },
+			{
+                "range": [48, 221],
+                "name": "bubble-splash"
+            },
+			{
+                "range": [221, 426],
+                "name": "bubble"
+            }
+        ]
+    },
+    "204_Wasser-Butanol_0.54mm_viewA": {
+        "shape": [123, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 11],
+                "name": "drop"
+            },
+			{
+                "range": [11, 14],
+                "name": "crown"
+            },
+			{
+                "range": [14, 52],
+                "name": "crown-splash"
+            },
+			{
+                "range": [52, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "343_Hexa_Hys-0,54mm_viewA": {
+        "shape": [110, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 14],
+                "name": "drop"
+            },
+			{
+                "range": [14, 39],
+                "name": "crown"
+            }
+        ]
+    },
+    "446_Hys-Hys_0,47mm_viewA": {
+        "shape": [138, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 11],
+                "name": "drop"
+            },
+			{
+                "range": [11, 29],
+                "name": "crown"
+            },
+			{
+                "range": [29, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "492_Hys_Hexa_0,48mm_viewA": {
+        "shape": [193, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 19],
+                "name": "drop"
+            },
+			{
+                "range": [19, 50],
+                "name": "crown"
+            }
+        ]
+    },
+    "712_Hyspin_Hexa_0,25mm_viewA": {
+        "shape": [65, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 15],
+                "name": "drop"
+            },
+			{
+                "range": [15, 23],
+                "name": "crown"
+            },
+			{
+                "range": [23, 34],
+                "name": "crown-splash"
+            },
+			{
+                "range": [34, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "818_Diesel-5W30_0,50mm_viewA": {
+        "shape": [47, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 14],
+                "name": "drop"
+            }
+        ]
+    },
+    "876_Hexa-Hyspin_0,75mm_viewA": {
+        "shape": [68, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 15],
+                "name": "drop"
+            },
+			{
+                "range": [15, 29],
+                "name": "crown"
+            },
+			{
+                "range": [29, 42],
+                "name": "crown-splash"
+            },
+			{
+                "range": [42, null],
+                "name": "splash"
+            }
+        ]
+    },
+    "956_Hyspin-Hexa_0,374mm_viewA": {
+        "shape": [59, 1, 160, 224],
+        "default": "none",
+        "features": [
+			{
+                "range": [1, 18],
+                "name": "drop"
+            },
+			{
+                "range": [18, 40],
+                "name": "crown"
+            }
+        ]
+    }
+}

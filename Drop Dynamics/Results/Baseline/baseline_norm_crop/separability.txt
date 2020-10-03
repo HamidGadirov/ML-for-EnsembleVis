@@ -1,0 +1,4 @@
+Accuracy of clustering: 
+t-SNE mean and std: 0.703333 0.000000 
+UMAP mean and std: 0.700833 0.001179 
+UMAP mean and std: 0.685833 0.003536 

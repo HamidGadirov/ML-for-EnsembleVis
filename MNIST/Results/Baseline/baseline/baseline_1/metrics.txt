@@ -1,0 +1,3 @@
+Separability UMAP 0.825750 
+Neighborhood_hit UMAP 0.753721 
+Variance UMAP 0.103428 

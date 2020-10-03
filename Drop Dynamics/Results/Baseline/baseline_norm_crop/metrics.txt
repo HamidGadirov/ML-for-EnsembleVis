@@ -1,0 +1,13 @@
+Separability: 
+t-SNE mean and std: 0.703333 0.000000 
+Neighborhood hit: 
+t-SNE: 0.634804 
+Mean of distances for all clusters: 
+t-SNE: 22.736435 
+
+Separability: 
+UMAP mean and std: 0.707500 0.003536 
+Neighborhood hit: 
+UMAP: 0.611667 
+Mean of distances for all clusters: 
+UMAP: 5.272652 

@@ -1,0 +1,6 @@
+Separability t-SNE 0.710000 
+Neighborhood_hit t-SNE 0.577549 
+Variance t-SNE 0.093594 
+Separability UMAP 0.721667 
+Neighborhood_hit UMAP 0.586667 
+Variance UMAP 0.113585 

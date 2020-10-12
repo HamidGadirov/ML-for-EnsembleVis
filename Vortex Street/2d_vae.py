@@ -20,7 +20,7 @@ from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
 from reparameterization_trick import sampling
 
-from pca_projection import pca_projection
+#from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
 
@@ -271,14 +271,6 @@ def main():
             beta = 4
             project = True
 
-            # model_names = {"2d_beta2_vae_cropped_128_relu_1.h5", "2d_beta2_vae_cropped_128_relu_2.h5"} # 20 40 ep
-            # model_names = {"2d_beta0.5_vae_cropped_128_relu_1.h5", "2d_beta0.5_vae_cropped_128_relu_2.h5"} # 20 ep
-            # model_names = {"2d_vae_cropped_128_relu_1.h5", "2d_vae_cropped_128_relu_2.h5",
-            # "2d_vae_cropped_128_relu_3.h5", "2d_vae_cropped_128_relu_4.h5", "2d_vae_cropped_128_relu_5.h5"} # 30 ep val_loss: 0.0051
-            # model_names = {"2d_vae_cropped_256_relu_1.h5", "2d_vae_cropped_256_relu_2.h5",
-            # "2d_vae_cropped_256_relu_3.h5", "2d_vae_cropped_256_relu_4.h5", "2d_vae_cropped_256_relu_5.h5"} # 30 ep 
-            # model_names = {"2d_beta2_vae_cropped_128_relu_3.h5", "2d_beta2_vae_cropped_128_relu_4.h5", "2d_beta2_vae_cropped_128_relu_5.h5", \
-            # "2d_beta0.5_vae_cropped_128_relu_3.h5", "2d_beta0.5_vae_cropped_128_relu_4.h5", "2d_beta0.5_vae_cropped_128_relu_5.h5"} # 20 ep
 
             #for model_name in model_names: # diff parameters
                 # for experiment in range(5):

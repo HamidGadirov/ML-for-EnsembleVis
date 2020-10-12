@@ -11,7 +11,7 @@ from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
 
-from pca_projection import pca_projection
+#from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
 
@@ -252,17 +252,6 @@ def main():
             regularization = False
             dropout_sparcity = False
 
-            #model_names = {"3d_ae_cropped_256_relu_reg_1.h5", "3d_ae_cropped_256_relu_reg_2.h5"} # 
-            #model_names = {"3d_ae_cropped_256_relu_reg_3.h5", "3d_ae_cropped_256_relu_reg_4.h5", "3d_ae_cropped_256_relu_reg_5.h5"} # 20
-            
-            #model_names = {"3d_ae_cropped_256_relu_1.h5", "3d_ae_cropped_256_relu_2.h5"} # 
-            #model_names = {"3d_ae_cropped_256_relu_3.h5", "3d_ae_cropped_256_relu_4.h5", "3d_ae_cropped_256_relu_5.h5"} # 10
-
-            #model_names = {"3d_ae_cropped_512_relu_reg_1.h5", "3d_ae_cropped_512_relu_reg_2.h5", \
-            #"3d_ae_cropped_512_relu_reg_3.h5", "3d_ae_cropped_512_relu_reg_4.h5", "3d_ae_cropped_512_relu_reg_5.h5"} # 20
-
-            #model_names = {"3d_ae_cropped_512_relu_1.h5", "3d_ae_cropped_512_relu_2.h5", \
-            #"3d_ae_cropped_512_relu_3.h5", "3d_ae_cropped_512_relu_4.h5", "3d_ae_cropped_512_relu_5.h5"} # 10
 
             # Grid search in: latent_dim, activation, regularization
             if("relu" in model_name):

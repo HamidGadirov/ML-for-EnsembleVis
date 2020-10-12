@@ -9,7 +9,7 @@ from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
 from reparameterization_trick import sampling
 
-from pca_projection import pca_projection
+#from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
 

@@ -9,7 +9,7 @@ from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
 from reparameterization_trick import sampling
-from pca_projection import pca_projection
+#from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
 
@@ -286,35 +286,6 @@ def main():
 
             # no need to use additional regularization, as encoding to a distribution itself introduces regularisation.
 
-            #model_names = {"3d_beta10_vae_cropped_256_relu_norm_1.h5", "3d_beta10_vae_cropped_256_relu_norm_2.h5", \
-            #"3d_beta100_vae_cropped_256_relu_norm_1.h5", "3d_beta100_vae_cropped_256_relu_norm_2.h5"}  # 30 ep
-            #model_names = {"3d_beta100_vae_cropped_256_relu_norm_1.h5", "3d_beta100_vae_cropped_256_relu_norm_2.h5"} # 30 ep
-
-            #model_names = {"3d_vae_cropped_512_relu_norm_1.h5", "3d_vae_cropped_512_relu_norm_2.h5", \
-            #"3d_vae_cropped_512_relu_norm_3.h5", "3d_vae_cropped_512_relu_norm_4.h5", "3d_vae_cropped_512_relu_norm_5.h5"} # 50 ep
-
-            #model_names = {"3d_beta0.5_vae_cropped_512_relu_norm_1.h5", "3d_beta0.5_vae_cropped_512_relu_norm_2.h5", \
-            #"3d_beta0.5_vae_cropped_512_relu_norm_3.h5", "3d_beta0.5_vae_cropped_512_relu_norm_4.h5", "3d_beta0.5_vae_cropped_512_relu_norm_5.h5"} # 50 ep
-
-            #model_names = {"3d_beta2_vae_cropped_256_relu_norm_1.h5", "3d_beta2_vae_cropped_256_relu_norm_2.h5", \
-            #"3d_beta2_vae_cropped_256_relu_norm_3.h5", "3d_beta2_vae_cropped_256_relu_norm_4.h5", "3d_beta2_vae_cropped_256_relu_norm_5.h5"} # 30
-
-            #model_names = {"3d_beta_vae_cropped_256_relu_norm_1.h5", "3d_beta_vae_cropped_256_relu_norm_2.h5", \
-            #"3d_beta_vae_cropped_256_relu_norm_3.h5", "3d_beta_vae_cropped_256_relu_norm_4.h5", "3d_beta_vae_cropped_256_relu_norm_5.h5"} # 30 ep
-
-            #model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5", \
-            #"3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5"} # 50 ep
-
-            # + 5 ep with ind norm
-
-            # model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5", \
-            # "3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5", \
-            # "3d_beta_vae_cropped_256_relu_norm_1.h5", "3d_beta_vae_cropped_256_relu_norm_2.h5", \
-            # "3d_beta_vae_cropped_256_relu_norm_3.h5", "3d_beta_vae_cropped_256_relu_norm_4.h5", "3d_beta_vae_cropped_256_relu_norm_5.h5", \
-            # "3d_beta2_vae_cropped_256_relu_norm_1.h5", "3d_beta2_vae_cropped_256_relu_norm_2.h5", \
-            # "3d_beta2_vae_cropped_256_relu_norm_3.h5", "3d_beta2_vae_cropped_256_relu_norm_4.h5", "3d_beta2_vae_cropped_256_relu_norm_5.h5", \
-            # "3d_beta10_vae_cropped_256_relu_norm_1.h5", "3d_beta10_vae_cropped_256_relu_norm_2.h5", \
-            # "3d_beta100_vae_cropped_256_relu_norm_1.h5", "3d_beta100_vae_cropped_256_relu_norm_2.h5"}
 
             #model_names = {"3d_vae_cropped_256_relu_norm_1.h5"}
             #for model_name in model_names:

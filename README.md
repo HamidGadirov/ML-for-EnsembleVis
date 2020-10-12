@@ -19,3 +19,14 @@ vised features improve the clustering on the final projections. Autoencoders and
 extracting high-level features from ensembles. The combination of metrics allow
 us to evaluate the resulting projections. We summarize our findings by offering
 practical suggestions for applying autoencoder-based techniques to ensemble data.
+
+# How to run code to reproduce results:
+
+1. Go to the corresponding directory of the dataset (Drop Dynamics/Vortex Street/MNIST).
+
+2. Open the corresponding file (e.g. 3d_vae.py, where "3d" stands for 3D convolutional model and "vae" for Variational Autoencoder).
+It is possible to select the model(s) for testing via "model_names" variable.
+
+3. Before executing, it is necessary to unzip the test data files (reconstruction, interpolation, all visualizations with time steps).
+
+Results will be saved e.g. in the Results/3D_VAE/"model_name" folder.

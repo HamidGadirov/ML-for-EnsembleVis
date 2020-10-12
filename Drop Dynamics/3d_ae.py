@@ -7,7 +7,7 @@ from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
 
-from pca_projection import pca_projection
+#from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
 
@@ -245,8 +245,6 @@ def main():
     "3d_ae_cropped_32_relu_norm_3.h5", "3d_ae_cropped_32_relu_norm_4.h5", "3d_ae_cropped_32_relu_norm_5.h5"}
 
     #model_names = {"3d_ae_cropped_32_relu_norm_3.h5"}
-
-    # model_names = {"3d_ae_cropped_256_relu_reg_norm_1.h5", "3d_ae_cropped_256_relu_reg_norm_2.h5"}
     #"3d_ae_cropped_2_relu_norm_3.h5", "3d_ae_cropped_2_relu_norm_4.h5", "3d_ae_cropped_2_relu_norm_5.h5"} # no!
 
     dir_res = "Results/3D_AE" # directory with all models
@@ -287,27 +285,6 @@ def main():
             stride = (3, 2, 2)
             regularization = False
             dropout_sparcity = False
-
-            #model_names = {"3d_ae_cropped_256_relu_norm_1.h5", "3d_ae_cropped_256_relu_norm_2.h5", \
-            #"3d_ae_cropped_256_relu_norm_3.h5", "3d_ae_cropped_256_relu_norm_4.h5", "3d_ae_cropped_256_relu_norm_5.h5"} # 15ep
-
-            #model_names = {"3d_ae_cropped_512_relu_norm_1.h5", "3d_ae_cropped_512_relu_norm_2.h5", \
-            #"3d_ae_cropped_512_relu_norm_3.h5", "3d_ae_cropped_512_relu_norm_4.h5", "3d_ae_cropped_512_relu_norm_5.h5"} # 15ep
-
-            #model_names = {"3d_ae_cropped_256_relu_reg_norm_1.h5", "3d_ae_cropped_256_relu_reg_norm_2.h5", \
-            #"3d_ae_cropped_256_relu_reg_norm_3.h5", "3d_ae_cropped_256_relu_reg_norm_4.h5", "3d_ae_cropped_256_relu_reg_norm_5.h5"} # 20ep
-
-            #model_names = {"3d_ae_cropped_512_relu_reg_norm_1.h5", "3d_ae_cropped_512_relu_reg_norm_2.h5", \
-            #"3d_ae_cropped_512_relu_reg_norm_3.h5", "3d_ae_cropped_512_relu_reg_norm_4.h5", "3d_ae_cropped_512_relu_reg_norm_5.h5"} # 20ep
-
-            # model_names = {"3d_ae_cropped_128_relu_norm_1.h5", "3d_ae_cropped_128_relu_norm_2.h5", \
-            # "3d_ae_cropped_128_relu_norm_3.h5", "3d_ae_cropped_128_relu_norm_4.h5", "3d_ae_cropped_128_relu_norm_5.h5"} # 20ep
-
-            # model_names = {"3d_ae_cropped_64_relu_norm_1.h5", "3d_ae_cropped_64_relu_norm_2.h5", \
-            # "3d_ae_cropped_64_relu_norm_3.h5", "3d_ae_cropped_64_relu_norm_4.h5", "3d_ae_cropped_64_relu_norm_5.h5"} # 20ep
-
-            # model_names = {"3d_ae_cropped_32_relu_norm_1.h5", "3d_ae_cropped_32_relu_norm_2.h5", \
-            # "3d_ae_cropped_32_relu_norm_3.h5", "3d_ae_cropped_32_relu_norm_4.h5", "3d_ae_cropped_32_relu_norm_5.h5"} # 20ep
                 
             # Grid search in: latent_dim, activation, regularization
             if("relu" in model_name):

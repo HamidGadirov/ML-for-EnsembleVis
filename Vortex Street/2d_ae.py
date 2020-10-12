@@ -269,12 +269,6 @@ def main():
             regularization = False
             dropout_sparcity = False
 
-            # model_names = {"2d_ae_cropped_128_relu_reg_1.h5", "2d_ae_cropped_128_relu_reg_2.h5", \
-            # "2d_ae_cropped_128_relu_reg_3.h5", "2d_ae_cropped_128_relu_reg_4.h5", "2d_ae_cropped_128_relu_reg_5.h5"}
-            # model_names = {"2d_ae_cropped_64_relu_reg_1.h5", "2d_ae_cropped_64_relu_reg_2.h5", \
-            # "2d_ae_cropped_64_relu_reg_3.h5", "2d_ae_cropped_64_relu_reg_4.h5", "2d_ae_cropped_64_relu_reg_5.h5"}
-            #model_names = {"2d_ae_cropped_128_relu_1.h5", "2d_ae_cropped_128_relu_2.h5", \
-            #"2d_ae_cropped_128_relu_3.h5", "2d_ae_cropped_128_relu_4.h5", "2d_ae_cropped_128_relu_5.h5"}
 
             # Grid search in: latent_dim, activation, regularization
             if("relu" in model_name):

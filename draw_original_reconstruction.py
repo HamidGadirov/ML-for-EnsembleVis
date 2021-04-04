@@ -58,10 +58,10 @@ def draw_orig_reconstr(data, decoded_imgs, title, dir_res_model, dataset, tempor
 
     title += 'original and reconstructed frames'
     plt.suptitle(title, fontsize=15)    
-    #plt.show()
+    plt.show()
     
     plt.tight_layout()
-    #fig.set_size_inches(12, 9)
-    #fig.savefig('{}/orig_reconstr.png'.format(dir_res_model), bbox_inches='tight')
+    fig.set_size_inches(12, 9)
+    fig.savefig('{}/orig_reconstr.png'.format(dir_res_model), bbox_inches='tight')
     fig.savefig('{}/orig_reconstr.png'.format(dir_res_model), dpi=300)
     plt.close(fig)

@@ -36,8 +36,8 @@ def im_scatter(x, y, data, dataset, ax=None, zoom=1, temporal=False):
         #img = im.get_children()[0]
         #img.set_clim(vmin, vmax)
         im.get_children()[0].set_clim(vmin, vmax)
-        if (dataset == "droplet"):
-            im.get_children()[0].set_cmap('gray')
+        #if (dataset == "droplet"):
+        #    im.get_children()[0].set_cmap('gray')
         ab = AnnotationBbox(im, (x0, y0), xycoords='data', frameon=False)
         artist.append(ax.add_artist(ab))
         # plt.imshow(img, cmap='viridis', vmin=vmin, vmax=vmax)

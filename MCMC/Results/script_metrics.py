@@ -314,10 +314,6 @@ print(metrics_vals)
 # metrics_vals = np.vstack((x,y))
 # print(metrics_vals)
 
-# scores = [[0.7, 5], [0.6, 6], [0.7, 4], [0.6, 5], [0.6, 6], [0.8, 4], [0.7, 6], [0.6, 4], [0.7, 4], [0.8, 5], [0.8, 6], [0.7, 7]]
-# metrics_vals = np.vstack((metrics_vals,scores))
-# print(metrics_vals)
-
 # # we want max Neighborhood_hit but min Distances
 # # # let's inverse the dist for simplicity - No!
 # # #scores[:, 1] = 1/scores[:, 1]
@@ -484,7 +480,7 @@ adjust_text(texts, lim=0)
 #             autoalign='', only_move={'points':'y', 'text':'y'})
 
 fig.set_size_inches(16, 9)
-plt.savefig('drop_pareto.png', dpi=300)
+plt.savefig('mcmc_pareto.png', dpi=300)
 plt.show()
 
 

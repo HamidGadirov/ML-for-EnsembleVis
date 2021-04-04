@@ -68,26 +68,36 @@ def load_labelled_data():
 
     start_time = time.time()
     print("Loading data from pickle dump...")
-    pkl_file = open("droplet_sampled_labelled_data.pkl", 'rb') # droplet_labelled_data_2
+    pkl_file = open("mcmc_labelled_data.pkl", 'rb')
     data = []
     data = pickle.load(pkl_file)
     pkl_file.close
 
     print("Loading names from pickle dump...")
-    pkl_file = open("droplet_sampled_labelled_names.pkl", 'rb') # droplet_labelled_names_2
+    pkl_file = open("mcmc_labelled_names.pkl", 'rb')
     names = []
     names = pickle.load(pkl_file)
     pkl_file.close
 
+    print(data.shape)
+    print(len(names))
+
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    # if data.shape[0] != len(names):
-    #     input("!!! Inconstintency in data and names !!!")
-    
-    data_sampled = data[:1800,...] # 3000
-    names_sampled = names[:1800]
-    # test_idx = np.random.randint(data.shape[0], size=900) #3D
+    if data.shape[0] != len(names):
+        input("!!! Inconstintency in data and names !!!")
+
+    from sklearn.utils import shuffle
+    data, names = shuffle(data, names, random_state=0)
+    print("Shuffled test set")
+    print(data.shape)
+    print(len(names))
+    # data = data[0:600]
+    # names = names[0:600]
+
+    # #data = data[:600,...]
+    # test_idx = np.random.randint(data.shape[0], size=600)
     # #print(test_idx)
     # data = data[test_idx,]
     # #names = names[test_idx,]
@@ -96,36 +106,13 @@ def load_labelled_data():
     #     names_new.append(names[idx])
     # names = names_new
     # print("Randomized sampling from test data")
-    print(data.shape)
-    print(len(names))
-    print(names[0])
-    print(np.unique(names))
+    # print(data.shape)
+    # print(len(names))
+    # print(names[0])
+    # print(np.unique(names))
 
     # for _ in np.unique(names):
     #     print(_)
-
-    print("Loading data from pickle dump...")
-    pkl_file = open("droplet_labelled_data_2.pkl", 'rb') # droplet_labelled_data_2
-    data = []
-    data = pickle.load(pkl_file)
-    pkl_file.close
-
-    print("Loading names from pickle dump...")
-    pkl_file = open("droplet_labelled_names_2.pkl", 'rb') # droplet_labelled_names_2
-    names = []
-    names = pickle.load(pkl_file)
-    pkl_file.close
-
-    data = data[:3600,...] # 3000
-    names = names[:3600]
-
-    data = np.concatenate((data, data_sampled), axis=0)
-    names = names + names_sampled
-
-    print(data.shape)
-    print(len(names))
-    print(names[0])
-    print(np.unique(names))
 
     return data, names
 
@@ -133,7 +120,7 @@ def load_unlabelled_data():
 
     start_time = time.time()
     print("Loading data from pickle dump...")
-    pkl_file = open("droplet_unlabelled_data.pkl", 'rb')
+    pkl_file = open("mcmc.pkl", 'rb')
     #pkl_file = open("droplet-part.pkl", 'rb')
     data = []
     data = pickle.load(pkl_file)
@@ -142,7 +129,10 @@ def load_unlabelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    data = data[0:12000]
+    from sklearn.utils import shuffle
+    data = shuffle(data, random_state=0)
+
+    data = data[0:20000]
     print(data.shape)
 
     return data
@@ -163,11 +153,13 @@ def load_preprocess():
     data_test, names = load_labelled_data() # for test only, 
     data_train = load_unlabelled_data() # for train only, 
 
-    data = np.zeros((data_test.shape[0]+data_train.shape[0], 160, 224, 1))
+    data = np.zeros((data_test.shape[0]+data_train.shape[0], 50, 50))
     data[:data_train.shape[0],] = data_train
     data[data_train.shape[0]:,] = data_test
 
-    dataset = "droplet" # for pca t-sne umap preprocessing vis
+    # data = load_unlabelled_data()
+
+    dataset = "mcmc" # for pca t-sne umap preprocessing vis
 
     visualize_data = False
     data, data_mean, data_std = preprocess(dataset, visualize_data, data) # reshape, visualize, normalize, scale
@@ -175,31 +167,32 @@ def load_preprocess():
 
     data = brightness_normalization(data) # test
 
-    # # cropping:
+    # cropping:
     # crop_left = int(data.shape[2]*0.1) # start from left
     # crop_right = int(data.shape[2]*0.85) # end at right
     # data = data[:,:,crop_left:crop_right,:]
     # print("data cropped: ", data.shape)
 
-    # cropping:
-    crop_left = int(data.shape[2]*0.15) # start from left 10 15
-    crop_right = int(data.shape[2]*0.8) # end at right 15 20
-    crop_bottom = int(data.shape[1]*0.83) # remove bottom 10 15 18 17+ 16- 15still 12bad
-    data = data[:,:,crop_left:crop_right,:]
-    data_train = data_train[:,:,crop_left:crop_right,:]
-    data_train = data_train[:,:crop_bottom,:,:]
-    data_test = data_test[:,:,crop_left:crop_right,:]
-    data_test = data_test[:,:crop_bottom,:,:]
-    print("train set cropped: ", data_train.shape)
-    print("test set:", data_test.shape, len(names))
+    # data_test_vis = data_test # unnormalized, uncropped
+    data_test_vis = data
+    # data_mean = 0
+    # data_std = 1
+    # names = ""
 
-    data_test_vis = data_test # unnormalized, uncropped
+    # data_train_size = 16000
+    # data_train = data[:data_train_size,]
+    # data_test = data[data_train_size:,]
+    # print("test:", data_test.shape)
 
     data_train = data[:data_train.shape[0],]
     data_test = data[data_train.shape[0]:,]
 
     data_train, data_val = train_test_split(data_train, test_size=0.2, random_state=1)
     print('train & val', data_train.shape, data_val.shape)
+
+    data_train = np.expand_dims(data_train, axis=-1)
+    data_test = np.expand_dims(data_test, axis=-1)
+    data_val = np.expand_dims(data_val, axis=-1)
 
     x_train, x_test, x_val = data_train, data_test, data_val
 
@@ -245,20 +238,21 @@ def main():
         encoded_vec = 0 # don't need it
         encoded_vec_train = 0 # don't need it
         encoded_vec_train_test = 0 # don't need it
+
     else:
         # preprocess the data and save test subset as pickle
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
 
-        # # save it only once
         # fn = os.path.join(dir_res, "test_data.pkl")
         # pkl_file = open(fn, 'wb')
         # pickle.dump(x_test, pkl_file)
         # print("Test data were saved as pickle")
         # pkl_file.close
 
+        # train_data = x_train[0:8000]
         # fn = os.path.join(dir_res, "train_data.pkl")
         # pkl_file = open(fn, 'wb')
-        # pickle.dump(x_train, pkl_file)
+        # pickle.dump(train_data, pkl_file)
         # print("Train data were saved as pickle")
         # pkl_file.close
 
@@ -268,21 +262,42 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    model_names = {"2d_vae_cropped_128_relu_norm_1.h5", "2d_vae_cropped_128_relu_norm_2.h5", \
-    "2d_vae_cropped_128_relu_norm_3.h5", "2d_vae_cropped_128_relu_norm_4.h5", "2d_vae_cropped_128_relu_norm_5.h5", \
-    "2d_vae_cropped_256_relu_norm_1.h5", "2d_vae_cropped_256_relu_norm_2.h5", \
-    "2d_vae_cropped_256_relu_norm_3.h5", "2d_vae_cropped_256_relu_norm_4.h5", "2d_vae_cropped_256_relu_norm_5.h5", \
-    "2d_beta_vae_cropped_128_relu_norm_2.h5", \
-    "2d_beta_vae_cropped_128_relu_norm_3.h5", "2d_beta_vae_cropped_128_relu_norm_4.h5", "2d_beta_vae_cropped_128_relu_norm_5.h5"}
 
-    model_names = {"2d_vae_croppedb_128_relu_norm_1.h5", "2d_vae_croppedb_128_relu_norm_2.h5", \
-    "2d_vae_croppedb_128_relu_norm_3.h5", "2d_vae_croppedb_128_relu_norm_4.h5", "2d_vae_croppedb_128_relu_norm_5.h5", \
-    "2d_vae_croppedb_256_relu_norm_1.h5", "2d_vae_croppedb_256_relu_norm_2.h5", \
-    "2d_vae_croppedb_256_relu_norm_3.h5", "2d_vae_croppedb_256_relu_norm_4.h5", "2d_vae_croppedb_256_relu_norm_5.h5", \
-    "2d_beta_vae_croppedb_128_relu_norm_2.h5", \
-    "2d_beta_vae_croppedb_128_relu_norm_3.h5", "2d_beta_vae_croppedb_128_relu_norm_4.h5", "2d_beta_vae_croppedb_128_relu_norm_5.h5"}
+    model_names = {"2d_beta10_vae_cropped_128_relu_norm_1.h5", "2d_beta10_vae_cropped_128_relu_norm_2.h5", \
+    "2d_beta6_vae_cropped_128_relu_norm_1.h5", "2d_beta6_vae_cropped_128_relu_norm_2.h5", \
+    "2d_beta8_vae_cropped_128_relu_norm_1.h5", "2d_beta8_vae_cropped_128_relu_norm_2.h5", \
+    "2d_beta100_vae_cropped_128_relu_norm_1.h5", "2d_beta100_vae_cropped_128_relu_norm_2.h5", "2d_beta100_vae_cropped_128_relu_norm_3.h5", \
+    "2d_beta8_vae_cropped_256_relu_norm_1.h5", "2d_beta8_vae_cropped_256_relu_norm_2.h5", \
+    "2d_beta2_vae_cropped_256_relu_norm_1.h5", "2d_beta2_vae_cropped_256_relu_norm_2.h5", "2d_beta2_vae_cropped_256_relu_norm_3.h5", \
+    "2d_beta100_vae_cropped_256_relu_norm_1.h5", "2d_beta100_vae_cropped_256_relu_norm_2.h5", "2d_beta100_vae_cropped_256_relu_norm_3.h5",
+    "2d_beta20_vae_cropped_128_relu_norm_1.h5", "2d_beta20_vae_cropped_128_relu_norm_2.h5", "2d_beta20_vae_cropped_128_relu_norm_3.h5", \
+    "2d_beta20_vae_cropped_256_relu_norm_1.h5", "2d_beta20_vae_cropped_256_relu_norm_2.h5", "2d_beta20_vae_cropped_256_relu_norm_3.h5", \
+    "2d_beta2_vae_cropped_64_relu_norm_1.h5", "2d_beta2_vae_cropped_64_relu_norm_2.h5", "2d_beta2_vae_cropped_64_relu_norm_3.h5", \
+    "2d_beta2_vae_cropped_32_relu_norm_1.h5", "2d_beta2_vae_cropped_32_relu_norm_2.h5", "2d_beta2_vae_cropped_32_relu_norm_3.h5", \
+    "2d_beta8_vae_cropped_64_relu_norm_1.h5", "2d_beta8_vae_cropped_64_relu_norm_2.h5", "2d_beta8_vae_cropped_64_relu_norm_3.h5", \
+    "2d_beta8_vae_cropped_32_relu_norm_1.h5", "2d_beta8_vae_cropped_32_relu_norm_2.h5", "2d_beta8_vae_cropped_32_relu_norm_3.h5", \
+    "2d_beta20_vae_cropped_64_relu_norm_1.h5", "2d_beta20_vae_cropped_64_relu_norm_2.h5", "2d_beta20_vae_cropped_64_relu_norm_3.h5", \
+    "2d_beta20_vae_cropped_32_relu_norm_1.h5", "2d_beta20_vae_cropped_32_relu_norm_2.h5", "2d_beta20_vae_cropped_32_relu_norm_3.h5",
+    "2d_beta8_vae_cropped_256_relu_norm_3.h5", "2d_beta6_vae_cropped_128_relu_norm_3.h5"}
 
-    dataset = "droplet"
+    # model_names = {"2d_vae_cropped_128_relu_norm_3.h5", "2d_vae_cropped_128_relu_norm_4.h5", \
+    # "2d_vae_cropped_256_relu_norm_1.h5", "2d_vae_cropped_256_relu_norm_2.h5", \
+    # "2d_vae_cropped_256_relu_norm_3.h5", "2d_vae_cropped_256_relu_norm_4.h5", "2d_vae_cropped_256_relu_norm_5.h5", \
+    # "2d_beta_vae_cropped_128_relu_norm_2.h5", "2d_beta_vae_cropped_128_relu_norm_3.h5", "2d_beta_vae_cropped_128_relu_norm_4.h5",
+    # "2d_beta2_vae_cropped_128_relu_norm_3.h5", "2d_beta2_vae_cropped_128_relu_norm_4.h5",
+    # "2d_beta2_vae_cropped_128_relu_norm_1.h5", "2d_beta2_vae_cropped_128_relu_norm_2.h5", "2d_beta2_vae_cropped_128_relu_norm_5.h5",
+    # "2d_beta6_vae_cropped_128_relu_norm_4.h5", "2d_beta6_vae_cropped_128_relu_norm_5.h5",
+    # "2d_beta8_vae_cropped_128_relu_norm_4.h5", "2d_beta8_vae_cropped_128_relu_norm_5.h5", "2d_beta8_vae_cropped_128_relu_norm_3.h5",
+    # "2d_beta10_vae_cropped_128_relu_norm_4.h5", "2d_beta10_vae_cropped_128_relu_norm_5.h5",
+    # "2d_beta20_vae_cropped_128_relu_norm_4.h5", "2d_beta20_vae_cropped_128_relu_norm_5.h5",
+    # "2d_beta_vae_cropped_256_relu_norm_1.h5", "2d_beta_vae_cropped_256_relu_norm_2.h5",
+    # "2d_beta_vae_cropped_256_relu_norm_3.h5", "2d_beta_vae_cropped_256_relu_norm_4.h5", "2d_beta_vae_cropped_256_relu_norm_5.h5",
+    # "2d_beta6_vae_cropped_256_relu_norm_1.h5", "2d_beta6_vae_cropped_256_relu_norm_2.h5",
+    # "2d_beta6_vae_cropped_256_relu_norm_3.h5", "2d_beta6_vae_cropped_256_relu_norm_4.h5", "2d_beta6_vae_cropped_256_relu_norm_5.h5",
+    # "2d_beta10_vae_cropped_256_relu_norm_1.h5", "2d_beta10_vae_cropped_256_relu_norm_2.h5",
+    # "2d_beta10_vae_cropped_256_relu_norm_3.h5", "2d_beta10_vae_cropped_256_relu_norm_4.h5", "2d_beta10_vae_cropped_256_relu_norm_5.h5"}
+
+    dataset = "mcmc"
     title = '2D VAE: ' # for subtitle
 
     for model_name in model_names:
@@ -297,7 +312,7 @@ def main():
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
 
-        project = True
+        project = False
         interpolation = False
         if load_data:
             interpolation = False
@@ -315,13 +330,13 @@ def main():
             generic = False
             dense_dim = 1024
             latent_dim = 256
-            epochs = 10 # 500
-            conv_layers = 4
+            epochs = 0 # 500
+            conv_layers = 2
             stride = 2
             latent_vector = True
             beta_vae = False
             beta = 4
-            project = True
+            project = False
             regularization = False
 
             # Grid search in: latent_dim, activation, beta
@@ -344,8 +359,14 @@ def main():
                 beta = 0.5
             if("beta2" in model_name):
                 beta = 2
+            if("beta6" in model_name):
+                beta = 6
+            if("beta8" in model_name):
+                beta = 8
             if("beta10" in model_name):
                 beta = 10
+            if("beta20" in model_name):
+                beta = 20
             if("beta100" in model_name):
                 beta = 100
 
@@ -355,6 +376,12 @@ def main():
             if("128" in model_name):
                 dense_dim = 512
                 latent_dim = 128
+            if("64" in model_name):
+                dense_dim = 256
+                latent_dim = 64
+            if("32" in model_name):
+                dense_dim = 256
+                latent_dim = 32
 
             # build encoder model
             inputs = Input(shape=(x_train.shape[1], x_train.shape[2], 1), name='encoded_input')
@@ -500,8 +527,8 @@ def main():
                         #callbacks=[TensorBoard(log_dir='/tmp/autoencoder')]))
             
             if(epochs):
-                vae.save_weights(model_name)
-                print("Saved", model_name, "model weights to disk")
+                vae.save_weights(dir_model_name)
+                print("Saved", dir_model_name, "model weights to disk")
 
                 loss_history = history_callback.history
                 np_loss_history = np.array(loss_history)
@@ -516,29 +543,26 @@ def main():
             #visualize_keras(x_train, encoder, decoder)
 
             # How convolutional neural networks see the world
+            
 
             test_data = x_test # x_test x_train
-            train_data = x_train
-            
-            # load_data = False # for now
-            train_test_data = 0
-            # encoded_vec = 0 # don't need it
-            encoded_vec_train = 0 # don't need it
-            encoded_vec_train_test = 0 # don't need it
+            train_data = x_train[0:8000]
 
             latent_representation = encoder.predict(test_data)
             encoded_vec = latent_representation[2]
             print('encoded_vec after reparam trick:', encoded_vec.shape) # (batch-size, latent_dim)
+            print('encoded_vec max:', encoded_vec.max())
+            print('encoded_vec min:', encoded_vec.min())
             # fig=plt.figure()
             # plt.tight_layout()
             # #fig.set_size_inches(8, 6)
-            # plt.suptitle('3d_vae: Latent vectors')
+            # plt.suptitle('2d_vae: Latent vectors')
             # plt.imshow(encoded_vec)
             # fig.savefig('{}/latent.png'.format(dir_res_model))
             # plt.close(fig)
 
             # clustering perf eval in the feature space
-            n_clusters = 8
+            n_clusters = 5
             kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
             # continue
 
@@ -547,25 +571,38 @@ def main():
             print('dec max:', decoded_imgs.max())
             print('dec min:', decoded_imgs.min())
 
-            # generate new image by sampling a random vector from the latent space
-            #sample = encoded_vec[2]
-            #print(sample.shape)
-            #dec_sample = decoder.predict(sample)
-            #generate_new(sample, dec_sample, temporal)
-
-            # test_data = data_test_vis # visualize the original
+            #print(test_data.mean()) # 0
+            #print(test_data.std()) # 1
 
             print('normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
             print('normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
             # un-normalize all using data_mean, data_std
             #test_data = test_data * data_std + data_mean
-            # encoded_vec = encoded_vec * data_std + data_mean
+            # encoded_vec = encoded_vec * data_std + data_mean # ?
             #decoded_imgs = decoded_imgs * data_std + data_mean
             # print('un-normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
             # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
             # draw original and reconstructed data
-            draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
+            # draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
+
+            # test_data = data_test_vis # visualize the original
+
+            # load_data = False # for now
+            train_test_data = 0
+            # encoded_vec = 0 # don't need it
+            encoded_vec_train = 0 # don't need it
+            encoded_vec_train_test = 0 # don't need it
+
+            # train data
+            latent_representation = encoder.predict(train_data)
+            encoded_vec_train = latent_representation[2]
+            print('encoded_vec_train after reparam trick:', encoded_vec_train.shape) # (batch-size, latent_dim)
+
+            decoded_imgs = vae.predict(train_data)
+            print('decoded_imgs:', decoded_imgs.shape)
+            print('dec max:', decoded_imgs.max())
+            print('dec min:', decoded_imgs.min())
 
             train_test_data = np.concatenate((train_data, test_data), axis=0)
             # train and test data
@@ -578,12 +615,17 @@ def main():
             print('dec max:', decoded_imgs.max())
             print('dec min:', decoded_imgs.min())
 
-            # test_data = data_test_vis # visualize the original
 
         if (project == True):
             # project using PCA (then t-sne) and visualize the scatterplot
             #print("PCA projection")
             #pca_projection(encoded_vec, test_data, latent_vector, title, dataset)
+
+            # project using UMAP and visualize the scatterplot
+            print("UMAP projection")
+            title_umap = title + 'Latent -> UMAP scatterplot'
+            # umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
 
             # project using t-sne and visualize the scatterplot
             print("t-SNE projection")
@@ -591,11 +633,6 @@ def main():
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=20)
             # tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, perp=30)
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=40)
-
-            # project using UMAP and visualize the scatterplot
-            print("UMAP projection")
-            title_umap = title + 'Latent -> UMAP scatterplot'
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
 
         if (interpolation == True):
 

@@ -1,0 +1,1000 @@
+sampled-1000-x2-t10/1418a_Hexahexa_0,251_viewA.bna, frame 31, crown
+sampled-1000-x2-t10/1393a_Hexahexa_1,251_viewA.bna, frame 176, column
+sampled-1000-x2-t10/058_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/865_Hexa-Hyspin_0,50mm_viewA.bna, frame 57, none
+sampled-1000-x2-t10/1382a_Hexahexa_1,250_viewA.bna, frame 57, crown
+sampled-1000-x2-t10/343_Hexa_Hys-0,54mm_viewA.bna, frame 38, splash
+sampled-1000-x2-t10/1103a_Hexahexa_0,751_viewA.bna, frame 69, splash
+sampled-1000-x2-t10/1183a_Hexahexa_0,250_viewA.bna, frame 22, crown
+sampled-1000-x2-t10/1443a_Hexahexa_0,502_viewA.bna, frame 65, none
+sampled-1000-x2-t10/860_Hexa-Hyspin_0,25mm_viewA.bna, frame 15, drop
+sampled-1000-x2-t10/1199a_Hexahexa_0,251_viewA.bna, frame 18, drop
+sampled-1000-x2-t10/976_Hyspin-Hexa_1,251mm_viewA.bna, frame 105, none
+sampled-1000-x2-t10/1533a_Hexahexa_1,000_viewA.bna, frame 70, splash
+sampled-1000-x2-t10/1570a_Hexahexa_1,251_viewA.bna, frame 97, splash
+sampled-1000-x2-t10/1049a_Hexahexa_0,499_viewA.bna, frame 51, bubble-splash
+sampled-1000-x2-t10/778_Hexa-Hyspin_0,50mm_viewA.bna, frame 21, crown
+sampled-1000-x2-t10/240_Hexa-Hexa_0,44mm_viewA.bna, frame 55, bubble-splash
+sampled-1000-x2-t10/972_Hyspin-Hexa_1,248mm_viewA.bna, frame 8, drop
+sampled-1000-x2-t10/1116a_Hexahexa_0,998_viewA.bna, frame 87, splash
+sampled-1000-x2-t10/1211a_Hexahexa_0,499_viewA.bna, frame 82, bubble-splash
+sampled-1000-x2-t10/1224a_Hexahexa_0,502_viewA.bna, frame 14, drop
+sampled-1000-x2-t10/857_Hyspin-Hexa_1,00mm_viewA.bna, frame 67, splash
+sampled-1000-x2-t10/260_Hexa-Hexa_0,50mm_viewA.bna, frame 36, bubble-splash
+sampled-1000-x2-t10/1165a_Hexahexa_1,248_viewA.bna, frame 68, crown-splash
+sampled-1000-x2-t10/416_Hys-Hys_0,27mm_viewA.bna, frame 23, crown
+sampled-1000-x2-t10/1170a_Hexahexa_0,251_viewA.bna, frame 57, splash
+sampled-1000-x2-t10/1562a_Hexahexa_1,251_viewA.bna, frame 112, splash
+sampled-1000-x2-t10/1354a_Hexahexa_1,001_viewA.bna, frame 16, none
+sampled-1000-x2-t10/1466a_Hexahexa_0,751_viewA.bna, frame 121, splash
+sampled-1000-x2-t10/2000a_Hexahexa_0,751_viewA.bna, frame 55, crown
+sampled-1000-x2-t10/1572a_Hexahexa_1,250_viewA.bna, frame 43, crown-splash
+sampled-1000-x2-t10/1322a_Hexahexa_1,000_viewA.bna, frame 53, crown-splash
+sampled-1000-x2-t10/1526a_Hexahexa_1,001_viewA.bna, frame 4, drop
+sampled-1000-x2-t10/342_Hexa_Hys-0,53mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/1278a_Hexahexa_0,751_viewA.bna, frame 61, none
+sampled-1000-x2-t10/334_Hexa_Hys-0,52mm_viewA.bna, frame 42, none
+sampled-1000-x2-t10/956_Hyspin-Hexa_0,374mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/763_Hexa-Hyspin_0,50mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/143_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 39, none
+sampled-1000-x2-t10/793_Diesel-5W30_0,50mm_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/911_Hexa-Hyspin_1,00mm_viewA.bna, frame 37, crown-splash
+sampled-1000-x2-t10/302_Hexa-Hexa_0,25_viewA.bna, frame 78, splash
+sampled-1000-x2-t10/1245a_Hexahexa_0,751_viewA.bna, frame 80, bubble-splash
+sampled-1000-x2-t10/1098a_Hexahexa_0,752_viewA.bna, frame 158, splash
+sampled-1000-x2-t10/942_Hyspin-Hexa_0,875mm_viewA.bna, frame 86, splash
+sampled-1000-x2-t10/828_Hyspin-Hexa_0,99mm_viewA.bna, frame 131, splash
+sampled-1000-x2-t10/1365a_Hexahexa_1,250_viewA.bna, frame 67, splash
+sampled-1000-x2-t10/226_Diesel-Hyspin_0.53mm_viewA.bna, frame 50, splash
+sampled-1000-x2-t10/358_Hys-Hexa_0,44mm_viewA.bna, frame 77, splash
+sampled-1000-x2-t10/1225a_Hexahexa_0,499_viewA.bna, frame 18, none
+sampled-1000-x2-t10/1123a_Hexahexa_0,998_viewA.bna, frame 65, none
+sampled-1000-x2-t10/417_Hys-Hys_0,08mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/1276a_Hexahexa_0,751_viewA.bna, frame 74, none
+sampled-1000-x2-t10/164_Hyspin-Hexadecan_0.50mm_viewA.bna, frame 106, splash
+sampled-1000-x2-t10/708_Hyspin_Hexa_0,50mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/962_Hyspin-Hexa_0,623mm_viewA.bna, frame 84, column
+sampled-1000-x2-t10/866_Hexa-Hyspin_0,26mm_viewA.bna, frame 42, none
+sampled-1000-x2-t10/1502a_Hexahexa_1,001_viewA.bna, frame 108, none
+sampled-1000-x2-t10/821_Hyspin-Hexa_0,75mm_viewA.bna, frame 36, crown-splash
+sampled-1000-x2-t10/1222a_Hexahexa_0,499_viewA.bna, frame 56, splash
+sampled-1000-x2-t10/416_Hys-Hys_0,27mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/1192a_Hexahexa_0,251_viewA.bna, frame 79, none
+sampled-1000-x2-t10/252_Hexa-Hexa_0,26mm_viewA.bna, frame 72, splash
+sampled-1000-x2-t10/942_Hyspin-Hexa_0,875mm_viewA.bna, frame 43, crown-splash
+sampled-1000-x2-t10/059_Diesel-Motoroel_0.93mm_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/747_Hexa_Hyspin_0,24mm_viewA.bna, frame 59, splash
+sampled-1000-x2-t10/489_Hys_Hexa_0,22mm_viewA.bna, frame 35, splash
+sampled-1000-x2-t10/1365a_Hexahexa_1,250_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/1576_Hexahexa_1,248_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/1371a_Hexahexa_1,250_viewA.bna, frame 89, splash
+sampled-1000-x2-t10/226_Diesel-Hyspin_0.53mm_viewA.bna, frame 55, splash
+sampled-1000-x2-t10/276_Hexa-Hexa_0,34_viewA.bna, frame 60, splash
+sampled-1000-x2-t10/1434a_Hexahexa_0,499_viewA.bna, frame 42, crown
+sampled-1000-x2-t10/1304a_Hexahexa_1,000_viewA.bna, frame 204, bubble
+sampled-1000-x2-t10/284_Hexa-Hexa_0,51_viewA.bna, frame 82, splash
+sampled-1000-x2-t10/334_Hexa_Hys-0,52mm_viewA.bna, frame 69, none
+sampled-1000-x2-t10/1274a_Hexahexa_0,749_viewA.bna, frame 63, splash
+sampled-1000-x2-t10/1190a_Hexahexa_0,248_viewA.bna, frame 36, splash
+sampled-1000-x2-t10/281_Hexa-Hexa_0,24_viewA.bna, frame 20, crown-splash
+sampled-1000-x2-t10/855_Hyspin-Hexa_1,01mm_viewA.bna, frame 33, crown-splash
+sampled-1000-x2-t10/028_Hyspin-Hexadecan_0.27mm_viewA.bna, frame 28, crown
+sampled-1000-x2-t10/1500a_Hexahexa_1,002_viewA.bna, frame 113, none
+sampled-1000-x2-t10/843_Hyspin-Hexa_0,76mm_viewA.bna, frame 22, crown
+sampled-1000-x2-t10/1407_Hyspin-Hexadekan_0,3099_viewA.bna, frame 106, splash
+sampled-1000-x2-t10/438_Hys-Hys_0,26mm_viewA.bna, frame 107, splash
+sampled-1000-x2-t10/252_Hexa-Hexa_0,26mm_viewA.bna, frame 28, bubble-splash
+sampled-1000-x2-t10/174_Hyspin-Hexadecan_0.45mm_viewA.bna, frame 28, crown
+sampled-1000-x2-t10/1277a_Hexahexa_0,750_viewA.bna, frame 116, column
+sampled-1000-x2-t10/1588_Hexahexa_0,500_viewA.bna, frame 174, bubble-splash
+sampled-1000-x2-t10/175_Hyspin-Hexadecan_0.46mm_viewA.bna, frame 15, drop
+sampled-1000-x2-t10/910_Hexa-Hyspin_1,00mm_viewA.bna, frame 70, splash
+sampled-1000-x2-t10/054_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 88, splash
+sampled-1000-x2-t10/850_Hyspin-Hexa_0,75mm_viewA.bna, frame 112, splash
+sampled-1000-x2-t10/718_Hyspin_Hexa_0,52mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/937_Hyspin-Hexa_1,127mm_viewA.bna, frame 75, splash
+sampled-1000-x2-t10/1547a_Hexahexa_1,251_viewA.bna, frame 19, crown
+sampled-1000-x2-t10/1022a_Hexahexa_0,249_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/793_Diesel-5W30_0,50mm_viewA.bna, frame 14, none
+sampled-1000-x2-t10/1233a_Hexahexa_0,500_viewA.bna, frame 110, column
+sampled-1000-x2-t10/1505a_Hexahexa_1,002_viewA.bna, frame 57, splash
+sampled-1000-x2-t10/300_Hexa-Hexa_0,51_viewA.bna, frame 27, crown
+sampled-1000-x2-t10/1174a_Hexahexa_0,249_viewA.bna, frame 11, drop
+sampled-1000-x2-t10/426_Hys-Hys_0,49mm_viewA.bna, frame 44, none
+sampled-1000-x2-t10/942_Hyspin-Hexa_0,875mm_viewA.bna, frame 61, splash
+sampled-1000-x2-t10/1229a_Hexahexa_0,500_viewA.bna, frame 55, splash
+sampled-1000-x2-t10/713_Hyspin_Hexa_0,25mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/213_Motoroel-Hexadecan_0.27mm_viewA.bna, frame 61, splash
+sampled-1000-x2-t10/203_Wasser-Butanol_0.30mm_viewA.bna, frame 22, splash
+sampled-1000-x2-t10/391_Hys-Hys_0,28mm_viewA.bna, frame 40, none
+sampled-1000-x2-t10/1242a_Hexahexa_0,499_viewA.bna, frame 52, none
+sampled-1000-x2-t10/823_Hyspin-Hexa_0,74mm_viewA.bna, frame 111, splash
+sampled-1000-x2-t10/1183a_Hexahexa_0,250_viewA.bna, frame 17, none
+sampled-1000-x2-t10/821_Hyspin-Hexa_0,75mm_viewA.bna, frame 32, crown-splash
+sampled-1000-x2-t10/1062a_Hexahexa_0,498_viewA.bna, frame 56, splash
+sampled-1000-x2-t10/1460a_Hexahexa_0,751_viewA.bna, frame 25, crown
+sampled-1000-x2-t10/838_Hyspin-Hexa_1,00mm_viewA.bna, frame 54, crown
+sampled-1000-x2-t10/1521a_Hexahexa_1,002_viewA.bna, frame 152, column
+sampled-1000-x2-t10/406_Hys-Hexa_0,92mm_viewA.bna, frame 34, crown
+sampled-1000-x2-t10/711_Hyspin_Hexa_0,52mm_viewA.bna, frame 53, splash
+sampled-1000-x2-t10/1427a_Hexahexa_0,251_viewA.bna, frame 49, none
+sampled-1000-x2-t10/1228a_Hexahexa_0,502_viewA.bna, frame 93, none
+sampled-1000-x2-t10/1145a_Hexahexa_1,250_viewA.bna, frame 120, splash
+sampled-1000-x2-t10/1558a_Hexahexa_1,249_viewA.bna, frame 124, splash
+sampled-1000-x2-t10/400_Hys-Hys_0,54mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/830_Hyspin-Hexa_1,01mm_viewA.bna, frame 96, splash
+sampled-1000-x2-t10/821_Hyspin-Hexa_0,75mm_viewA.bna, frame 92, splash
+sampled-1000-x2-t10/1418a_Hexahexa_0,251_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/1391a_Hexahexa_1,250_viewA.bna, frame 40, crown
+sampled-1000-x2-t10/492_Hys_Hexa_0,48mm_viewA.bna, frame 182, none
+sampled-1000-x2-t10/031_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/492_Hys_Hexa_0,48mm_viewA.bna, frame 90, column
+sampled-1000-x2-t10/1314a_Hexahexa_1,000_viewA.bna, frame 46, crown-splash
+sampled-1000-x2-t10/1234a_Hexahexa_0,499_viewA.bna, frame 95, column
+sampled-1000-x2-t10/1529a_Hexahexa_0,999_viewA.bna, frame 58, splash
+sampled-1000-x2-t10/873_Hexa-Hyspin_0,50mm_viewA.bna, frame 47, none
+sampled-1000-x2-t10/1411_Hyspin-Hexadekan_0,75801_viewA.bna, frame 92, splash
+sampled-1000-x2-t10/1151a_Hexahexa_1,251_viewA.bna, frame 136, none
+sampled-1000-x2-t10/488_Hys_Hexa_0,24mm_viewA.bna, frame 103, none
+sampled-1000-x2-t10/1073a_Hexahexa_0,499_viewA.bna, frame 54, splash
+sampled-1000-x2-t10/979_Hyspin-Hexa_1,249mm_viewA.bna, frame 26, crown
+sampled-1000-x2-t10/935_Hyspin-Hexa_1,124mm_viewA.bna, frame 114, column
+sampled-1000-x2-t10/872_Hexa-Hyspin_0,50mm_viewA.bna, frame 51, splash
+sampled-1000-x2-t10/948_Hyspin-Hexa_1,122mm_viewA.bna, frame 108, splash
+sampled-1000-x2-t10/1074a_Hexahexa_0,499_viewA.bna, frame 166, column
+sampled-1000-x2-t10/825_Hyspin-Hexa_1,00mm_viewA.bna, frame 125, column
+sampled-1000-x2-t10/957_Hyspin-Hexa_0,374mm_viewA.bna, frame 48, splash
+sampled-1000-x2-t10/1357a_Hexahexa_1,000_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/1167_Hexahexa_0,251_viewA.bna, frame 31, crown-splash
+sampled-1000-x2-t10/1544a_Hexahexa_1,252_viewA.bna, frame 78, splash
+sampled-1000-x2-t10/398_Hys-Hys_0,50mm_viewA.bna, frame 37, crown
+sampled-1000-x2-t10/1505a_Hexahexa_1,002_viewA.bna, frame 95, none
+sampled-1000-x2-t10/369_Hys-Hys_0,40mm_viewA.bna, frame 86, splash
+sampled-1000-x2-t10/1071a_Hexahexa_0,500_viewA.bna, frame 117, splash
+sampled-1000-x2-t10/175_Hyspin-Hexadecan_0.46mm_viewA.bna, frame 46, none
+sampled-1000-x2-t10/420_Hys-Hexa_0,98mm_viewA.bna, frame 178, column
+sampled-1000-x2-t10/321_Hexa-Hexa_0,26mm_viewA.bna, frame 58, none
+sampled-1000-x2-t10/797_Diesel-5W30_0,51mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/1078a_Hexahexa_0,499_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/1375a_Hexahexa_1,250_viewA.bna, frame 46, crown-splash
+sampled-1000-x2-t10/1529a_Hexahexa_0,999_viewA.bna, frame 10, drop
+sampled-1000-x2-t10/450_Hys-Hys_0,92mm_viewA.bna, frame 156, none
+sampled-1000-x2-t10/1106a_Hexahexa_0,752_viewA.bna, frame 66, bubble-splash
+sampled-1000-x2-t10/1018a_Hexahexa_0,251_viewA.bna, frame 60, splash
+sampled-1000-x2-t10/542_Hys-Hys_0,52mm_viewA.bna, frame 9, drop
+sampled-1000-x2-t10/883_Hexa-Hyspin_1,00mm_viewA.bna, frame 22, crown
+sampled-1000-x2-t10/940_Hyspin-Hexa_0,625mm_viewA.bna, frame 50, splash
+sampled-1000-x2-t10/1294a_Hexahexa_0,751_viewA.bna, frame 118, none
+sampled-1000-x2-t10/809_Diesel-5W30_0,27mm_viewA.bna, frame 19, none
+sampled-1000-x2-t10/414_Hys-Hys_0,30mm_viewA.bna, frame 67, none
+sampled-1000-x2-t10/1543a_Hexahexa_1,250_viewA.bna, frame 62, splash
+sampled-1000-x2-t10/1255a_Hexahexa_0,751_viewA.bna, frame 81, splash
+sampled-1000-x2-t10/187_Motoroel-Motoroel_0.93mm_viewA.bna, frame 11, crown
+sampled-1000-x2-t10/1511a_Hexahexa_1,000_viewA.bna, frame 142, column
+sampled-1000-x2-t10/1578_Hexahexa_0,999_viewA.bna, frame 94, bubble
+sampled-1000-x2-t10/402_Hys-Hexa_0,51mm_viewA.bna, frame 58, splash
+sampled-1000-x2-t10/1064a_Hexahexa_0,500_viewA.bna, frame 38, crown
+sampled-1000-x2-t10/1157a_Hexahexa_1,249_viewA.bna, frame 22, crown
+sampled-1000-x2-t10/493_Hys_Hexa_0,50mm_viewA.bna, frame 36, crown
+sampled-1000-x2-t10/500_Hys-Hys_0,25mm_viewA.bna, frame 54, none
+sampled-1000-x2-t10/211_Wasser-Hyspin_0.82mm_viewA.bna, frame 29, crown-splash
+sampled-1000-x2-t10/1100a_Hexahexa_0,749_viewA.bna, frame 94, column
+sampled-1000-x2-t10/702_Hyspin_Hexa_0,26mm_viewA.bna, frame 57, splash
+sampled-1000-x2-t10/896_Hexa-Hyspin_1,25mm_viewA.bna, frame 106, column
+sampled-1000-x2-t10/356_Hys-Hexa_0,44mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/404_Hys-Hexa_0,52mm_viewA.bna, frame 113, splash
+sampled-1000-x2-t10/811_Diesel-5W30_0,27mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/883_Hexa-Hyspin_1,00mm_viewA.bna, frame 90, none
+sampled-1000-x2-t10/036_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/298_Hexa-Hexa_0,51_viewA.bna, frame 29, crown
+sampled-1000-x2-t10/1578_Hexahexa_0,999_viewA.bna, frame 479, none
+sampled-1000-x2-t10/1427a_Hexahexa_0,251_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/1141a_Hexahexa_1,250_viewA.bna, frame 201, bubble
+sampled-1000-x2-t10/1592_Hexahexa_0,249_viewA.bna, frame 27, crown-splash
+sampled-1000-x2-t10/789_Hexa-Hyspin_0,50mm_viewA.bna, frame 23, crown
+sampled-1000-x2-t10/345_Hexa_Hys-0,50mm_viewA.bna, frame 37, splash
+sampled-1000-x2-t10/1256a_Hexahexa_0,752_viewA.bna, frame 35, crown-splash
+sampled-1000-x2-t10/1354a_Hexahexa_1,001_viewA.bna, frame 83, none
+sampled-1000-x2-t10/904_Hexa-Hyspin_1,26mm_viewA.bna, frame 13, none
+sampled-1000-x2-t10/1252a_Hexahexa_0,749_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/486_Hys-Hexa_0,27mm_viewA.bna, frame 30, crown
+sampled-1000-x2-t10/784_Hexa-Hyspin_0,26mm_viewA.bna, frame 49, none
+sampled-1000-x2-t10/144_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/345_Hexa_Hys-0,50mm_viewA.bna, frame 68, splash
+sampled-1000-x2-t10/829_Hyspin-Hexa_1,00mm_viewA.bna, frame 59, splash
+sampled-1000-x2-t10/1374a_Hexahexa_1,249_viewA.bna, frame 125, splash
+sampled-1000-x2-t10/199_Wasser-Motoroel_0.26mm_viewA.bna, frame 89, splash
+sampled-1000-x2-t10/1318a_Hexahexa_1,002_viewA.bna, frame 133, none
+sampled-1000-x2-t10/1495a_Hexahexa_1,000_viewA.bna, frame 16, drop
+sampled-1000-x2-t10/1294a_Hexahexa_0,751_viewA.bna, frame 47, splash
+sampled-1000-x2-t10/452_Hys-Hys_0,96mm_viewA.bna, frame 72, none
+sampled-1000-x2-t10/397_Hys-Hys_0,45mm_viewA.bna, frame 46, none
+sampled-1000-x2-t10/188_Motoroel-Motoroel_0.84mm_viewA.bna, frame 30, none
+sampled-1000-x2-t10/199_Wasser-Motoroel_0.26mm_viewA.bna, frame 55, splash
+sampled-1000-x2-t10/1151a_Hexahexa_1,251_viewA.bna, frame 37, crown-splash
+sampled-1000-x2-t10/249_Hexa-Hexa_0,51mm_viewA.bna, frame 399, bubble
+sampled-1000-x2-t10/1419a_Hexahexa_0,250_viewA.bna, frame 20, drop
+sampled-1000-x2-t10/213_Motoroel-Hexadecan_0.27mm_viewA.bna, frame 40, splash
+sampled-1000-x2-t10/1353a_Hexahexa_1,001_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/176_Hyspin-Hexadecan_0.42mm_viewA.bna, frame 78, none
+sampled-1000-x2-t10/202_Wasser-Butanol_0.29mm_viewA.bna, frame 14, crown
+sampled-1000-x2-t10/868_Hexa-Hyspin_0,25mm_viewA.bna, frame 28, crown
+sampled-1000-x2-t10/263_Hexa-Hexa_0,51mm_viewA.bna, frame 137, splash
+sampled-1000-x2-t10/1049a_Hexahexa_0,499_viewA.bna, frame 153, splash
+sampled-1000-x2-t10/1174a_Hexahexa_0,249_viewA.bna, frame 44, splash
+sampled-1000-x2-t10/1210a_Hexahexa_0,500_viewA.bna, frame 76, splash
+sampled-1000-x2-t10/026_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 51, none
+sampled-1000-x2-t10/1070a_Hexahexa_0,502_viewA.bna, frame 46, crown
+sampled-1000-x2-t10/1575_Hexahexa_1,251_viewA.bna, frame 393, bubble
+sampled-1000-x2-t10/1141a_Hexahexa_1,250_viewA.bna, frame 91, bubble
+sampled-1000-x2-t10/1483a_Hexahexa_0,750_viewA.bna, frame 78, splash
+sampled-1000-x2-t10/730_Hyspin_Hexa_0,50mm_viewA.bna, frame 51, none
+sampled-1000-x2-t10/412_Hys-Hys_0,13mm_viewA.bna, frame 20, none
+sampled-1000-x2-t10/1573a_Hexahexa_1,252_viewA.bna, frame 140, splash
+sampled-1000-x2-t10/196_Hyspin-Wasser_0.75mm_viewA.bna, frame 38, splash
+sampled-1000-x2-t10/1541a_Hexahexa_1,251_viewA.bna, frame 93, none
+sampled-1000-x2-t10/1492a_Hexahexa_0,750_viewA.bna, frame 102, none
+sampled-1000-x2-t10/1469a_Hexahexa_0,751_viewA.bna, frame 84, none
+sampled-1000-x2-t10/034_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 2, none
+sampled-1000-x2-t10/1145a_Hexahexa_1,250_viewA.bna, frame 77, splash
+sampled-1000-x2-t10/1132_Hexahexa_1,001_viewA.bna, frame 41, crown
+sampled-1000-x2-t10/730_Hyspin_Hexa_0,50mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/543_Hys-Hys_0,51mm_viewA.bna, frame 40, none
+sampled-1000-x2-t10/1318a_Hexahexa_1,002_viewA.bna, frame 72, splash
+sampled-1000-x2-t10/041_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/1348a_Hexahexa_1,000_viewA.bna, frame 189, none
+sampled-1000-x2-t10/1577_Hexahexa_1,251_viewA.bna, frame 369, none
+sampled-1000-x2-t10/1556a_Hexahexa_1,251_viewA.bna, frame 105, column
+sampled-1000-x2-t10/1494a_Hexahexa_0,751_viewA.bna, frame 33, crown
+sampled-1000-x2-t10/799_Diesel-5W30_0,27mm_viewA.bna, frame 10, drop
+sampled-1000-x2-t10/962_Hyspin-Hexa_0,623mm_viewA.bna, frame 55, none
+sampled-1000-x2-t10/411_Hys-Hys_0,29mm_viewA.bna, frame 40, none
+sampled-1000-x2-t10/830_Hyspin-Hexa_1,01mm_viewA.bna, frame 52, crown-splash
+sampled-1000-x2-t10/1538a_Hexahexa_1,252_viewA.bna, frame 72, none
+sampled-1000-x2-t10/362_Hys-Hys_0,21mm_viewA.bna, frame 94, splash
+sampled-1000-x2-t10/822_Hyspin-Hexa_0,76mm_viewA.bna, frame 72, splash
+sampled-1000-x2-t10/1608a_Hexahexa_0,252_viewA.bna, frame 41, splash
+sampled-1000-x2-t10/1510a_Hexahexa_0,999_viewA.bna, frame 93, column
+sampled-1000-x2-t10/009_Hyspin-Hexadecan_0.27mm_viewA.bna, frame 71, splash
+sampled-1000-x2-t10/1496a_Hexahexa_1,000_viewA.bna, frame 42, crown
+sampled-1000-x2-t10/328_Hexa-Hys_0,50mm_viewA.bna, frame 90, none
+sampled-1000-x2-t10/022_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 23, crown
+sampled-1000-x2-t10/437_Hys-Hys_0,55mm_viewA.bna, frame 112, none
+sampled-1000-x2-t10/413_Hys-Hys_0,29mm_viewA.bna, frame 10, drop
+sampled-1000-x2-t10/254_Hexa-Hexa_0,20mm_viewA.bna, frame 34, splash
+sampled-1000-x2-t10/755_Hexa_Hyspin_0,49mm_viewA.bna, frame 68, splash
+sampled-1000-x2-t10/1327a_Hexahexa_0,999_viewA.bna, frame 91, none
+sampled-1000-x2-t10/908_Hexa-Hyspin_1,25mm_viewA.bna, frame 63, splash
+sampled-1000-x2-t10/206_Wasser-Butanol_1.13mm_viewA.bna, frame 12, crown
+sampled-1000-x2-t10/1308a_Hexahexa_0,999_viewA.bna, frame 78, splash
+sampled-1000-x2-t10/166_Hyspin-Hexadecan_0.45mm_viewA.bna, frame 60, none
+sampled-1000-x2-t10/856_Hyspin-Hexa_0,99mm_viewA.bna, frame 48, crown-splash
+sampled-1000-x2-t10/228_Diesel-Hyspin_0.77mm_viewA.bna, frame 55, none
+sampled-1000-x2-t10/1074a_Hexahexa_0,499_viewA.bna, frame 28, crown
+sampled-1000-x2-t10/446_Hys-Hys_0,47mm_viewA.bna, frame 115, splash
+sampled-1000-x2-t10/1275a_Hexahexa_0,751_viewA.bna, frame 62, none
+sampled-1000-x2-t10/149_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/1313a_Hexahexa_1,000_viewA.bna, frame 49, crown-splash
+sampled-1000-x2-t10/447_Hys-Hys_0,52mm_viewA.bna, frame 80, splash
+sampled-1000-x2-t10/1259a_Hexahexa_0,751_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/501_Hys-Hys_0,27mm_viewA.bna, frame 38, none
+sampled-1000-x2-t10/413_Hys-Hys_0,29mm_viewA.bna, frame 47, none
+sampled-1000-x2-t10/030_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/419_Hys-Hexa_0,92mm_viewA.bna, frame 415, none
+sampled-1000-x2-t10/1554a_Hexahexa_1,250_viewA.bna, frame 99, column
+sampled-1000-x2-t10/1588_Hexahexa_0,500_viewA.bna, frame 361, bubble
+sampled-1000-x2-t10/1604a_Hexahexa_0,750_viewA.bna, frame 206, bubble
+sampled-1000-x2-t10/1150a_Hexahexa_1,251_viewA.bna, frame 142, none
+sampled-1000-x2-t10/1293a_Hexahexa_0,752_viewA.bna, frame 46, crown
+sampled-1000-x2-t10/749_Hexa_Hyspin_0,26mm_viewA.bna, frame 33, splash
+sampled-1000-x2-t10/1170a_Hexahexa_0,251_viewA.bna, frame 4, drop
+sampled-1000-x2-t10/1171a_Hexahexa_0,251_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/907_Hexa-Hyspin_1,25mm_viewA.bna, frame 19, crown
+sampled-1000-x2-t10/874_Hexa-Hyspin_0,50mm_viewA.bna, frame 9, drop
+sampled-1000-x2-t10/210_Wasser-Hyspin_0.85mm_viewA.bna, frame 80, splash
+sampled-1000-x2-t10/045_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 26, crown
+sampled-1000-x2-t10/246_Hexa-Hexa_0,49mm_viewA.bna, frame 194, bubble
+sampled-1000-x2-t10/206_Wasser-Butanol_1.13mm_viewA.bna, frame 159, bubble-splash
+sampled-1000-x2-t10/930_Hyspin-Hexa_0,875mm_viewA.bna, frame 46, crown
+sampled-1000-x2-t10/544_Hys-Hys_0,50mm_viewA.bna, frame 76, none
+sampled-1000-x2-t10/024_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 48, splash
+sampled-1000-x2-t10/034_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/327_Hexa-Hys_0,53mm_viewA.bna, frame 28, crown
+sampled-1000-x2-t10/1335a_Hexahexa_1,001_viewA.bna, frame 54, crown
+sampled-1000-x2-t10/1096a_Hexahexa_0,748_viewA.bna, frame 100, splash
+sampled-1000-x2-t10/739_Hyspin_Hexa_0,26mm_viewA.bna, frame 9, drop
+sampled-1000-x2-t10/438_Hys-Hys_0,26mm_viewA.bna, frame 52, splash
+sampled-1000-x2-t10/1073a_Hexahexa_0,499_viewA.bna, frame 77, column
+sampled-1000-x2-t10/754_Hexa_Hyspin_0,50mm_viewA.bna, frame 13, none
+sampled-1000-x2-t10/1156a_Hexahexa_1,250_viewA.bna, frame 92, column
+sampled-1000-x2-t10/379_Hys-Hys_0,27mm_viewA.bna, frame 82, splash
+sampled-1000-x2-t10/843_Hyspin-Hexa_0,76mm_viewA.bna, frame 81, column
+sampled-1000-x2-t10/797_Diesel-5W30_0,51mm_viewA.bna, frame 25, none
+sampled-1000-x2-t10/1020a_Hexahexa_0,250_viewA.bna, frame 35, splash
+sampled-1000-x2-t10/1436a_Hexahexa_0,498_viewA.bna, frame 117, column
+sampled-1000-x2-t10/1067a_Hexahexa_0,498_viewA.bna, frame 27, crown
+sampled-1000-x2-t10/1063a_Hexahexa_0,500_viewA.bna, frame 73, column
+sampled-1000-x2-t10/1568a_Hexahexa_1,249_viewA.bna, frame 38, crown
+sampled-1000-x2-t10/781_Hexa-Hyspin_0,25mm_viewA.bna, frame 11, drop
+sampled-1000-x2-t10/781_Hexa-Hyspin_0,25mm_viewA.bna, frame 12, drop
+sampled-1000-x2-t10/1304a_Hexahexa_1,000_viewA.bna, frame 207, bubble
+sampled-1000-x2-t10/1246a_Hexahexa_0,750_viewA.bna, frame 71, bubble-splash
+sampled-1000-x2-t10/342_Hexa_Hys-0,53mm_viewA.bna, frame 62, none
+sampled-1000-x2-t10/1268a_Hexahexa_0,750_viewA.bna, frame 80, column
+sampled-1000-x2-t10/758_Hexa-Hyspin_0,26mm_viewA.bna, frame 16, none
+sampled-1000-x2-t10/794_Diesel-5W30_0,50mm_viewA.bna, frame 18, none
+sampled-1000-x2-t10/163_Hyspin-Hexadecan_0.50mm_viewA.bna, frame 93, splash
+sampled-1000-x2-t10/1241a_Hexahexa_0,501_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/1131a_Hexahexa_1,001_viewA.bna, frame 104, splash
+sampled-1000-x2-t10/1087a_Hexahexa_0,752_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/262_Hexa-Hexa_0,50mm_viewA.bna, frame 50, bubble-splash
+sampled-1000-x2-t10/1248a_Hexahexa_0,749_viewA.bna, frame 75, bubble-splash
+sampled-1000-x2-t10/413_Hys-Hys_0,29mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/1519a_Hexahexa_0,998_viewA.bna, frame 118, none
+sampled-1000-x2-t10/1095a_Hexahexa_0,750_viewA.bna, frame 161, column
+sampled-1000-x2-t10/1495a_Hexahexa_1,000_viewA.bna, frame 62, none
+sampled-1000-x2-t10/260_Hexa-Hexa_0,50mm_viewA.bna, frame 50, bubble-splash
+sampled-1000-x2-t10/1226a_Hexahexa_0,501_viewA.bna, frame 4, drop
+sampled-1000-x2-t10/869_Hexa-Hyspin_0,25mm_viewA.bna, frame 20, none
+sampled-1000-x2-t10/815_Diesel-5W30_0,49mm_viewA.bna, frame 23, none
+sampled-1000-x2-t10/867_Hexa-Hyspin_0,25mm_viewA.bna, frame 26, crown
+sampled-1000-x2-t10/1599a_Hexahexa_0,999_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/1207a_Hexahexa_0,501_viewA.bna, frame 23, crown-splash
+sampled-1000-x2-t10/867_Hexa-Hyspin_0,25mm_viewA.bna, frame 46, none
+sampled-1000-x2-t10/445_Hys-Hys_0,48mm_viewA.bna, frame 94, splash
+sampled-1000-x2-t10/865_Hexa-Hyspin_0,50mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/039_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 37, splash
+sampled-1000-x2-t10/274_Hexa-Hexa_0,53_viewA.bna, frame 182, bubble-splash
+sampled-1000-x2-t10/054_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 55, splash
+sampled-1000-x2-t10/741_Hyspin_Hexa_0,25mm_viewA.bna, frame 13, drop
+sampled-1000-x2-t10/1157a_Hexahexa_1,249_viewA.bna, frame 159, none
+sampled-1000-x2-t10/203_Wasser-Butanol_0.30mm_viewA.bna, frame 39, splash
+sampled-1000-x2-t10/242_Hexa-Hexa_0,50mm_viewA.bna, frame 89, splash
+sampled-1000-x2-t10/1050a_Hexahexa_0,501_viewA.bna, frame 21, crown
+sampled-1000-x2-t10/178_Hyspin-Hyspin_0.26mm_viewA.bna, frame 10, none
+sampled-1000-x2-t10/1575_Hexahexa_1,251_viewA.bna, frame 93, bubble
+sampled-1000-x2-t10/909_Hexa-Hyspin_1,00mm_viewA.bna, frame 45, crown-splash
+sampled-1000-x2-t10/908_Hexa-Hyspin_1,25mm_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/1305a_Hexahexa_1,001_viewA.bna, frame 12, drop
+sampled-1000-x2-t10/024_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 87, splash
+sampled-1000-x2-t10/022_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 36, splash
+sampled-1000-x2-t10/395_Hys-Hys_0,10mm_viewA.bna, frame 16, none
+sampled-1000-x2-t10/1307a_Hexahexa_1,001_viewA.bna, frame 62, splash
+sampled-1000-x2-t10/317_Hexa-Hexa_0,53mm_viewA.bna, frame 51, none
+sampled-1000-x2-t10/439_Hys-Hys_0,33mm_viewA.bna, frame 50, none
+sampled-1000-x2-t10/1297a_Hexahexa_0,750_viewA.bna, frame 114, column
+sampled-1000-x2-t10/1425a_Hexahexa_0,251_viewA.bna, frame 32, crown
+sampled-1000-x2-t10/397_Hys-Hys_0,45mm_viewA.bna, frame 40, crown
+sampled-1000-x2-t10/1546a_Hexahexa_1,249_viewA.bna, frame 166, column
+sampled-1000-x2-t10/1361a_Hexahexa_1,249_viewA.bna, frame 116, splash
+sampled-1000-x2-t10/1167_Hexahexa_0,251_viewA.bna, frame 46, splash
+sampled-1000-x2-t10/756_Hexa_Hyspin_0,51mm_viewA.bna, frame 38, splash
+sampled-1000-x2-t10/500_Hys-Hys_0,25mm_viewA.bna, frame 62, none
+sampled-1000-x2-t10/388_Hys-Hys_0,30mm_viewA.bna, frame 28, crown
+sampled-1000-x2-t10/979_Hyspin-Hexa_1,249mm_viewA.bna, frame 59, crown
+sampled-1000-x2-t10/1376a_Hexahexa_1,250_viewA.bna, frame 69, none
+sampled-1000-x2-t10/1202a_Hexahexa_0,249_viewA.bna, frame 54, none
+sampled-1000-x2-t10/019_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/808_Diesel-5W30_0,49mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/704_Hyspin_Hexa_0,24mm_viewA.bna, frame 23, crown-splash
+sampled-1000-x2-t10/909_Hexa-Hyspin_1,00mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/984_Hyspin-Hexa_0,875mm_viewA.bna, frame 12, drop
+sampled-1000-x2-t10/413_Hys-Hys_0,29mm_viewA.bna, frame 50, none
+sampled-1000-x2-t10/1151a_Hexahexa_1,251_viewA.bna, frame 65, splash
+sampled-1000-x2-t10/1039a_Hexahexa_0,250_viewA.bna, frame 31, crown
+sampled-1000-x2-t10/1255a_Hexahexa_0,751_viewA.bna, frame 81, splash
+sampled-1000-x2-t10/1296a_Hexahexa_0,751_viewA.bna, frame 143, column
+sampled-1000-x2-t10/1475a_Hexahexa_0,750_viewA.bna, frame 33, crown
+sampled-1000-x2-t10/177_Hyspin-Hexadecan_0.45mm_viewA.bna, frame 30, crown
+sampled-1000-x2-t10/707_Hyspin_Hexa_0,52mm_viewA.bna, frame 11, drop
+sampled-1000-x2-t10/412_Hys-Hys_0,13mm_viewA.bna, frame 21, none
+sampled-1000-x2-t10/895_Hexa-Hyspin_1,25mm_viewA.bna, frame 39, crown
+sampled-1000-x2-t10/1543a_Hexahexa_1,250_viewA.bna, frame 83, splash
+sampled-1000-x2-t10/1517a_Hexahexa_0,999_viewA.bna, frame 130, none
+sampled-1000-x2-t10/220_Motoroel-Wasser_0.97mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/035_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 18, drop
+sampled-1000-x2-t10/1546a_Hexahexa_1,249_viewA.bna, frame 97, column
+sampled-1000-x2-t10/416_Hys-Hys_0,27mm_viewA.bna, frame 49, none
+sampled-1000-x2-t10/921_Hyspin_Hexa_0,375mm_viewA.bna, frame 56, splash
+sampled-1000-x2-t10/180_Hexadecan-Hexadecan_0.25mm_viewA.bna, frame 53, splash
+sampled-1000-x2-t10/768_Hexa-Hyspin_0,50mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/1455a_Hexahexa_0,500_viewA.bna, frame 23, crown
+sampled-1000-x2-t10/427_Hys-Hys_0,24mm_viewA.bna, frame 62, none
+sampled-1000-x2-t10/1203a_Hexahexa_0,250_viewA.bna, frame 92, none
+sampled-1000-x2-t10/1261a_Hexahexa_0,752_viewA.bna, frame 61, splash
+sampled-1000-x2-t10/1206a_Hexahexa_0,501_viewA.bna, frame 116, splash
+sampled-1000-x2-t10/879_Hexa-Hyspin_0,75mm_viewA.bna, frame 79, none
+sampled-1000-x2-t10/240_Hexa-Hexa_0,44mm_viewA.bna, frame 186, none
+sampled-1000-x2-t10/1586_Hexahexa_0,750_viewA.bna, frame 132, bubble-splash
+sampled-1000-x2-t10/1381a_Hexahexa_1,249_viewA.bna, frame 30, crown
+sampled-1000-x2-t10/1146a_Hexahexa_1,248_viewA.bna, frame 58, crown-splash
+sampled-1000-x2-t10/200_Wasser-Motoroel_1.03mm_viewA.bna, frame 48, none
+sampled-1000-x2-t10/1133a_Hexahexa_1,000_viewA.bna, frame 101, column
+sampled-1000-x2-t10/486_Hys-Hexa_0,27mm_viewA.bna, frame 46, none
+sampled-1000-x2-t10/028_Hyspin-Hexadecan_0.27mm_viewA.bna, frame 37, none
+sampled-1000-x2-t10/1391a_Hexahexa_1,250_viewA.bna, frame 20, crown
+sampled-1000-x2-t10/1092a_Hexahexa_0,749_viewA.bna, frame 97, column
+sampled-1000-x2-t10/1383a_Hexahexa_1,250_viewA.bna, frame 82, none
+sampled-1000-x2-t10/1215a_Hexahexa_0,500_viewA.bna, frame 81, splash
+sampled-1000-x2-t10/1322a_Hexahexa_1,000_viewA.bna, frame 82, splash
+sampled-1000-x2-t10/493_Hys_Hexa_0,50mm_viewA.bna, frame 89, column
+sampled-1000-x2-t10/1025a_Hexahexa_0,248_viewA.bna, frame 79, splash
+sampled-1000-x2-t10/736_Hyspin_Hexa_0,25mm_viewA.bna, frame 46, none
+sampled-1000-x2-t10/1493a_Hexahexa_0,752_viewA.bna, frame 49, crown
+sampled-1000-x2-t10/1023a_Hexahexa_0,249_viewA.bna, frame 17, crown
+sampled-1000-x2-t10/331_Hexa_Hys-0,50mm_viewA.bna, frame 68, none
+sampled-1000-x2-t10/761_Hexa-Hyspin_0,26mm_viewA.bna, frame 51, splash
+sampled-1000-x2-t10/1393a_Hexahexa_1,251_viewA.bna, frame 194, column
+sampled-1000-x2-t10/1136a_Hexahexa_0,998_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/1321a_Hexahexa_0,999_viewA.bna, frame 15, drop
+sampled-1000-x2-t10/1412a_Hyspin-Hexadekan_0,75052_viewA.bna, frame 57, splash
+sampled-1000-x2-t10/814_Diesel-5W30_0,51mm_viewA.bna, frame 44, none
+sampled-1000-x2-t10/1174a_Hexahexa_0,249_viewA.bna, frame 65, splash
+sampled-1000-x2-t10/1435a_Hexahexa_0,499_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/1191a_Hexahexa_0,251_viewA.bna, frame 97, none
+sampled-1000-x2-t10/1382a_Hexahexa_1,250_viewA.bna, frame 104, column
+sampled-1000-x2-t10/1515a_Hexahexa_1,000_viewA.bna, frame 52, crown
+sampled-1000-x2-t10/1422a_Hexahexa_0,250_viewA.bna, frame 5, drop
+sampled-1000-x2-t10/1435a_Hexahexa_0,499_viewA.bna, frame 85, splash
+sampled-1000-x2-t10/1242a_Hexahexa_0,499_viewA.bna, frame 146, column
+sampled-1000-x2-t10/1182a_Hexahexa_0,249_viewA.bna, frame 35, splash
+sampled-1000-x2-t10/1322a_Hexahexa_1,000_viewA.bna, frame 35, crown
+sampled-1000-x2-t10/1437a_Hexahexa_0,500_viewA.bna, frame 82, splash
+sampled-1000-x2-t10/037_Hyspin-Hexadecan_0.21mm_viewA.bna, frame 38, none
+sampled-1000-x2-t10/714_Hyspin_Hexa_0,26mm_viewA.bna, frame 60, splash
+sampled-1000-x2-t10/1520a_Hexahexa_0,999_viewA.bna, frame 110, none
+sampled-1000-x2-t10/904_Hexa-Hyspin_1,26mm_viewA.bna, frame 70, splash
+sampled-1000-x2-t10/1592_Hexahexa_0,249_viewA.bna, frame 55, splash
+sampled-1000-x2-t10/1184a_Hexahexa_0,250_viewA.bna, frame 51, splash
+sampled-1000-x2-t10/435_Hys-Hys_0,47mm_viewA.bna, frame 17, crown
+sampled-1000-x2-t10/1042a_Hexahexa_0,249_viewA.bna, frame 23, none
+sampled-1000-x2-t10/826_Hyspin-Hexa_1,02mm_viewA.bna, frame 139, splash
+sampled-1000-x2-t10/298_Hexa-Hexa_0,51_viewA.bna, frame 234, splash
+sampled-1000-x2-t10/850_Hyspin-Hexa_0,75mm_viewA.bna, frame 23, crown
+sampled-1000-x2-t10/1362a_Hexahexa_1,250_viewA.bna, frame 113, bubble-splash
+sampled-1000-x2-t10/941_Hyspin-Hexa_0,626mm_viewA.bna, frame 79, splash
+sampled-1000-x2-t10/1556a_Hexahexa_1,251_viewA.bna, frame 107, column
+sampled-1000-x2-t10/1417a_Hexahexa_0,251_viewA.bna, frame 29, crown
+sampled-1000-x2-t10/213_Motoroel-Hexadecan_0.27mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/370_Hys-Hys_0,43mm_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/1312a_Hexahexa_1,000_viewA.bna, frame 58, splash
+sampled-1000-x2-t10/1086a_Hexahexa_0,750_viewA.bna, frame 10, drop
+sampled-1000-x2-t10/419_Hys-Hexa_0,92mm_viewA.bna, frame 85, column
+sampled-1000-x2-t10/798_Diesel-5W30_0,50mm_viewA.bna, frame 14, none
+sampled-1000-x2-t10/1500a_Hexahexa_1,002_viewA.bna, frame 95, none
+sampled-1000-x2-t10/1525a_Hexahexa_1,001_viewA.bna, frame 109, none
+sampled-1000-x2-t10/390_Hys-Hys_0,29mm_viewA.bna, frame 44, none
+sampled-1000-x2-t10/1413_Hyspin-Hexadekan_1,01528_viewA.bna, frame 44, crown-splash
+sampled-1000-x2-t10/256_Hexa-Hexa_0,13mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/866_Hexa-Hyspin_0,26mm_viewA.bna, frame 12, drop
+sampled-1000-x2-t10/1568a_Hexahexa_1,249_viewA.bna, frame 30, crown
+sampled-1000-x2-t10/316_Hexa-Hexa_0,51mm_viewA.bna, frame 81, column
+sampled-1000-x2-t10/035_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 31, crown
+sampled-1000-x2-t10/1131a_Hexahexa_1,001_viewA.bna, frame 10, drop
+sampled-1000-x2-t10/036_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 18, drop
+sampled-1000-x2-t10/295_Hexa-Hexa_0,24_viewA.bna, frame 94, splash
+sampled-1000-x2-t10/1434a_Hexahexa_0,499_viewA.bna, frame 66, splash
+sampled-1000-x2-t10/905_Hexa-Hyspin_1,25mm_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/1211a_Hexahexa_0,499_viewA.bna, frame 62, bubble-splash
+sampled-1000-x2-t10/270_Hexa-Hexa_0,5_viewA.bna, frame 8, drop
+sampled-1000-x2-t10/047_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/277_Hexa-Hexa_0,11_viewA.bna, frame 70, splash
+sampled-1000-x2-t10/940_Hyspin-Hexa_0,625mm_viewA.bna, frame 66, splash
+sampled-1000-x2-t10/1371a_Hexahexa_1,250_viewA.bna, frame 141, none
+sampled-1000-x2-t10/1255a_Hexahexa_0,751_viewA.bna, frame 90, splash
+sampled-1000-x2-t10/1393a_Hexahexa_1,251_viewA.bna, frame 144, column
+sampled-1000-x2-t10/969_Hyspin-Hexa_0,375mm_viewA.bna, frame 89, column
+sampled-1000-x2-t10/376_Hys-Hys_0,53mm_viewA.bna, frame 36, crown
+sampled-1000-x2-t10/541_Hys-Hys_0,49mm_viewA.bna, frame 52, none
+sampled-1000-x2-t10/788_Hexa-Hyspin_0,50mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/961_Hyspin-Hexa_0,625mm_viewA.bna, frame 4, drop
+sampled-1000-x2-t10/1171a_Hexahexa_0,251_viewA.bna, frame 41, splash
+sampled-1000-x2-t10/1454a_Hexahexa_0,500_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/197_Hyspin-Wasser_1.03mm_viewA.bna, frame 57, none
+sampled-1000-x2-t10/423_Hys-Hys_0,34mm_viewA.bna, frame 34, splash
+sampled-1000-x2-t10/1474a_Hexahexa_0,750_viewA.bna, frame 33, crown
+sampled-1000-x2-t10/1271a_Hexahexa_0,750_viewA.bna, frame 115, none
+sampled-1000-x2-t10/1030a_Hexahexa_0,249_viewA.bna, frame 22, crown
+sampled-1000-x2-t10/013_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 45, splash
+sampled-1000-x2-t10/1211a_Hexahexa_0,499_viewA.bna, frame 141, splash
+sampled-1000-x2-t10/054_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 81, splash
+sampled-1000-x2-t10/917_Hexa-Hyspin_0,75mm_viewA.bna, frame 35, crown
+sampled-1000-x2-t10/424_Hys-Hys_0,32mm_viewA.bna, frame 57, none
+sampled-1000-x2-t10/230_Diesel-Motoroel_0.74mm_viewA.bna, frame 29, none
+sampled-1000-x2-t10/1144a_Hexahexa_1,248_viewA.bna, frame 29, crown-splash
+sampled-1000-x2-t10/299_Hexa-Hexa_0,50_viewA.bna, frame 189, splash
+sampled-1000-x2-t10/1327a_Hexahexa_0,999_viewA.bna, frame 65, splash
+sampled-1000-x2-t10/1425a_Hexahexa_0,251_viewA.bna, frame 30, crown
+sampled-1000-x2-t10/1521a_Hexahexa_1,002_viewA.bna, frame 33, crown
+sampled-1000-x2-t10/1423a_Hexahexa_0,250_viewA.bna, frame 44, none
+sampled-1000-x2-t10/004_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 45, splash
+sampled-1000-x2-t10/1412a_Hyspin-Hexadekan_0,75052_viewA.bna, frame 41, crown-splash
+sampled-1000-x2-t10/967_Hyspin-Hexa_1,124mm_viewA.bna, frame 61, none
+sampled-1000-x2-t10/439_Hys-Hys_0,33mm_viewA.bna, frame 85, none
+sampled-1000-x2-t10/058_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 68, splash
+sampled-1000-x2-t10/1489a_Hexahexa_0,750_viewA.bna, frame 116, none
+sampled-1000-x2-t10/1483a_Hexahexa_0,750_viewA.bna, frame 14, drop
+sampled-1000-x2-t10/741_Hyspin_Hexa_0,25mm_viewA.bna, frame 33, none
+sampled-1000-x2-t10/1319a_Hexahexa_1,000_viewA.bna, frame 3, drop
+sampled-1000-x2-t10/1294a_Hexahexa_0,751_viewA.bna, frame 102, splash
+sampled-1000-x2-t10/433_Hys-Hys_0,49mm_viewA.bna, frame 71, splash
+sampled-1000-x2-t10/423_Hys-Hys_0,34mm_viewA.bna, frame 38, none
+sampled-1000-x2-t10/268_Hexa-Hexa_0,23mm_viewA.bna, frame 14, crown
+sampled-1000-x2-t10/012_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 19, crown
+sampled-1000-x2-t10/820_Hyspin-Hexa_0,75mm_viewA.bna, frame 81, splash
+sampled-1000-x2-t10/214_Motoroel-Hexadecan_0.49mm_viewA.bna, frame 22, crown
+sampled-1000-x2-t10/1215a_Hexahexa_0,500_viewA.bna, frame 32, crown-splash
+sampled-1000-x2-t10/1353a_Hexahexa_1,001_viewA.bna, frame 77, splash
+sampled-1000-x2-t10/383_Hys-Hys_0,28mm_viewA.bna, frame 18, crown
+sampled-1000-x2-t10/1532a_Hexahexa_1,000_viewA.bna, frame 106, none
+sampled-1000-x2-t10/1319a_Hexahexa_1,000_viewA.bna, frame 49, crown
+sampled-1000-x2-t10/712_Hyspin_Hexa_0,25mm_viewA.bna, frame 61, splash
+sampled-1000-x2-t10/042_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 98, none
+sampled-1000-x2-t10/850_Hyspin-Hexa_0,75mm_viewA.bna, frame 84, splash
+sampled-1000-x2-t10/1439a_Hexahexa_0,501_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/383_Hys-Hys_0,28mm_viewA.bna, frame 40, splash
+sampled-1000-x2-t10/422_Hys-Hexa_0,95mm_viewA.bna, frame 255, none
+sampled-1000-x2-t10/1349a_Hexahexa_1,000_viewA.bna, frame 71, splash
+sampled-1000-x2-t10/813_Diesel-5W30_0,51mm_viewA.bna, frame 41, none
+sampled-1000-x2-t10/229_Diesel-Motoroel_0.26mm_viewA.bna, frame 13, none
+sampled-1000-x2-t10/785_Hexa-Hyspin_0,25mm_viewA.bna, frame 19, none
+sampled-1000-x2-t10/887_Hexa-Hyspin_0,75mm_viewA.bna, frame 54, splash
+sampled-1000-x2-t10/398_Hys-Hys_0,50mm_viewA.bna, frame 29, crown
+sampled-1000-x2-t10/049_Hyspin-Hexadecan_0.21mm_viewA.bna, frame 46, splash
+sampled-1000-x2-t10/762_Hexa-Hyspin_0,26mm_viewA.bna, frame 24, crown
+sampled-1000-x2-t10/1419a_Hexahexa_0,250_viewA.bna, frame 43, none
+sampled-1000-x2-t10/1286a_Hexahexa_0,750_viewA.bna, frame 69, splash
+sampled-1000-x2-t10/191_Hyspin-Diesel_0.51mm_viewA.bna, frame 38, crown-splash
+sampled-1000-x2-t10/817_Diesel-5W30_0,50mm_viewA.bna, frame 26, none
+sampled-1000-x2-t10/838_Hyspin-Hexa_1,00mm_viewA.bna, frame 37, crown
+sampled-1000-x2-t10/832_Hyspin-Hexa_0,75mm_viewA.bna, frame 211, splash
+sampled-1000-x2-t10/784_Hexa-Hyspin_0,26mm_viewA.bna, frame 23, none
+sampled-1000-x2-t10/543_Hys-Hys_0,51mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/1514a_Hexahexa_0,999_viewA.bna, frame 115, column
+sampled-1000-x2-t10/203_Wasser-Butanol_0.30mm_viewA.bna, frame 32, splash
+sampled-1000-x2-t10/057_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 96, splash
+sampled-1000-x2-t10/145_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 8, drop
+sampled-1000-x2-t10/1512a_Hexahexa_1,000_viewA.bna, frame 137, column
+sampled-1000-x2-t10/1150a_Hexahexa_1,251_viewA.bna, frame 83, splash
+sampled-1000-x2-t10/1294a_Hexahexa_0,751_viewA.bna, frame 80, splash
+sampled-1000-x2-t10/1496a_Hexahexa_1,000_viewA.bna, frame 46, crown
+sampled-1000-x2-t10/1443a_Hexahexa_0,502_viewA.bna, frame 105, none
+sampled-1000-x2-t10/1151a_Hexahexa_1,251_viewA.bna, frame 122, splash
+sampled-1000-x2-t10/985_Hyspin-Hexa_0,875mm_viewA.bna, frame 106, column
+sampled-1000-x2-t10/1193a_Hexahexa_0,251_viewA.bna, frame 42, none
+sampled-1000-x2-t10/767_Hexa-Hyspin_0,50mm_viewA.bna, frame 26, crown
+sampled-1000-x2-t10/1503a_Hexahexa_1,002_viewA.bna, frame 35, crown
+sampled-1000-x2-t10/1591_Hexahexa_0,251_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/1177a_Hexahexa_0,248_viewA.bna, frame 36, splash
+sampled-1000-x2-t10/985_Hyspin-Hexa_0,875mm_viewA.bna, frame 2, drop
+sampled-1000-x2-t10/1334a_Hexahexa_1,000_viewA.bna, frame 165, column
+sampled-1000-x2-t10/228_Diesel-Hyspin_0.77mm_viewA.bna, frame 19, crown
+sampled-1000-x2-t10/889_Hexa-Hyspin_0,75mm_viewA.bna, frame 13, drop
+sampled-1000-x2-t10/170_Hyspin-Hexadecan_0.45mm_viewA.bna, frame 133, splash
+sampled-1000-x2-t10/408_Hys-Hexa_0,94mm_viewA.bna, frame 38, crown-splash
+sampled-1000-x2-t10/1125a_Hexahexa_1,000_viewA.bna, frame 83, column
+sampled-1000-x2-t10/025_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 21, crown
+sampled-1000-x2-t10/1573a_Hexahexa_1,252_viewA.bna, frame 69, splash
+sampled-1000-x2-t10/023_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 86, splash
+sampled-1000-x2-t10/348_Hexa_Hys-0,52mm_viewA.bna, frame 67, splash
+sampled-1000-x2-t10/303_Hexa-Hexa_0,25_viewA.bna, frame 97, splash
+sampled-1000-x2-t10/152_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 27, crown
+sampled-1000-x2-t10/1174a_Hexahexa_0,249_viewA.bna, frame 38, splash
+sampled-1000-x2-t10/1261a_Hexahexa_0,752_viewA.bna, frame 4, drop
+sampled-1000-x2-t10/1018a_Hexahexa_0,251_viewA.bna, frame 81, splash
+sampled-1000-x2-t10/872_Hexa-Hyspin_0,50mm_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/1512a_Hexahexa_1,000_viewA.bna, frame 129, column
+sampled-1000-x2-t10/1368a_Hexahexa_1,249_viewA.bna, frame 31, crown
+sampled-1000-x2-t10/926_Hyspin_Hexa_0,626mm_viewA.bna, frame 16, none
+sampled-1000-x2-t10/1517a_Hexahexa_0,999_viewA.bna, frame 135, none
+sampled-1000-x2-t10/268_Hexa-Hexa_0,23mm_viewA.bna, frame 52, splash
+sampled-1000-x2-t10/452_Hys-Hys_0,96mm_viewA.bna, frame 62, splash
+sampled-1000-x2-t10/768_Hexa-Hyspin_0,50mm_viewA.bna, frame 30, crown
+sampled-1000-x2-t10/168_Hyspin-Hexadecan_0.44mm_viewA.bna, frame 160, splash
+sampled-1000-x2-t10/1225a_Hexahexa_0,499_viewA.bna, frame 62, splash
+sampled-1000-x2-t10/1381a_Hexahexa_1,249_viewA.bna, frame 153, none
+sampled-1000-x2-t10/716_Hyspin_Hexa_0,24mm_viewA.bna, frame 44, splash
+sampled-1000-x2-t10/448_Hys-Hys_0,90mm_viewA.bna, frame 33, crown
+sampled-1000-x2-t10/303_Hexa-Hexa_0,25_viewA.bna, frame 144, splash
+sampled-1000-x2-t10/853_Hyspin-Hexa_1,01mm_viewA.bna, frame 5, splash
+sampled-1000-x2-t10/899_Hexa-Hyspin_0,75mm_viewA.bna, frame 62, splash
+sampled-1000-x2-t10/427_Hys-Hys_0,24mm_viewA.bna, frame 58, none
+sampled-1000-x2-t10/049_Hyspin-Hexadecan_0.21mm_viewA.bna, frame 6, drop
+sampled-1000-x2-t10/294_Hexa-Hexa_0,26_viewA.bna, frame 7, drop
+sampled-1000-x2-t10/035_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 20, 
+sampled-1000-x2-t10/1163a_Hexahexa_1,252_viewA.bna, frame 68, 
+sampled-1000-x2-t10/1118a_Hexahexa_1,001_viewA.bna, frame 100, 
+sampled-1000-x2-t10/1222a_Hexahexa_0,499_viewA.bna, frame 75, 
+sampled-1000-x2-t10/1367a_Hexahexa_1,249_viewA.bna, frame 13, 
+sampled-1000-x2-t10/1214a_Hexahexa_0,501_viewA.bna, frame 10, 
+sampled-1000-x2-t10/964_Hyspin-Hexa_0,878mm_viewA.bna, frame 101, 
+sampled-1000-x2-t10/1493a_Hexahexa_0,752_viewA.bna, frame 126, 
+sampled-1000-x2-t10/274_Hexa-Hexa_0,53_viewA.bna, frame 270, 
+sampled-1000-x2-t10/172_Hyspin-Hexadecan_0.46mm_viewA.bna, frame 46, 
+sampled-1000-x2-t10/1119a_Hexahexa_1,000_viewA.bna, frame 65, 
+sampled-1000-x2-t10/1079a_Hexahexa_0,499_viewA.bna, frame 101, 
+sampled-1000-x2-t10/1365a_Hexahexa_1,250_viewA.bna, frame 156, 
+sampled-1000-x2-t10/873_Hexa-Hyspin_0,50mm_viewA.bna, frame 35, 
+sampled-1000-x2-t10/724_Hyspin_Hexa_0,25mm_viewA.bna, frame 55, 
+sampled-1000-x2-t10/816_Diesel-5W30_0,51mm_viewA.bna, frame 36, 
+sampled-1000-x2-t10/1070a_Hexahexa_0,502_viewA.bna, frame 68, 
+sampled-1000-x2-t10/1165a_Hexahexa_1,248_viewA.bna, frame 76, 
+sampled-1000-x2-t10/307_Hexa-Hexa_0,24_viewA.bna, frame 50, 
+sampled-1000-x2-t10/1129a_Hexahexa_1,000_viewA.bna, frame 94, 
+sampled-1000-x2-t10/254_Hexa-Hexa_0,20mm_viewA.bna, frame 13, 
+sampled-1000-x2-t10/180_Hexadecan-Hexadecan_0.25mm_viewA.bna, frame 75, 
+sampled-1000-x2-t10/358_Hys-Hexa_0,44mm_viewA.bna, frame 71, 
+sampled-1000-x2-t10/1208a_Hexahexa_0,498_viewA.bna, frame 141, 
+sampled-1000-x2-t10/2000a_Hexahexa_0,751_viewA.bna, frame 96, 
+sampled-1000-x2-t10/718_Hyspin_Hexa_0,52mm_viewA.bna, frame 33, 
+sampled-1000-x2-t10/1030a_Hexahexa_0,249_viewA.bna, frame 58, 
+sampled-1000-x2-t10/1467a_Hexahexa_0,750_viewA.bna, frame 115, 
+sampled-1000-x2-t10/203_Wasser-Butanol_0.30mm_viewA.bna, frame 58, 
+sampled-1000-x2-t10/1127a_Hexahexa_0,998_viewA.bna, frame 107, 
+sampled-1000-x2-t10/194_Hyspin-Wasser_0.26mm_viewA.bna, frame 32, 
+sampled-1000-x2-t10/1456a_Hexahexa_0,501_viewA.bna, frame 114, 
+sampled-1000-x2-t10/1327a_Hexahexa_0,999_viewA.bna, frame 106, 
+sampled-1000-x2-t10/049_Hyspin-Hexadecan_0.21mm_viewA.bna, frame 36, 
+sampled-1000-x2-t10/1394a_Hexahexa_1,249_viewA.bna, frame 26, 
+sampled-1000-x2-t10/1486a_Hexahexa_0,749_viewA.bna, frame 45, 
+sampled-1000-x2-t10/785_Hexa-Hyspin_0,25mm_viewA.bna, frame 10, 
+sampled-1000-x2-t10/806_Diesel-5W30_0,50mm_viewA.bna, frame 46, 
+sampled-1000-x2-t10/396_Hys-Hys_0,50mm_viewA.bna, frame 29, 
+sampled-1000-x2-t10/1519a_Hexahexa_0,998_viewA.bna, frame 66, 
+sampled-1000-x2-t10/1423a_Hexahexa_0,250_viewA.bna, frame 17, 
+sampled-1000-x2-t10/913_Hexa-Hyspin_1,25mm_viewA.bna, frame 44, 
+sampled-1000-x2-t10/1351a_Hexahexa_0,998_viewA.bna, frame 32, 
+sampled-1000-x2-t10/1294a_Hexahexa_0,751_viewA.bna, frame 59, 
+sampled-1000-x2-t10/174_Hyspin-Hexadecan_0.45mm_viewA.bna, frame 16, 
+sampled-1000-x2-t10/1136a_Hexahexa_0,998_viewA.bna, frame 143, 
+sampled-1000-x2-t10/1371a_Hexahexa_1,250_viewA.bna, frame 52, 
+sampled-1000-x2-t10/1168a_Hexahexa_0,247_viewA.bna, frame 51, 
+sampled-1000-x2-t10/190_Hyspin-Diesel_0.26mm_viewA.bna, frame 33, 
+sampled-1000-x2-t10/1261a_Hexahexa_0,752_viewA.bna, frame 20, 
+sampled-1000-x2-t10/724_Hyspin_Hexa_0,25mm_viewA.bna, frame 43, 
+sampled-1000-x2-t10/486_Hys-Hexa_0,27mm_viewA.bna, frame 116, 
+sampled-1000-x2-t10/739_Hyspin_Hexa_0,26mm_viewA.bna, frame 46, 
+sampled-1000-x2-t10/020_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 94, 
+sampled-1000-x2-t10/325_Hexa-Hys_0,52mm_viewA.bna, frame 61, 
+sampled-1000-x2-t10/1242a_Hexahexa_0,499_viewA.bna, frame 134, 
+sampled-1000-x2-t10/190_Hyspin-Diesel_0.26mm_viewA.bna, frame 31, 
+sampled-1000-x2-t10/1081a_Hexahexa_0,750_viewA.bna, frame 275, 
+sampled-1000-x2-t10/1070a_Hexahexa_0,502_viewA.bna, frame 29, 
+sampled-1000-x2-t10/419_Hys-Hexa_0,92mm_viewA.bna, frame 339, 
+sampled-1000-x2-t10/1388a_Hexahexa_1,251_viewA.bna, frame 69, 
+sampled-1000-x2-t10/739_Hyspin_Hexa_0,26mm_viewA.bna, frame 26, 
+sampled-1000-x2-t10/1170a_Hexahexa_0,251_viewA.bna, frame 44, 
+sampled-1000-x2-t10/1375a_Hexahexa_1,250_viewA.bna, frame 131, 
+sampled-1000-x2-t10/271_Hexa-Hexa_0,52_viewA.bna, frame 151, 
+sampled-1000-x2-t10/949_Hyspin-Hexa_1,126mm_viewA.bna, frame 42, 
+sampled-1000-x2-t10/1559a_Hexahexa_1,250_viewA.bna, frame 43, 
+sampled-1000-x2-t10/032_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 62, 
+sampled-1000-x2-t10/052_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 13, 
+sampled-1000-x2-t10/218_Motoroel-Wasser_0.52mm_viewA.bna, frame 5, 
+sampled-1000-x2-t10/402_Hys-Hexa_0,51mm_viewA.bna, frame 93, 
+sampled-1000-x2-t10/158_Hyspin-Hexadecan_0.51mm_viewA.bna, frame 32, 
+sampled-1000-x2-t10/1168a_Hexahexa_0,247_viewA.bna, frame 31, 
+sampled-1000-x2-t10/033_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 20, 
+sampled-1000-x2-t10/1101a_Hexahexa_0,752_viewA.bna, frame 98, 
+sampled-1000-x2-t10/1184a_Hexahexa_0,250_viewA.bna, frame 56, 
+sampled-1000-x2-t10/1141a_Hexahexa_1,250_viewA.bna, frame 65, 
+sampled-1000-x2-t10/1114a_Hexahexa_1,000_viewA.bna, frame 63, 
+sampled-1000-x2-t10/792_Diesel-5W30_0,27mm_viewA.bna, frame 24, 
+sampled-1000-x2-t10/386_Hys-Hys_0,10mm_viewA.bna, frame 39, 
+sampled-1000-x2-t10/1072a_Hexahexa_0,500_viewA.bna, frame 117, 
+sampled-1000-x2-t10/1607a_Hexahexa_0,500_viewA.bna, frame 129, 
+sampled-1000-x2-t10/1237a_Hexahexa_0,501_viewA.bna, frame 94, 
+sampled-1000-x2-t10/1282a_Hexahexa_0,752_viewA.bna, frame 35, 
+sampled-1000-x2-t10/039_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 31, 
+sampled-1000-x2-t10/818_Diesel-5W30_0,50mm_viewA.bna, frame 42, 
+sampled-1000-x2-t10/1427a_Hexahexa_0,251_viewA.bna, frame 7, 
+sampled-1000-x2-t10/1346a_Hexahexa_1,000_viewA.bna, frame 20, 
+sampled-1000-x2-t10/966_Hyspin-Hexa_1,126mm_viewA.bna, frame 90, 
+sampled-1000-x2-t10/358_Hys-Hexa_0,44mm_viewA.bna, frame 2, 
+sampled-1000-x2-t10/1125a_Hexahexa_1,000_viewA.bna, frame 88, 
+sampled-1000-x2-t10/299_Hexa-Hexa_0,50_viewA.bna, frame 66, 
+sampled-1000-x2-t10/1273a_Hexahexa_0,752_viewA.bna, frame 115, 
+sampled-1000-x2-t10/191_Hyspin-Diesel_0.51mm_viewA.bna, frame 79, 
+sampled-1000-x2-t10/1054a_Hexahexa_0,499_viewA.bna, frame 75, 
+sampled-1000-x2-t10/862_Hexa-Hyspin_0,25mm_viewA.bna, frame 42, 
+sampled-1000-x2-t10/199_Wasser-Motoroel_0.26mm_viewA.bna, frame 83, 
+sampled-1000-x2-t10/1040a_Hexahexa_0,249_viewA.bna, frame 13, 
+sampled-1000-x2-t10/1052a_Hexahexa_0,501_viewA.bna, frame 87, 
+sampled-1000-x2-t10/949_Hyspin-Hexa_1,126mm_viewA.bna, frame 81, 
+sampled-1000-x2-t10/548_Hys-Hys_0,50mm_viewA.bna, frame 45, 
+sampled-1000-x2-t10/1114a_Hexahexa_1,000_viewA.bna, frame 29, 
+sampled-1000-x2-t10/1153a_Hexahexa_1,251_viewA.bna, frame 148, 
+sampled-1000-x2-t10/1286a_Hexahexa_0,750_viewA.bna, frame 52, 
+sampled-1000-x2-t10/285_Hexa-Hexa_0,51_viewA.bna, frame 49, 
+sampled-1000-x2-t10/1604a_Hexahexa_0,750_viewA.bna, frame 93, 
+sampled-1000-x2-t10/741_Hyspin_Hexa_0,25mm_viewA.bna, frame 29, 
+sampled-1000-x2-t10/707_Hyspin_Hexa_0,52mm_viewA.bna, frame 51, 
+sampled-1000-x2-t10/1197a_Hexahexa_0,249_viewA.bna, frame 62, 
+sampled-1000-x2-t10/1324a_Hexahexa_1,001_viewA.bna, frame 22, 
+sampled-1000-x2-t10/425_Hys-Hys_0,28mm_viewA.bna, frame 81, 
+sampled-1000-x2-t10/1535a_Hexahexa_1,001_viewA.bna, frame 51, 
+sampled-1000-x2-t10/420_Hys-Hexa_0,98mm_viewA.bna, frame 23, 
+sampled-1000-x2-t10/733_Hyspin_Hexa_0,52mm_viewA.bna, frame 26, 
+sampled-1000-x2-t10/252_Hexa-Hexa_0,26mm_viewA.bna, frame 73, 
+sampled-1000-x2-t10/1312a_Hexahexa_1,000_viewA.bna, frame 35, 
+sampled-1000-x2-t10/759_Hexa-Hyspin_0,25mm_viewA.bna, frame 39, 
+sampled-1000-x2-t10/012_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 26, 
+sampled-1000-x2-t10/451_Hys-Hys_0,96mm_viewA.bna, frame 8, 
+sampled-1000-x2-t10/1328a_Hexahexa_0,998_viewA.bna, frame 104, 
+sampled-1000-x2-t10/863_Hexa-Hyspin_0,5mm_viewA.bna, frame 19, 
+sampled-1000-x2-t10/311_Hexa-Hexa_0,54mm_viewA.bna, frame 92, 
+sampled-1000-x2-t10/053_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 63, 
+sampled-1000-x2-t10/380_Hys-Hys_0,29mm_viewA.bna, frame 17, 
+sampled-1000-x2-t10/1276a_Hexahexa_0,751_viewA.bna, frame 51, 
+sampled-1000-x2-t10/1521a_Hexahexa_1,002_viewA.bna, frame 106, 
+sampled-1000-x2-t10/1569a_Hexahexa_1,251_viewA.bna, frame 87, 
+sampled-1000-x2-t10/1302a_Hexahexa_1,001_viewA.bna, frame 42, 
+sampled-1000-x2-t10/042_Hyspin-Hexadecan_0.23mm_viewA.bna, frame 101, 
+sampled-1000-x2-t10/452_Hys-Hys_0,96mm_viewA.bna, frame 142, 
+sampled-1000-x2-t10/1562a_Hexahexa_1,251_viewA.bna, frame 98, 
+sampled-1000-x2-t10/1032a_Hexahexa_0,248_viewA.bna, frame 7, 
+sampled-1000-x2-t10/1173a_Hexahexa_0,249_viewA.bna, frame 42, 
+sampled-1000-x2-t10/724_Hyspin_Hexa_0,25mm_viewA.bna, frame 38, 
+sampled-1000-x2-t10/700_Hyspin_Hexa_0,27mm_viewA.bna, frame 47, 
+sampled-1000-x2-t10/1395a_Hexahexa_1,251_viewA.bna, frame 173, 
+sampled-1000-x2-t10/1520a_Hexahexa_0,999_viewA.bna, frame 71, 
+sampled-1000-x2-t10/785_Hexa-Hyspin_0,25mm_viewA.bna, frame 38, 
+sampled-1000-x2-t10/1134a_Hexahexa_1,000_viewA.bna, frame 122, 
+sampled-1000-x2-t10/896_Hexa-Hyspin_1,25mm_viewA.bna, frame 54, 
+sampled-1000-x2-t10/1327a_Hexahexa_0,999_viewA.bna, frame 93, 
+sampled-1000-x2-t10/822_Hyspin-Hexa_0,76mm_viewA.bna, frame 89, 
+sampled-1000-x2-t10/159_Hyspin-Hexadecan_0.50mm_viewA.bna, frame 73, 
+sampled-1000-x2-t10/151_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 24, 
+sampled-1000-x2-t10/1575_Hexahexa_1,251_viewA.bna, frame 113, 
+sampled-1000-x2-t10/784_Hexa-Hyspin_0,26mm_viewA.bna, frame 3, 
+sampled-1000-x2-t10/1151a_Hexahexa_1,251_viewA.bna, frame 2, 
+sampled-1000-x2-t10/837_Hyspin-Hexa_0,99mm_viewA.bna, frame 75, 
+sampled-1000-x2-t10/1509a_Hexahexa_1,000_viewA.bna, frame 150, 
+sampled-1000-x2-t10/1126a_Hexahexa_1,000_viewA.bna, frame 5, 
+sampled-1000-x2-t10/1409_Hyspin-Hexadekan_0,41676_viewA.bna, frame 70, 
+sampled-1000-x2-t10/792_Diesel-5W30_0,27mm_viewA.bna, frame 49, 
+sampled-1000-x2-t10/1498a_Hexahexa_1,001_viewA.bna, frame 23, 
+sampled-1000-x2-t10/763_Hexa-Hyspin_0,50mm_viewA.bna, frame 11, 
+sampled-1000-x2-t10/1591_Hexahexa_0,251_viewA.bna, frame 23, 
+sampled-1000-x2-t10/1237a_Hexahexa_0,501_viewA.bna, frame 85, 
+sampled-1000-x2-t10/1024a_Hexahexa_0,248_viewA.bna, frame 70, 
+sampled-1000-x2-t10/180_Hexadecan-Hexadecan_0.25mm_viewA.bna, frame 69, 
+sampled-1000-x2-t10/707_Hyspin_Hexa_0,52mm_viewA.bna, frame 73, 
+sampled-1000-x2-t10/1521a_Hexahexa_1,002_viewA.bna, frame 134, 
+sampled-1000-x2-t10/1520a_Hexahexa_0,999_viewA.bna, frame 93, 
+sampled-1000-x2-t10/874_Hexa-Hyspin_0,50mm_viewA.bna, frame 39, 
+sampled-1000-x2-t10/1580_Hexahexa_1,001_viewA.bna, frame 299, 
+sampled-1000-x2-t10/1152a_Hexahexa_1,251_viewA.bna, frame 53, 
+sampled-1000-x2-t10/1358a_Hexahexa_0,999_viewA.bna, frame 47, 
+sampled-1000-x2-t10/1277a_Hexahexa_0,750_viewA.bna, frame 127, 
+sampled-1000-x2-t10/1224a_Hexahexa_0,502_viewA.bna, frame 84, 
+sampled-1000-x2-t10/1600a_Hexahexa_0,999_viewA.bna, frame 231, 
+sampled-1000-x2-t10/146_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 11, 
+sampled-1000-x2-t10/898_Hexa-Hyspin_0,75mm_viewA.bna, frame 19, 
+sampled-1000-x2-t10/231_Diesel-Motoroel_0.54mm_viewA.bna, frame 10, 
+sampled-1000-x2-t10/1293a_Hexahexa_0,752_viewA.bna, frame 39, 
+sampled-1000-x2-t10/788_Hexa-Hyspin_0,50mm_viewA.bna, frame 29, 
+sampled-1000-x2-t10/1440a_Hexahexa_0,500_viewA.bna, frame 60, 
+sampled-1000-x2-t10/023_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 92, 
+sampled-1000-x2-t10/722_Hyspin_Hexa_0,51mm_viewA.bna, frame 96, 
+sampled-1000-x2-t10/398_Hys-Hys_0,50mm_viewA.bna, frame 25, 
+sampled-1000-x2-t10/808_Diesel-5W30_0,49mm_viewA.bna, frame 51, 
+sampled-1000-x2-t10/1416a_Hexahexa_0,250_viewA.bna, frame 26, 
+sampled-1000-x2-t10/956_Hyspin-Hexa_0,374mm_viewA.bna, frame 39, 
+sampled-1000-x2-t10/027_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 6, 
+sampled-1000-x2-t10/1553a_Hexahexa_1,251_viewA.bna, frame 167, 
+sampled-1000-x2-t10/263_Hexa-Hexa_0,51mm_viewA.bna, frame 108, 
+sampled-1000-x2-t10/200_Wasser-Motoroel_1.03mm_viewA.bna, frame 29, 
+sampled-1000-x2-t10/1244a_Hexahexa_0,749_viewA.bna, frame 305, 
+sampled-1000-x2-t10/795_Diesel-5W30_0,51mm_viewA.bna, frame 17, 
+sampled-1000-x2-t10/1375a_Hexahexa_1,250_viewA.bna, frame 9, 
+sampled-1000-x2-t10/1453a_Hexahexa_0,501_viewA.bna, frame 67, 
+sampled-1000-x2-t10/1077a_Hexahexa_0,502_viewA.bna, frame 45, 
+sampled-1000-x2-t10/005_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 27, 
+sampled-1000-x2-t10/1229a_Hexahexa_0,500_viewA.bna, frame 40, 
+sampled-1000-x2-t10/025_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 8, 
+sampled-1000-x2-t10/1088a_Hexahexa_0,749_viewA.bna, frame 70, 
+sampled-1000-x2-t10/755_Hexa_Hyspin_0,49mm_viewA.bna, frame 2, 
+sampled-1000-x2-t10/1466a_Hexahexa_0,751_viewA.bna, frame 42, 
+sampled-1000-x2-t10/175_Hyspin-Hexadecan_0.46mm_viewA.bna, frame 38, 
+sampled-1000-x2-t10/542_Hys-Hys_0,52mm_viewA.bna, frame 62, 
+sampled-1000-x2-t10/276_Hexa-Hexa_0,34_viewA.bna, frame 106, 
+sampled-1000-x2-t10/1518a_Hexahexa_1,001_viewA.bna, frame 40, 
+sampled-1000-x2-t10/1376a_Hexahexa_1,250_viewA.bna, frame 144, 
+sampled-1000-x2-t10/019_Hyspin-Hexadecan_0.24mm_viewA.bna, frame 74, 
+sampled-1000-x2-t10/1384a_Hexahexa_1,248_viewA.bna, frame 155, 
+sampled-1000-x2-t10/1209a_Hexahexa_0,502_viewA.bna, frame 159, 
+sampled-1000-x2-t10/1228a_Hexahexa_0,502_viewA.bna, frame 11, 
+sampled-1000-x2-t10/1335a_Hexahexa_1,001_viewA.bna, frame 72, 
+sampled-1000-x2-t10/944_Hyspin-Hexa_0,874mm_viewA.bna, frame 45, 
+sampled-1000-x2-t10/290_Hexa-Hexa_0,54_viewA.bna, frame 54, 
+sampled-1000-x2-t10/781_Hexa-Hyspin_0,25mm_viewA.bna, frame 16, 
+sampled-1000-x2-t10/1430a_Hexahexa_0,500_viewA.bna, frame 10, 
+sampled-1000-x2-t10/211_Wasser-Hyspin_0.82mm_viewA.bna, frame 2, 
+sampled-1000-x2-t10/164_Hyspin-Hexadecan_0.50mm_viewA.bna, frame 65, 
+sampled-1000-x2-t10/040_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 21, 
+sampled-1000-x2-t10/1030a_Hexahexa_0,249_viewA.bna, frame 51, 
+sampled-1000-x2-t10/1485a_Hexahexa_0,751_viewA.bna, frame 9, 
+sampled-1000-x2-t10/1024a_Hexahexa_0,248_viewA.bna, frame 9, 
+sampled-1000-x2-t10/1356a_Hexahexa_1,000_viewA.bna, frame 9, 
+sampled-1000-x2-t10/1435a_Hexahexa_0,499_viewA.bna, frame 80, 
+sampled-1000-x2-t10/445_Hys-Hys_0,48mm_viewA.bna, frame 28, 
+sampled-1000-x2-t10/1335a_Hexahexa_1,001_viewA.bna, frame 34, 
+sampled-1000-x2-t10/009_Hyspin-Hexadecan_0.27mm_viewA.bna, frame 20, 
+sampled-1000-x2-t10/825_Hyspin-Hexa_1,00mm_viewA.bna, frame 49, 
+sampled-1000-x2-t10/1356a_Hexahexa_1,000_viewA.bna, frame 107, 
+sampled-1000-x2-t10/1184a_Hexahexa_0,250_viewA.bna, frame 33, 
+sampled-1000-x2-t10/013_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 14, 
+sampled-1000-x2-t10/541_Hys-Hys_0,49mm_viewA.bna, frame 40, 
+sampled-1000-x2-t10/1185a_Hexahexa_0,251_viewA.bna, frame 20, 
+sampled-1000-x2-t10/1417a_Hexahexa_0,251_viewA.bna, frame 23, 
+sampled-1000-x2-t10/1525a_Hexahexa_1,001_viewA.bna, frame 83, 
+sampled-1000-x2-t10/155_Hyspin-Hexadecan_0.50mm_viewA.bna, frame 57, 
+sampled-1000-x2-t10/1176a_Hexahexa_0,251_viewA.bna, frame 71, 
+sampled-1000-x2-t10/256_Hexa-Hexa_0,13mm_viewA.bna, frame 36, 
+sampled-1000-x2-t10/869_Hexa-Hyspin_0,25mm_viewA.bna, frame 35, 
+sampled-1000-x2-t10/1267a_Hexahexa_0,749_viewA.bna, frame 82, 
+sampled-1000-x2-t10/403_Hys-Hexa_0,55mm_viewA.bna, frame 106, 
+sampled-1000-x2-t10/175_Hyspin-Hexadecan_0.46mm_viewA.bna, frame 33, 
+sampled-1000-x2-t10/347_Hexa_Hys-0,50mm_viewA.bna, frame 33, 
+sampled-1000-x2-t10/1318a_Hexahexa_1,002_viewA.bna, frame 93, 
+sampled-1000-x2-t10/1024a_Hexahexa_0,248_viewA.bna, frame 48, 
+sampled-1000-x2-t10/374_Hys-Hys_0,51mm_viewA.bna, frame 45, 
+sampled-1000-x2-t10/1215a_Hexahexa_0,500_viewA.bna, frame 86, 
+sampled-1000-x2-t10/210_Wasser-Hyspin_0.85mm_viewA.bna, frame 15, 
+sampled-1000-x2-t10/991_Hyspin-Hexa_0,374mm_viewA.bna, frame 16, 
+sampled-1000-x2-t10/306_Hexa-Hexa_0,24_viewA.bna, frame 35, 
+sampled-1000-x2-t10/179_Hyspin-Hyspin_0.26mm_viewA.bna, frame 77, 
+sampled-1000-x2-t10/144_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 19, 
+sampled-1000-x2-t10/1354a_Hexahexa_1,001_viewA.bna, frame 126, 
+sampled-1000-x2-t10/1340a_Hexahexa_1,001_viewA.bna, frame 197, 
+sampled-1000-x2-t10/1495a_Hexahexa_1,000_viewA.bna, frame 84, 
+sampled-1000-x2-t10/856_Hyspin-Hexa_0,99mm_viewA.bna, frame 53, 
+sampled-1000-x2-t10/383_Hys-Hys_0,28mm_viewA.bna, frame 83, 
+sampled-1000-x2-t10/1032a_Hexahexa_0,248_viewA.bna, frame 57, 
+sampled-1000-x2-t10/151_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 59, 
+sampled-1000-x2-t10/840_Hyspin-Hexa_1,00mm_viewA.bna, frame 90, 
+sampled-1000-x2-t10/333_Hexa_Hys-0,53mm_viewA.bna, frame 24, 
+sampled-1000-x2-t10/1570a_Hexahexa_1,251_viewA.bna, frame 87, 
+sampled-1000-x2-t10/1432a_Hexahexa_0,501_viewA.bna, frame 18, 
+sampled-1000-x2-t10/1162a_Hexahexa_1,251_viewA.bna, frame 43, 
+sampled-1000-x2-t10/707_Hyspin_Hexa_0,52mm_viewA.bna, frame 19, 
+sampled-1000-x2-t10/1206a_Hexahexa_0,501_viewA.bna, frame 120, 
+sampled-1000-x2-t10/1469a_Hexahexa_0,751_viewA.bna, frame 2, 
+sampled-1000-x2-t10/1205a_Hexahexa_0,499_viewA.bna, frame 13, 
+sampled-1000-x2-t10/372_Hys-Hys_0,80mm_viewA.bna, frame 113, 
+sampled-1000-x2-t10/905_Hexa-Hyspin_1,25mm_viewA.bna, frame 9, 
+sampled-1000-x2-t10/1459a_Hexahexa_0,750_viewA.bna, frame 169, 
+sampled-1000-x2-t10/1219a_Hexahexa_0,501_viewA.bna, frame 17, 
+sampled-1000-x2-t10/707_Hyspin_Hexa_0,52mm_viewA.bna, frame 70, 
+sampled-1000-x2-t10/1386a_Hexahexa_1,250_viewA.bna, frame 82, 
+sampled-1000-x2-t10/284_Hexa-Hexa_0,51_viewA.bna, frame 22, 
+sampled-1000-x2-t10/1552a_Hexahexa_1,250_viewA.bna, frame 74, 
+sampled-1000-x2-t10/1096a_Hexahexa_0,748_viewA.bna, frame 18, 
+sampled-1000-x2-t10/1296a_Hexahexa_0,751_viewA.bna, frame 150, 
+sampled-1000-x2-t10/447_Hys-Hys_0,52mm_viewA.bna, frame 63, 
+sampled-1000-x2-t10/852_Hyspin-Hexa_1,00mm_viewA.bna, frame 42, 
+sampled-1000-x2-t10/850_Hyspin-Hexa_0,75mm_viewA.bna, frame 32, 
+sampled-1000-x2-t10/1193a_Hexahexa_0,251_viewA.bna, frame 44, 
+sampled-1000-x2-t10/785_Hexa-Hyspin_0,25mm_viewA.bna, frame 46, 
+sampled-1000-x2-t10/1482a_Hexahexa_0,750_viewA.bna, frame 101, 
+sampled-1000-x2-t10/896_Hexa-Hyspin_1,25mm_viewA.bna, frame 59, 
+sampled-1000-x2-t10/396_Hys-Hys_0,50mm_viewA.bna, frame 36, 
+sampled-1000-x2-t10/246_Hexa-Hexa_0,49mm_viewA.bna, frame 372, 
+sampled-1000-x2-t10/1456a_Hexahexa_0,501_viewA.bna, frame 82, 
+sampled-1000-x2-t10/725_Hyspin_Hexa_0,26mm_viewA.bna, frame 18, 
+sampled-1000-x2-t10/253_Hexa-Hexa_0,30mm_viewA.bna, frame 13, 
+sampled-1000-x2-t10/1540a_Hexahexa_1,251_viewA.bna, frame 33, 
+sampled-1000-x2-t10/865_Hexa-Hyspin_0,50mm_viewA.bna, frame 5, 
+sampled-1000-x2-t10/931_Hyspin-Hexa_0,876mm_viewA.bna, frame 50, 
+sampled-1000-x2-t10/303_Hexa-Hexa_0,25_viewA.bna, frame 75, 
+sampled-1000-x2-t10/1419a_Hexahexa_0,250_viewA.bna, frame 34, 
+sampled-1000-x2-t10/1031a_Hexahexa_0,250_viewA.bna, frame 16, 
+sampled-1000-x2-t10/1378a_Hexahexa_1,249_viewA.bna, frame 18, 
+sampled-1000-x2-t10/437_Hys-Hys_0,55mm_viewA.bna, frame 61, 
+sampled-1000-x2-t10/1378a_Hexahexa_1,249_viewA.bna, frame 68, 
+sampled-1000-x2-t10/1602a_Hexahexa_0,751_viewA.bna, frame 286, 
+sampled-1000-x2-t10/1056a_Hexahexa_0,502_viewA.bna, frame 62, 
+sampled-1000-x2-t10/1329a_Hexahexa_1,000_viewA.bna, frame 88, 
+sampled-1000-x2-t10/1191a_Hexahexa_0,251_viewA.bna, frame 48, 
+sampled-1000-x2-t10/1495a_Hexahexa_1,000_viewA.bna, frame 35, 
+sampled-1000-x2-t10/1278a_Hexahexa_0,751_viewA.bna, frame 5, 
+sampled-1000-x2-t10/857_Hyspin-Hexa_1,00mm_viewA.bna, frame 84, 
+sampled-1000-x2-t10/317_Hexa-Hexa_0,53mm_viewA.bna, frame 5, 
+sampled-1000-x2-t10/1057a_Hexahexa_0,499_viewA.bna, frame 46, 
+sampled-1000-x2-t10/747_Hexa_Hyspin_0,24mm_viewA.bna, frame 11, 
+sampled-1000-x2-t10/791_Diesel-5W30_0,27mm_viewA.bna, frame 39, 
+sampled-1000-x2-t10/1522a_Hexahexa_1,002_viewA.bna, frame 95, 
+sampled-1000-x2-t10/441_Hys-Hys_0,30mm_viewA.bna, frame 24, 
+sampled-1000-x2-t10/057_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 65, 
+sampled-1000-x2-t10/1608a_Hexahexa_0,252_viewA.bna, frame 44, 
+sampled-1000-x2-t10/328_Hexa-Hys_0,50mm_viewA.bna, frame 47, 
+sampled-1000-x2-t10/1096a_Hexahexa_0,748_viewA.bna, frame 88, 
+sampled-1000-x2-t10/796_Diesel-5W30_0,51mm_viewA.bna, frame 15, 
+sampled-1000-x2-t10/1308a_Hexahexa_0,999_viewA.bna, frame 32, 
+sampled-1000-x2-t10/857_Hyspin-Hexa_1,00mm_viewA.bna, frame 66, 
+sampled-1000-x2-t10/420_Hys-Hexa_0,98mm_viewA.bna, frame 111, 
+sampled-1000-x2-t10/1343a_Hexahexa_1,000_viewA.bna, frame 127, 
+sampled-1000-x2-t10/490_Hys_Hexa_0,25mm_viewA.bna, frame 34, 
+sampled-1000-x2-t10/1298a_Hexahexa_0,998_viewA.bna, frame 42, 
+sampled-1000-x2-t10/1084a_Hexahexa_0,752_viewA.bna, frame 108, 
+sampled-1000-x2-t10/1533a_Hexahexa_1,000_viewA.bna, frame 47, 
+sampled-1000-x2-t10/403_Hys-Hexa_0,55mm_viewA.bna, frame 92, 
+sampled-1000-x2-t10/1316a_Hexahexa_1,000_viewA.bna, frame 92, 
+sampled-1000-x2-t10/486_Hys-Hexa_0,27mm_viewA.bna, frame 53, 
+sampled-1000-x2-t10/491_Hys_Hexa_0,54mm_viewA.bna, frame 186, 
+sampled-1000-x2-t10/1388a_Hexahexa_1,251_viewA.bna, frame 112, 
+sampled-1000-x2-t10/768_Hexa-Hyspin_0,50mm_viewA.bna, frame 48, 
+sampled-1000-x2-t10/028_Hyspin-Hexadecan_0.27mm_viewA.bna, frame 26, 
+sampled-1000-x2-t10/1451a_Hexahexa_0,501_viewA.bna, frame 33, 
+sampled-1000-x2-t10/1353a_Hexahexa_1,001_viewA.bna, frame 39, 
+sampled-1000-x2-t10/339_Hexa_Hys-0,51mm_viewA.bna, frame 80, 
+sampled-1000-x2-t10/1023a_Hexahexa_0,249_viewA.bna, frame 81, 
+sampled-1000-x2-t10/1295a_Hexahexa_0,751_viewA.bna, frame 107, 
+sampled-1000-x2-t10/207_Wasser-Hyspin_0.25mm_viewA.bna, frame 65, 
+sampled-1000-x2-t10/1102a_Hexahexa_0,751_viewA.bna, frame 88, 
+sampled-1000-x2-t10/1128a_Hexahexa_1,002_viewA.bna, frame 43, 
+sampled-1000-x2-t10/036_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 48, 
+sampled-1000-x2-t10/784_Hexa-Hyspin_0,26mm_viewA.bna, frame 27, 
+sampled-1000-x2-t10/1204a_Hexahexa_0,502_viewA.bna, frame 125, 
+sampled-1000-x2-t10/227_Diesel-Hyspin_0.99mm_viewA.bna, frame 52, 
+sampled-1000-x2-t10/253_Hexa-Hexa_0,30mm_viewA.bna, frame 96, 
+sampled-1000-x2-t10/488_Hys_Hexa_0,24mm_viewA.bna, frame 139, 
+sampled-1000-x2-t10/1570a_Hexahexa_1,251_viewA.bna, frame 36, 
+sampled-1000-x2-t10/1070a_Hexahexa_0,502_viewA.bna, frame 96, 
+sampled-1000-x2-t10/1363a_Hexahexa_1,250_viewA.bna, frame 527, 
+sampled-1000-x2-t10/716_Hyspin_Hexa_0,24mm_viewA.bna, frame 32, 
+sampled-1000-x2-t10/344_Hexa_Hys-0,51mm_viewA.bna, frame 61, 
+sampled-1000-x2-t10/796_Diesel-5W30_0,51mm_viewA.bna, frame 28, 
+sampled-1000-x2-t10/1247a_Hexahexa_0,750_viewA.bna, frame 86, 
+sampled-1000-x2-t10/1020a_Hexahexa_0,250_viewA.bna, frame 51, 
+sampled-1000-x2-t10/844_Hyspin-Hexa_0,75mm_viewA.bna, frame 38, 
+sampled-1000-x2-t10/835_Hyspin-Hexa_0,75mm_viewA.bna, frame 41, 
+sampled-1000-x2-t10/1052a_Hexahexa_0,501_viewA.bna, frame 39, 
+sampled-1000-x2-t10/155_Hyspin-Hexadecan_0.50mm_viewA.bna, frame 90, 
+sampled-1000-x2-t10/1129a_Hexahexa_1,000_viewA.bna, frame 4, 
+sampled-1000-x2-t10/294_Hexa-Hexa_0,26_viewA.bna, frame 50, 
+sampled-1000-x2-t10/1459a_Hexahexa_0,750_viewA.bna, frame 37, 
+sampled-1000-x2-t10/1239a_Hexahexa_0,501_viewA.bna, frame 144, 
+sampled-1000-x2-t10/1116a_Hexahexa_0,998_viewA.bna, frame 8, 
+sampled-1000-x2-t10/850_Hyspin-Hexa_0,75mm_viewA.bna, frame 23, 
+sampled-1000-x2-t10/882_Hexa-Hyspin_1,00mm_viewA.bna, frame 9, 
+sampled-1000-x2-t10/285_Hexa-Hexa_0,51_viewA.bna, frame 7, 
+sampled-1000-x2-t10/1171a_Hexahexa_0,251_viewA.bna, frame 5, 
+sampled-1000-x2-t10/967_Hyspin-Hexa_1,124mm_viewA.bna, frame 87, 
+sampled-1000-x2-t10/296_Hexa-Hexa_0,22_viewA.bna, frame 29, 
+sampled-1000-x2-t10/858_Hyspin-Hexa_1,00mm_viewA.bna, frame 113, 
+sampled-1000-x2-t10/1224a_Hexahexa_0,502_viewA.bna, frame 60, 
+sampled-1000-x2-t10/344_Hexa_Hys-0,51mm_viewA.bna, frame 138, 
+sampled-1000-x2-t10/211_Wasser-Hyspin_0.82mm_viewA.bna, frame 3, 
+sampled-1000-x2-t10/1211a_Hexahexa_0,499_viewA.bna, frame 36, 
+sampled-1000-x2-t10/314_Hexa-Hexa_0,55mm_viewA.bna, frame 91, 
+sampled-1000-x2-t10/979_Hyspin-Hexa_1,249mm_viewA.bna, frame 112, 
+sampled-1000-x2-t10/286_Hexa-Hexa_0,25_viewA.bna, frame 73, 
+sampled-1000-x2-t10/1044a_Hexahexa_0,251_viewA.bna, frame 114, 
+sampled-1000-x2-t10/1079a_Hexahexa_0,499_viewA.bna, frame 29, 
+sampled-1000-x2-t10/858_Hyspin-Hexa_1,00mm_viewA.bna, frame 63, 
+sampled-1000-x2-t10/858_Hyspin-Hexa_1,00mm_viewA.bna, frame 13, 
+sampled-1000-x2-t10/1526a_Hexahexa_1,001_viewA.bna, frame 96, 
+sampled-1000-x2-t10/151_Hyspin-Hexadecan_0.26mm_viewA.bna, frame 72, 
+sampled-1000-x2-t10/828_Hyspin-Hexa_0,99mm_viewA.bna, frame 103, 
+sampled-1000-x2-t10/1145a_Hexahexa_1,250_viewA.bna, frame 156, 
+sampled-1000-x2-t10/1192a_Hexahexa_0,251_viewA.bna, frame 10, 
+sampled-1000-x2-t10/1129a_Hexahexa_1,000_viewA.bna, frame 15, 
+sampled-1000-x2-t10/1329a_Hexahexa_1,000_viewA.bna, frame 103, 
+sampled-1000-x2-t10/491_Hys_Hexa_0,54mm_viewA.bna, frame 39, 
+sampled-1000-x2-t10/245_Hexa-Hexa_0,49mm_viewA.bna, frame 30, 
+sampled-1000-x2-t10/1305a_Hexahexa_1,001_viewA.bna, frame 174, 
+sampled-1000-x2-t10/014_Hyspin-Hexadecan_0.25mm_viewA.bna, frame 34, 
+sampled-1000-x2-t10/1500a_Hexahexa_1,002_viewA.bna, frame 110, 
+sampled-1000-x2-t10/190_Hyspin-Diesel_0.26mm_viewA.bna, frame 38, 
+sampled-1000-x2-t10/1464a_Hexahexa_0,749_viewA.bna, frame 2, 
+sampled-1000-x2-t10/041_Hyspin-Hexadecan_0.22mm_viewA.bna, frame 6, 
+sampled-1000-x2-t10/1325a_Hexahexa_1,000_viewA.bna, frame 87, 
+sampled-1000-x2-t10/1308a_Hexahexa_0,999_viewA.bna, frame 25, 
+sampled-1000-x2-t10/432_Hys-Hys_0,53mm_viewA.bna, frame 64, 
+sampled-1000-x2-t10/706_Hyspin_Hexa_0,50mm_viewA.bna, frame 50, 
+sampled-1000-x2-t10/920_Hyspin_Hexa_0,374mm_viewA.bna, frame 12, 
+sampled-1000-x2-t10/1319a_Hexahexa_1,000_viewA.bna, frame 63, 
+sampled-1000-x2-t10/1353a_Hexahexa_1,001_viewA.bna, frame 120, 
+sampled-1000-x2-t10/1556a_Hexahexa_1,251_viewA.bna, frame 150, 

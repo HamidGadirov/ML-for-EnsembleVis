@@ -76,6 +76,7 @@ def variance_droplet(encoded_vec_2d, names):
     # for loop: measure dist from each vec to centers
 
     unique_names = np.unique(names)
+    print(unique_names)
 
     # get the centers for each cluster
     centers = []
@@ -86,11 +87,11 @@ def variance_droplet(encoded_vec_2d, names):
                 dist_to_center.append(encoded_vec_2d[i])
         
         centers.append(np.mean(dist_to_center, axis=0))
-    #print("centers:", centers)
+    # print("centers:", centers)
     centers = zip(unique_names, centers)
     centers = dict(centers)
-    #print("(dict) dist and centers:", centers)
-    #print(centers["drop"])
+    # print("(dict) dist and centers:", centers)
+    # print(centers["drop"])
 
     # for each point in the proj measure and accumulate distance to its cluster
     dist_to_centers = []
@@ -103,7 +104,7 @@ def variance_droplet(encoded_vec_2d, names):
         #print(dist_to_center)
         dist_to_centers.append(np.mean(dist_to_center, axis=0))
 
-    #print("dist_to_centers:", dist_to_centers)
+    print("dist_to_centers:", dist_to_centers)
 
     dist_to_centers_mean = np.mean(dist_to_centers, axis=0)
     #print("dist_to_centers_mean:", dist_to_centers_mean)

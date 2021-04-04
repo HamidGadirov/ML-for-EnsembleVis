@@ -221,9 +221,119 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
 
     title += str(perp)
 
+    knn_title = "t-SNE"
+
+    if (dataset == "mcmc"):
+
+        #  clustering in the projection
+        from sklearn.cluster import KMeans
+        kmeans = KMeans(n_clusters=8, random_state=0).fit(encoded_vec_2d)
+        # print(kmeans.labels_)
+
+        # Clustering performance evaluation of the proj
+        unique_names, indexed_names = np.unique(names, return_inverse=True)
+        # print(unique_names, indexed_names)
+        
+        from sklearn import metrics
+        labels_true = indexed_names
+        labels_pred = kmeans.labels_
+        rand_index = metrics.rand_score(labels_true, labels_pred)
+        print("Rand index:", rand_index)
+
+        if("Raw data" in title): # baseline
+            test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
+            tsne = TSNE(n_components=2, random_state=0, perplexity=perp)
+            encoded_vec_2d = tsne.fit_transform(test_data_tmp) # encoded_vec
+
+        if (names):
+            # encoded_vec_2d_ = encoded_vec_2d
+            # encoded_vec_2d = encoded_vec # features
+            separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
+            print("Separability:", separability)
+            print(len(names), "labels considered")
+
+            with open(filename, "a") as text_file:
+                text_file.write("Separability ")
+                text_file.write("t-SNE %f \n" % separability)
+                # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+
+            # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
+            # of a projected point that has the same class label
+            fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
+            print("Neighborhood hit (fraction):", fraction)
+            with open(filename, "a") as text_file:
+                text_file.write("Neighborhood_hit ")
+                text_file.write("t-SNE %f \n" % fraction)
+
+            # Distance from cluster centers metric
+            dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
+            print("Mean of distances for all classes:", dist_to_centers_mean)
+            with open(filename, "a") as text_file:
+                text_file.write("Variance ")
+                text_file.write("t-SNE %f \n" % dist_to_centers_mean)
+
+            print("Labels:", len(names))
+            print("unique:", np.unique(names))
+            unique_names, indexed_names = np.unique(names, return_inverse=True)
+            print(unique_names, indexed_names)
+            # draw a scatterplot with colored labels
+            fig, ax = plt.subplots()
+            # colors = ['tab:purple', 'tab:darkviolet', 'tab:blueviolet', 'tab:royalblue', 'tab:lime', 'tab:yellow', 'tab:blue']
+            colors = []
+            for i in indexed_names:
+                colors.append('purple' if i==1 else 'mediumblue' if i==2 else 'orange' if i==3 else 'limegreen' if i==4 else 'yellow')
+            # for train data - color = gray
+
+            # encoded_vec_2d = encoded_vec_2d_
+
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=colors)
+            #plt.legend(unique_names)
+            # produce a legend with the unique colors from the scatter
+            handles = scatter.legend_elements()[0]
+            labels = unique_names
+            # legend1 = ax.legend(handles, labels)
+            # ax.add_artist(legend1)
+
+            #legend1(loc=1,prop={'size': 6})
+            #ax.legend(loc=1, fontsize = 12)
+            #cbar= plt.colorbar()
+            knn_title = title
+            # knn_title += ", separability="
+            # knn_title += str("%.3f" % separability)
+            knn_title += ", neigh hit="
+            knn_title += str("%.3f" % fraction)
+            knn_title += ", spread="
+            knn_title += str("%.3f" % dist_to_centers_mean)
+            #plt.suptitle(knn_title, fontsize=15)
+            #ax.set_title(knn_title, fontsize=17)
+        else:
+            # no labels
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c='gray')
+            knn_title = title
+
+        #ax.set_title(knn_title, fontsize=17)
+        plt.axis('off')
+        plt.tight_layout()
+        fig.savefig('{}/latent_tsne_scatter_labels.png'.format(dir_res_model), dpi=300)
+        plt.close(fig)
+
+        # # full ensemble
+        # # encoded_vec_train_test
+        # fig, ax = plt.subplots()
+        # train_size = 8000
+        # scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='gray')
+        # scatter = plt.scatter(encoded_vec_2d_train_test[train_size:, 0], encoded_vec_2d_train_test[train_size:, 1], c=colors)
+
+        # plt.axis('off')
+        # plt.show()
+        # plt.tight_layout()
+        # #fig.set_size_inches(12, 9)
+        # fig.savefig('{}/latent_umap_scatter_labels_full.png'.format(dir_res_model), dpi=300)
+        # plt.close(fig)
+
     # kNN for separability flow dataset
     if (dataset == "flow"):
-        knn_title = "t-SNE"
 
         if("Raw data" in title): # baseline
             test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
@@ -254,46 +364,50 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
         # acc_mean, acc_std = statistics.mean(accuracy), statistics.stdev(accuracy)
         # print("Accuracy mean and std:", acc_mean, acc_std)
 
-        separability, labels = kNN_classification_flow(encoded_vec_2d, names, knn_title)
-        print("Separability:", separability)
-        print(len(labels), "labels considered")
+        if (names):
+            separability, labels = kNN_classification_flow(encoded_vec_2d, names, knn_title)
+            print("Separability:", separability)
+            print(len(labels), "labels considered")
 
-        with open(filename, "w") as text_file:
-            text_file.write("Separability ")
-            #print(f"Accuracy of clustering: ", file=text_file)
-            #print("t-SNE mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
-            text_file.write("t-SNE %f \n" % separability)
-            # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+            with open(filename, "w") as text_file:
+                text_file.write("Separability ")
+                #print(f"Accuracy of clustering: ", file=text_file)
+                #print("t-SNE mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+                text_file.write("t-SNE %f \n" % separability)
+                # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
 
-        # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
-        # of a projected point that has the same class label
-        fraction = kNN_fraction_flow(encoded_vec_2d, names, knn_title)
-        print("Neighborhood hit (fraction):", fraction)
-        with open(filename, "a") as text_file:
-            text_file.write("Neighborhood_hit ")
-            text_file.write("t-SNE %f \n" % fraction)
+            # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
+            # of a projected point that has the same class label
+            fraction = kNN_fraction_flow(encoded_vec_2d, names, knn_title)
+            print("Neighborhood hit (fraction):", fraction)
+            with open(filename, "a") as text_file:
+                text_file.write("Neighborhood_hit ")
+                text_file.write("t-SNE %f \n" % fraction)
 
-        # Distance from cluster centers metric
-        #dist_to_laminar, dist_to_turbulent = get_cluster_centers_flow(encoded_vec_2d, names) 
-        dist_to_centers_mean = variance_flow(encoded_vec_2d, names) 
-        # print("Distances:", dist_to_laminar, dist_to_turbulent)
-        # with open(filename, "a") as text_file:
-        #     text_file.write("Distances: \n")
-        #     text_file.write("t-SNE dist_to_laminar and dist_to_turbulent: %f %f \n" % (dist_to_laminar, dist_to_turbulent))
-        print("Mean of distances for all classes:", dist_to_centers_mean)
-        with open(filename, "a") as text_file:
-            text_file.write("Variance ")
-            text_file.write("t-SNE %f \n" % dist_to_centers_mean)
+            # Distance from cluster centers metric
+            #dist_to_laminar, dist_to_turbulent = get_cluster_centers_flow(encoded_vec_2d, names) 
+            dist_to_centers_mean = variance_flow(encoded_vec_2d, names) 
+            # print("Distances:", dist_to_laminar, dist_to_turbulent)
+            # with open(filename, "a") as text_file:
+            #     text_file.write("Distances: \n")
+            #     text_file.write("t-SNE dist_to_laminar and dist_to_turbulent: %f %f \n" % (dist_to_laminar, dist_to_turbulent))
+            print("Mean of distances for all classes:", dist_to_centers_mean)
+            with open(filename, "a") as text_file:
+                text_file.write("Variance ")
+                text_file.write("t-SNE %f \n" % dist_to_centers_mean)
 
-        print("Labels:", len(labels))
-        # draw a scatterplot with colored labels
-        #fig, ax = plt.subplots()
-        fig, ax = plt.subplots()
-        scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=labels)
-        handles = scatter.legend_elements()[0]
-        label_names = ("laminar", "turbulent")
-        legend1 = ax.legend(handles, label_names)
-        ax.add_artist(legend1)
+            print("Labels:", len(labels))
+            # draw a scatterplot with colored labels
+            #fig, ax = plt.subplots()
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=labels)
+            handles = scatter.legend_elements()[0]
+            label_names = ("laminar", "turbulent")
+            legend1 = ax.legend(handles, label_names)
+            ax.add_artist(legend1)
+        else:
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=labels)
 
         knn_title = title
         # knn_title += ", separability="
@@ -315,7 +429,20 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
 
     elif (dataset == "droplet"):
 
-        knn_title = "t-SNE"
+        #  clustering in the projection
+        from sklearn.cluster import KMeans
+        kmeans = KMeans(n_clusters=8, random_state=0).fit(encoded_vec_2d)
+        # print(kmeans.labels_)
+
+        # Clustering performance evaluation of the proj
+        unique_names, indexed_names = np.unique(names, return_inverse=True)
+        # print(unique_names, indexed_names)
+        
+        from sklearn import metrics
+        labels_true = indexed_names
+        labels_pred = kmeans.labels_
+        rand_index = metrics.rand_score(labels_true, labels_pred)
+        print("Rand index:", rand_index)
 
         if("Raw data" in title): # baseline
             test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
@@ -340,57 +467,63 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
         # acc_mean, acc_std = statistics.mean(accuracy), statistics.stdev(accuracy)
         # print("Accuracy mean and std:", acc_mean, acc_std)
 
-        separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
-        print("Separability:", separability)
-        print(len(names), "labels considered")
+        if (names):
+            separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
+            print("Separability:", separability)
+            print(len(names), "labels considered")
 
-        with open(filename, "w") as text_file:
-            text_file.write("Separability ")
-            #print(f"Accuracy of clustering: ", file=text_file)
-            #print("t-SNE mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
-            text_file.write("t-SNE %f \n" % separability)
-            # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+            with open(filename, "w") as text_file:
+                text_file.write("Separability ")
+                #print(f"Accuracy of clustering: ", file=text_file)
+                #print("t-SNE mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+                text_file.write("t-SNE %f \n" % separability)
+                # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
 
-        # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
-        # of a projected point that has the same class label
-        fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
-        print("Neighborhood hit (fraction):", fraction)
-        with open(filename, "a") as text_file:
-            text_file.write("Neighborhood_hit ")
-            text_file.write("t-SNE %f \n" % fraction)
+            # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
+            # of a projected point that has the same class label
+            fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
+            print("Neighborhood hit (fraction):", fraction)
+            with open(filename, "a") as text_file:
+                text_file.write("Neighborhood_hit ")
+                text_file.write("t-SNE %f \n" % fraction)
 
-        # Distance from cluster centers metric
-        dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
-        print("Mean of distances for all classes:", dist_to_centers_mean)
-        with open(filename, "a") as text_file:
-            text_file.write("Variance ")
-            text_file.write("t-SNE %f \n" % dist_to_centers_mean)
+            # Distance from cluster centers metric
+            dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
+            print("Mean of distances for all classes:", dist_to_centers_mean)
+            with open(filename, "a") as text_file:
+                text_file.write("Variance ")
+                text_file.write("t-SNE %f \n" % dist_to_centers_mean)
 
-        print("Labels:", len(names))
-        print("unique:", np.unique(names))
-        unique_names, indexed_names = np.unique(names, return_inverse=True)
-        #unique_names = ['bubble', 'bubble-splash', 'crown', 'crown-splash', 'splash', 'drop', 'none'] # scatter colors
-        #print(unique_names, indexed_names)
-        # draw a scatterplot with colored labels
-        fig, ax = plt.subplots()
-        scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=indexed_names)
-        #plt.legend(unique_names)
-        # produce a legend with the unique colors from the scatter
-        handles = scatter.legend_elements()[0]
-        labels = unique_names
-        legend1 = ax.legend(handles, labels)
-        ax.add_artist(legend1)
-        #ax.legend(prop={'size': 6})
-        #cbar= plt.colorbar()
-        knn_title = title
-        # knn_title += ", separability="
-        # knn_title += str("%.3f" % separability)
-        knn_title += ", neigh hit="
-        knn_title += str("%.3f" % fraction)
-        knn_title += ", spread="
-        knn_title += str("%.3f" % dist_to_centers_mean)
-        #plt.suptitle(knn_title, fontsize=15)
-        ax.set_title(knn_title, fontsize=17)
+            print("Labels:", len(names))
+            print("unique:", np.unique(names))
+            unique_names, indexed_names = np.unique(names, return_inverse=True)
+            #unique_names = ['bubble', 'bubble-splash', 'crown', 'crown-splash', 'splash', 'drop', 'none'] # scatter colors
+            #print(unique_names, indexed_names)
+            # draw a scatterplot with colored labels
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=indexed_names)
+            #plt.legend(unique_names)
+            # produce a legend with the unique colors from the scatter
+            handles = scatter.legend_elements()[0]
+            labels = unique_names
+            legend1 = ax.legend(handles, labels)
+            ax.add_artist(legend1)
+            #ax.legend(prop={'size': 6})
+            #cbar= plt.colorbar()
+
+            knn_title = title
+            # knn_title += ", separability="
+            # knn_title += str("%.3f" % separability)
+            knn_title += ", neigh hit="
+            knn_title += str("%.3f" % fraction)
+            knn_title += ", spread="
+            knn_title += str("%.3f" % dist_to_centers_mean)
+            #plt.suptitle(knn_title, fontsize=15)
+            ax.set_title(knn_title, fontsize=17)
+        else:
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1])
+
         plt.axis('off')
         #plt.show()
         plt.tight_layout()
@@ -411,8 +544,6 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
             test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
             tsne = TSNE(n_components=2, random_state=0, perplexity=perp)
             encoded_vec_2d = tsne.fit_transform(test_data_tmp) # encoded_vec
-
-        knn_title = "t-SNE"
 
         separability = kNN_classification_mnist(encoded_vec_2d, names, knn_title)
         print("Separability:", separability)
@@ -466,7 +597,7 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
 
     ### Kernelized sorting
     proj = "tsne"
-    grid_projection(encoded_vec_2d, test_data, dataset, dir_res_model, title, proj, temporal)
+    # grid_projection(encoded_vec_2d, test_data, dataset, dir_res_model, title, proj, temporal)
 
     x = encoded_vec_2d[:, 0]
     y = encoded_vec_2d[:, 1]
@@ -485,6 +616,8 @@ def tsne_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
     if (dataset == "droplet"):
         zoom = 0.15
     if (dataset == "flow"):
+        zoom = 0.15
+    if (dataset == "mcmc"):
         zoom = 0.15
 
         #fig=plt.figure()

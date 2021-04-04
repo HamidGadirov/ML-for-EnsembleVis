@@ -112,7 +112,7 @@ def load_metrics_from_folder():
     listOfFiles = getListOfFiles(dirName)
     listOfFiles.sort()
     #print(listOfFiles)
-    print("####")
+    print("ll")
     #dir_names = []
     # metrics_pareto = {}
     # metrics_pareto["Neighborhood_hit"] = []
@@ -123,15 +123,17 @@ def load_metrics_from_folder():
 
     models = []
     for f in listOfFiles:
+        print(f)
         try:
             #print(f)
-            model = f.split("/")[2] #that is the folder where to avg
+            model = f.split("/")[3] #that is the folder where to avg
             models.append(model)
         except:
             print(f)
     
     keys = np.unique(models)
-    # print(keys)
+    #keys = models # no avg
+    print("keys:",keys)
     # values = metrics_pareto
     # for key in keys:
     #     print(key)
@@ -145,10 +147,8 @@ def load_metrics_from_folder():
         temp_d[key] = {}
         d[key]['Neighborhood_hit'] = []
         d[key]['Variance'] = []
-        d[key]['Separability'] = []
         temp_d[key]['Neighborhood_hit'] = []
         temp_d[key]['Variance'] = []
-        temp_d[key]['Separability'] = []
 
     # res[0].extend(np.unique(models))
     # print(res[0])
@@ -171,7 +171,7 @@ def load_metrics_from_folder():
                 print(filename)
             #print("key:",key)
             #print("experiment:",experiment)
-            experiment = experiment[:-2]
+            #experiment = experiment[:-2]
             if key == experiment:
                 #print("in fn:",filename)
                 #print("values:",d[key])
@@ -192,15 +192,15 @@ def load_metrics_from_folder():
                         for line in lines:
                             words = line.split(" ")
                             # words = words[:-2]
-                            # if words[0] == "Separability" or words[0] == "\n":
-                            if words[0] == "\n":
+                            if words[0] == "Separability" or words[0] == "\n":
                                 continue
 
-                            if words[1] == "UMAP":
-                                print(words[2])
-                                temp_d[key][words[0]].append(words[2][:-2])
-                                print("empty",d[key])
-                                print("not empty",temp_d[key])
+                            if words[0] == "Neighborhood_hit" or words[0] == "Variance":
+                                if words[1] == "UMAP":
+                                    print(words[2])
+                                    temp_d[key][words[0]].append(words[2][:-2])
+                                    print("empty",d[key])
+                                    print("not empty",temp_d[key])
                 # else:
                 #     print(d[key])
 
@@ -211,21 +211,16 @@ def load_metrics_from_folder():
         if not temp_d[key]["Neighborhood_hit"]: # test
             continue
 
-        import statistics
-        # d[key]['Neighborhood_hit'] = statistics.mean(list(map(float, temp_d[key]['Neighborhood_hit'])))
-        # d[key]['Variance'] = statistics.mean(list(map(float, temp_d[key]['Variance'])))
-        # #d[key] = temp_d[key]
-        # print(d[key])
+        if not temp_d[key]["Variance"]: # test
+            continue
 
-        d[key]['Neighborhood_hit'].append(statistics.mean(list(map(float, temp_d[key]['Neighborhood_hit']))))
-        d[key]['Neighborhood_hit'].append(statistics.stdev(list(map(float, temp_d[key]['Neighborhood_hit']))))
-        d[key]['Variance'].append(statistics.mean(list(map(float, temp_d[key]['Variance']))))
-        d[key]['Variance'].append(statistics.stdev(list(map(float, temp_d[key]['Variance']))))
-        d[key]['Separability'].append(statistics.mean(list(map(float, temp_d[key]['Separability']))))
-        d[key]['Separability'].append(statistics.stdev(list(map(float, temp_d[key]['Separability']))))
+        import statistics
+        #d[key]['Neighborhood_hit'] = statistics.mean(list(map(float, temp_d[key]['Neighborhood_hit'])))
+        #d[key]['Variance'] = statistics.mean(list(map(float, temp_d[key]['Variance'])))
+        d[key]['Neighborhood_hit'] = list(map(float, temp_d[key]['Neighborhood_hit']))
+        d[key]['Variance'] = list(map(float, temp_d[key]['Variance']))
         #d[key] = temp_d[key]
         print(d[key])
-        print("++++++++++++++++++++++++")
 
         #break
     
@@ -239,50 +234,35 @@ print("#####")
 print(d)
 print(len(d))
 
-# metrics_pareto = np.zeros((0,2)) #
+metrics_pareto = np.zeros((0,2)) #
 metrics_pareto = []
-metrics_pareto_mean_std = []
 
 print("#####")
 i = 0
 pareto_list = []
 for key, value in d.items():
     if d[key]["Neighborhood_hit"]: # test
-        print(key)
-        if("100" in key) or ("32" in key) or ("512" in key):
-            continue
-
         print(d[key])
         pareto_list.append(key)
         #print(type(d[key]["Neighborhood_hit"]))
         metrics_pareto.append([])
-        metrics_pareto[i].append(d[key]["Neighborhood_hit"][0])
-        metrics_pareto[i].append(d[key]["Variance"][0])
-        metrics_pareto[i].append(d[key]["Separability"][0])
-
-        metrics_pareto_mean_std.append([]) # add variance
-        metrics_pareto_mean_std[i].append(d[key]["Neighborhood_hit"][1])
-        metrics_pareto_mean_std[i].append(d[key]["Variance"][1])
-        metrics_pareto_mean_std[i].append(d[key]["Separability"][1])
-
+        metrics_pareto[i].append(d[key]["Neighborhood_hit"])
+        metrics_pareto[i].append(d[key]["Variance"])
+        #print(metrics_pareto[i])
         i += 1
 
-print(pareto_list)
-
-print("Mean and std:", metrics_pareto_mean_std)
+print("Pareto list:", pareto_list)
+print(len(pareto_list))
 
 #print(metrics_pareto)
 metrics_pareto = np.asarray(metrics_pareto)
 #print(metrics_pareto)
+print("metrics_pareto:", metrics_pareto)
 print(metrics_pareto.shape)
+print(type(metrics_pareto.shape))
 
 x = metrics_pareto[:,0]
 y = metrics_pareto[:,1]
-
-metrics_pareto_mean_std = np.asarray(metrics_pareto_mean_std)
-xerr = metrics_pareto_mean_std[:,0]
-yerr = metrics_pareto_mean_std[:,1]
-zerr = metrics_pareto_mean_std[:,2]
 
 print(x,y)
 
@@ -296,10 +276,7 @@ print(x,y)
 # x = metrics_pareto["Neighborhood_hit"]
 # y = metrics_pareto["Distances"]
 
-fig, ax = plt.subplots()
 plt.scatter(x, y)
-ax.errorbar(x, y, xerr=xerr, yerr=yerr, fmt='o')
-#plt.errorbar(x, y, e, linestyle='None', marker='^')
 plt.xlabel('Neighborhood_hit')
 plt.ylabel('Variance')
 #plt.show()
@@ -355,6 +332,9 @@ for i in pareto:
 pareto_front = metrics_vals[pareto]
 print('\nPareto front scores')
 print(pareto_front)
+print(pareto_front.shape)
+print(type(pareto_front))
+pareto_front.resize(pareto_front.shape[0], pareto_front.shape[1])
 
 pareto_front_df = pd.DataFrame(pareto_front)
 pareto_front_df.sort_values(0, inplace=True)
@@ -364,25 +344,6 @@ x_all = metrics_pareto[:, 0]
 y_all = metrics_pareto[:, 1]
 x_pareto = pareto_front[:, 0]
 y_pareto = pareto_front[:, 1]
-
-z_all = metrics_pareto[:, 2]
-
-filename = "metrics.txt"
-
-with open(filename, "w") as text_file:
-    text_file.write("Method  Separability  Neighborhood hit  Spread  (± for uncertainty (std dev)) \n")
-    for i in range (len(x_all)):
-        text_file.write(str(pareto_list[i]) + "  ")
-        text_file.write(str(round(z_all[i],4)) + "±" + str(round(zerr[i],3)) + "  ")
-        text_file.write(str(round(x_all[i],4)) + "±" + str(round(xerr[i],3)) + "  ")
-        text_file.write(str(round(y_all[i],4)) + "±" + str(round(yerr[i],3)) + "\n")
-
-#uncertainty equal to the standard deviation
-
-# # draw a scatterplot with annotations
-# fig, ax = plt.subplots() # just a figure and only one subplot
-# # ax.errorbar(x, y, xerr=xerr, yerr=yerr, fmt='o') # for std
-# sc = ax.scatter(x_all, y_all)
 
 names = pareto_list # all unique models
 
@@ -405,20 +366,16 @@ for name in names: # replace some characters
     name = name.replace(' norm', '')
     name = name.replace('beta', 'b')
     #print(name)
-    name = name.replace('2d', '2D')
-    name = name.replace('3d', '3D')
-    name = name.replace('vae', 'VAE')
-    name = name.replace('ae', 'AE')
     models.append(name)
 # print("after repl:", names)
 # print("after repl:", models)
 
-# for i, txt in enumerate(models):
-#     print(txt)
-#     annot_all = ax.annotate(txt, xy=(x_all[i], y_all[i]), 
-#         xytext=(0,5), 
-#         ha='center',
-#         textcoords="offset points", fontsize=10)
+for i, txt in enumerate(models):
+    print(txt)
+    annot_all = ax.annotate(txt, xy=(x_all[i], y_all[i]), 
+        xytext=(0,5), 
+        ha='center',
+        textcoords="offset points", fontsize=12)
 
 annot = ax.annotate("", xy=(0,0), xytext=(0,5), ha='center',
             bbox=dict(boxstyle="round", fc="w")) # arrowprops=dict(arrowstyle="->"))
@@ -450,15 +407,15 @@ def hover(event):
                 annot.set_visible(True) #
                 fig.canvas.draw_idle()
 
-# fig.canvas.mpl_connect("motion_notify_event", hover)
+fig.canvas.mpl_connect("motion_notify_event", hover)
 
 ax.plot(x_pareto, y_pareto, color='g') # connecting line for pareto front
 ax.scatter(x_pareto, y_pareto, c='g')
 
 for i in range(len(pareto_list)):
     if ("baseline" in pareto_list[i]):
-        #print(pareto_list[i])
-        #print(x_all[i], y_all[i])
+        print(pareto_list[i])
+        print(x_all[i], y_all[i])
         ax.scatter(x_all[i], y_all[i], c='r') # baseline
 
 # ZoomPan scrollig
@@ -467,30 +424,106 @@ zp = ZoomPan()
 figZoom = zp.zoom_factory(ax, base_scale = scale)
 figPan = zp.pan_factory(ax)
 
-# ax.set_xlim([0.24,0.82])
-#ax.set_ylim([ymin,ymax])
-plt.xticks(fontsize=20)
-plt.yticks(fontsize=20)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
 
-plt.xlabel('Neighborhood hit', fontsize=20)
-plt.ylabel('Spread', fontsize=20)
-plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
+plt.xlabel('Neighborhood hit', fontsize=18)
+plt.ylabel('Spread', fontsize=18)
+plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=20)
 
-texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=18) for i in range(len(x_all))]
-print(texts)
-adjust_text(texts, lim=0)
-# adjust_text(texts, lim=1, arrowprops=dict(arrowstyle="->", color='b', lw=0.5))
-# adjust_text(texts, x, y, arrowprops=dict(arrowstyle="-", color='black', lw=0.5), 
-#             autoalign='', only_move={'points':'y', 'text':'y'})
+# texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=12) for i in range(len(x_all))]
+# print(texts)
+# adjust_text(texts, lim=1)
 
 fig.set_size_inches(16, 9)
-plt.savefig('drop_pareto.png', dpi=300)
+plt.savefig('drop_pareto_ind.png', dpi=300)
 plt.show()
 
+# fig, ax = plt.subplots() # just a figure and only one subplot
+# x_all = [1.0, 2, 3]
+# y_all = [1, 2.3, 3]
+# names = [1, 2, 3]
+# ax.scatter(x_all, y_all)
+# for i, txt in enumerate(names):
+#     txt = str(txt)
+#     print(txt)
+#     print(type(txt))
+#     print(type(x_all[i]))
+#     ax.annotate(txt, (x_all[i], y_all[i]))
+# plt.show()
 
-# Show the baseline: one point (red)
-#dirName = 'Baseline'
+
 
 
 # in the end to have a visualization with point for each dir (our analysis)
 # and correstonding folder (shown as a list or in the vis interactively)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # for model in d.keys:
+    #     print(model)
+
+        # model = f.split("/")[1] #that is the folder where to avg
+        # # find all files in that model fir, avg
+        # res[0].append(model)
+        # print(res[1]["Neighborhood_hit"])
+        # if not res[1]["Neighborhood_hit"]:
+        #     print("empty")
+
+    #     for filename in listOfFiles:
+    #         experiment = filename.split("/")[2]
+    #         if model == experiment:
+    #             if not res[1]["Neighborhood_hit"]:
+
+    #         if filename.endswith(("metrics.txt")):
+    #             print(filename)
+    #             with open(filename) as f:
+    #                 lines = f.readlines()
+    #             #print(lines)
+
+    #             lines = np.asarray(lines)
+    #             #print(lines.shape[0])
+
+    #             # create a dict for table
+    #             #metrics_pareto = [] {'key': 'value'}
+    #             # metrics_pareto = {}
+    #             # metrics_pareto["Neighborhood_hit"] = []
+    #             # metrics_pareto["Distances"] = []
+
+    #             for line in lines:
+    #                 words = line.split(" ")
+    #                 # words = words[:-2]
+    #                 #print(words[2])
+    #                 if words[0] == "Separability" or words[0] == "\n":
+    #                     continue
+
+    #                 metrics_pareto[words[0]].append(words[2][:-2])
+                    # if words[0] == "Neighborhood_hit":
+                    #     print(words[2][:-2])
+                    #     try:
+                    #         metrics_pareto[words[0]].append(words[2])
+                    #     except:
+                    #         metrics_pareto[words[0]] = words[2]
+                    # if words[0] == "Neighborhood_hit":
+                    #     metrics_pareto[words[0]].append(words[2])
+                    #     #print(words[1], words[2])
+                    # if words[0] == "Distances":
+                    #     print(words[1], words[2])
+
+                #print(metrics_pareto)
+
+
+
+
+

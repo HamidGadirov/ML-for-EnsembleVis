@@ -155,6 +155,7 @@ def preprocess_3d(dataset, visualize, data, names=""):
     # normalize to zero mean and unit variance, this is best
     data_mean = x_train.mean()
     data_std = x_train.std()
+    
     x_train = (x_train - x_train.mean()) / x_train.std()
     #print(x_train)
     print(x_train.max())

@@ -3,15 +3,16 @@
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir) 
+sys.path.insert(0, parent_dir)
 
 from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
 from reparameterization_trick import sampling
-#from pca_projection import pca_projection
+from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
+from kmeans_rand import kmeans_rand
 
 from visualization import visualize_keract, visualize_keras
 from latent_sp_interpolation import interpolate, find_interpolatable, latent_dim_traversal
@@ -29,6 +30,15 @@ from sklearn.model_selection import train_test_split
 from keras.layers import Activation, Input, Dense, Conv3D, Conv3DTranspose
 from keras.layers import Flatten, Reshape, Cropping3D, Lambda
 #from tensorflow.keras.layers.normalization import BatchNormalization
+
+# import tensorflow as tf
+# sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(log_device_placement=True))
+# print("hh")
+# from tensorflow.python.client import device_lib
+# print(device_lib.list_local_devices())
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 from keras.models import Model
 from keras import backend as K
 from keras import optimizers, regularizers
@@ -52,13 +62,13 @@ def load_labelled_data():
 
     start_time = time.time()
     print("Loading data from pickle dump...")
-    pkl_file = open("droplet_labelled_data.pkl", 'rb')
+    pkl_file = open("droplet_sampled_labelled_data.pkl", 'rb') # droplet_labelled_data_2
     data = []
     data = pickle.load(pkl_file)
     pkl_file.close
 
     print("Loading names from pickle dump...")
-    pkl_file = open("droplet_labelled_names.pkl", 'rb')
+    pkl_file = open("droplet_sampled_labelled_names.pkl", 'rb') # droplet_labelled_names_2
     names = []
     names = pickle.load(pkl_file)
     pkl_file.close
@@ -66,11 +76,11 @@ def load_labelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    if data.shape[0] != len(names):
-        input("!!! Inconstintency in data and names !!!")
+    # if data.shape[0] != len(names):
+    #     input("!!! Inconstintency in data and names !!!")
     
-    data = data[:1800,...]
-    names = names[:1800]
+    data_sampled = data[:1800,...] # 3000
+    names_sampled = names[:1800]
     # test_idx = np.random.randint(data.shape[0], size=900) #3D
     # #print(test_idx)
     # data = data[test_idx,]
@@ -88,6 +98,29 @@ def load_labelled_data():
     # for _ in np.unique(names):
     #     print(_)
 
+    print("Loading data from pickle dump...")
+    pkl_file = open("droplet_labelled_data_2.pkl", 'rb') # droplet_labelled_data_2
+    data = []
+    data = pickle.load(pkl_file)
+    pkl_file.close
+
+    print("Loading names from pickle dump...")
+    pkl_file = open("droplet_labelled_names_2.pkl", 'rb') # droplet_labelled_names_2
+    names = []
+    names = pickle.load(pkl_file)
+    pkl_file.close
+
+    data = data[:3600,...] # 3000
+    names = names[:3600]
+
+    data = np.concatenate((data, data_sampled), axis=0)
+    names = names + names_sampled
+
+    print(data.shape)
+    print(len(names))
+    print(names[0])
+    print(np.unique(names))
+
     return data, names
 
 def load_unlabelled_data():
@@ -102,7 +135,7 @@ def load_unlabelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    data = data[0:15000]
+    data = data[:15000] # 15000
     print(data.shape)
 
     return data
@@ -155,11 +188,14 @@ def load_preprocess():
     data_test_vis = data_test # unnormalized -, uncropped +
 
     # cropping:
-    crop_left = int(data.shape[3]*0.1) # start from left
-    crop_right = int(data.shape[3]*0.85) # end at right
-    #data = data[:,:,:,crop_left:crop_right,:]
+    crop_left = int(data.shape[3]*0.15) # start from left 10 15
+    crop_right = int(data.shape[3]*0.8) # end at right 15 20
+    crop_bottom = int(data.shape[2]*0.83) # remove bottom 10 15 18 17+ 16- 15still 12bad
+    data = data[:,:,:,crop_left:crop_right,:]
     data_train = data_train[:,:,:,crop_left:crop_right,:]
+    data_train = data_train[:,:,:crop_bottom,:,:]
     data_test = data_test[:,:,:,crop_left:crop_right,:]
+    data_test = data_test[:,:,:crop_bottom,:,:]
     print("train set cropped: ", data_train.shape)
     print("test set:", data_test.shape, len(names))
 
@@ -187,13 +223,19 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data:
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
         pkl_file = open(fn, 'rb')
-        data = pickle.load(pkl_file)
+        data_test = pickle.load(pkl_file)
         print("Test data were loaded from pickle")
+        pkl_file.close
+
+        fn = os.path.join(dir_res, "train_data.pkl")
+        pkl_file = open(fn, 'rb')
+        data_train = pickle.load(pkl_file)
+        print("Train data were loaded from pickle")
         pkl_file.close
 
         fn = os.path.join(dir_res, "test_labels.pkl")
@@ -202,28 +244,41 @@ def main():
         print("Test labels were loaded from pickle")
         pkl_file.close
 
-        test_data = np.asarray(data)
+        test_data = np.asarray(data_test)
         print(test_data.shape)
+        train_data = np.asarray(data_train)
+        print(train_data.shape)
 
         names = labels
         print(len(names))
 
+        train_test_data = np.concatenate((train_data, test_data), axis=0)
+
         encoded_vec = 0 # don't need it
+        encoded_vec_train = 0 # don't need it
+        encoded_vec_train_test = 0 # don't need it
     else:
         # preprocess the data and save test subset as pickle
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
 
-        fn = os.path.join(dir_res, "test_data.pkl")
-        pkl_file = open(fn, 'wb')
-        pickle.dump(x_test, pkl_file)
-        print("Test data were saved as pickle")
-        pkl_file.close
+        # save it only once
+        # fn = os.path.join(dir_res, "test_data.pkl")
+        # pkl_file = open(fn, 'wb')
+        # pickle.dump(x_test, pkl_file)
+        # print("Test data were saved as pickle")
+        # pkl_file.close
 
-        fn = os.path.join(dir_res, "test_labels.pkl")
-        pkl_file = open(fn, 'wb')
-        pickle.dump(names, pkl_file)
-        print("Test labels were saved as pickle")
-        pkl_file.close
+        # fn = os.path.join(dir_res, "train_data.pkl")
+        # pkl_file = open(fn, 'wb')
+        # pickle.dump(x_train, pkl_file)
+        # print("Train data were saved as pickle")
+        # pkl_file.close
+
+        # fn = os.path.join(dir_res, "test_labels.pkl")
+        # pkl_file = open(fn, 'wb')
+        # pickle.dump(names, pkl_file)
+        # print("Test labels were saved as pickle")
+        # pkl_file.close
 
     model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5", \
     "3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5", \
@@ -241,7 +296,19 @@ def main():
     "3d_beta0.1_vae_cropped_256_relu_norm_1.h5", "3d_beta0.1_vae_cropped_256_relu_norm_2.h5", \
     "3d_beta0.1_vae_cropped_256_relu_norm_3.h5", "3d_beta0.1_vae_cropped_256_relu_norm_4.h5", "3d_beta0.1_vae_cropped_256_relu_norm_5.h5"} # 20 ep
 
-    # model_names = {"3d_beta_vae_cropped_256_relu_norm_1.h5", "3d_beta_vae_cropped_256_relu_norm_2.h5"}
+    #model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5"}
+    #"3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5"}
+
+    model_names = {"3d_beta0.1_vae_croppedb_256_relu_norm_1.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_2.h5", \
+    "3d_beta0.1_vae_croppedb_256_relu_norm_3.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_4.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_5.h5",
+    "3d_vae_croppedb_256_relu_norm_1.h5", "3d_vae_croppedb_256_relu_norm_2.h5",
+    "3d_vae_croppedb_256_relu_norm_3.h5", "3d_vae_croppedb_256_relu_norm_4.h5", "3d_vae_croppedb_256_relu_norm_5.h5",
+    "3d_beta2_vae_croppedb_256_relu_norm_1.h5", "3d_beta2_vae_croppedb_256_relu_norm_2.h5",
+    "3d_beta2_vae_croppedb_256_relu_norm_3.h5", "3d_beta2_vae_croppedb_256_relu_norm_4.h5", "3d_beta2_vae_croppedb_256_relu_norm_5.h5",
+    "3d_beta4_vae_croppedb_256_relu_norm_1.h5", "3d_beta4_vae_croppedb_256_relu_norm_2.h5",
+    "3d_beta4_vae_croppedb_256_relu_norm_3.h5", "3d_beta4_vae_croppedb_256_relu_norm_4.h5", "3d_beta4_vae_croppedb_256_relu_norm_5.h5",
+    "3d_beta10_vae_croppedb_256_relu_norm_1.h5", "3d_beta10_vae_croppedb_256_relu_norm_2.h5",
+    "3d_beta10_vae_croppedb_256_relu_norm_3.h5", "3d_beta10_vae_croppedb_256_relu_norm_4.h5", "3d_beta10_vae_croppedb_256_relu_norm_5.h5"}
 
     dataset = "droplet"
     title = '3D VAE: ' # for subtitle
@@ -249,22 +316,21 @@ def main():
     for model_name in model_names:
         print("model_name:", model_name)
 
-        model = model_name[:-5]
+        model = model_name[:-5] # [:-5]
         dir_res_m = os.path.join(dir_res, model)
         print("Saved here:", dir_res_m)
-        model = model_name[:-3]
+        model = model_name[:-3] # [:-3]
         dir_res_model = os.path.join(dir_res_m, model)
         os.makedirs(dir_res_model, exist_ok=True)
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
 
         project = True
-        interpolation = True
+        interpolation = False
         if load_data:
             interpolation = False
         latent_vector = True
 
-        #load_data = False
         if not load_data:
             # encoded_vec will be predicted with encoder
 
@@ -277,7 +343,7 @@ def main():
             generic = False
             dense_dim = 1024
             latent_dim = 512
-            epochs = 0 # 500
+            epochs = 10 # 500
             conv_layers = 4
             stride = (3, 2, 2)
             beta_vae = False
@@ -285,11 +351,6 @@ def main():
             regularization = False
 
             # no need to use additional regularization, as encoding to a distribution itself introduces regularisation.
-
-
-            #model_names = {"3d_vae_cropped_256_relu_norm_1.h5"}
-            #for model_name in model_names:
-            #    print("model_name:", model_name)
 
             # Grid search in: latent_dim, activation, beta
             if("relu" in model_name):
@@ -404,7 +465,7 @@ def main():
             # instantiate VAE model
             outputs = decoder(encoder(inputs)[2])
             vae = Model(inputs, outputs, name='vae')
-            #vae.summary()
+            # vae.summary()
             # with open(filename, "a") as text_file:
             #     vae.summary(print_fn=lambda x: text_file.write(x + '\n'))
 
@@ -418,11 +479,13 @@ def main():
                     vae.summary(print_fn=lambda x: text_file.write(x + '\n'))
 
             try:
-                f = open(model_name)
-                vae.load_weights(model_name)
-                print("Loaded", model_name, "model from disk")
+                dir_model_name = os.path.join("weights", model_name)
+                f = open(dir_model_name)
+                vae.load_weights(dir_model_name)
+                print("Loaded", dir_model_name, "model from disk")
             except IOError:
-                print(model_name, "model not accessible")
+                print(dir_model_name, "model not accessible")
+                epochs = 20 # train if no weights found
 
             #autoencoder.compile(optimizer='adadelta', loss='mse') #
             lr = 0.0005
@@ -462,7 +525,7 @@ def main():
             early_stopping = [EarlyStopping(monitor='val_loss',
                                 min_delta=0,
                                 patience=10,
-                                verbose=2, mode='auto',
+                                verbose=1, mode='auto',
                                 restore_best_weights=True)]
             
             # train the whole autoencoder
@@ -475,7 +538,7 @@ def main():
                         #callbacks=[TensorBoard(log_dir='/tmp/autoencoder')]))
             
             if(epochs):
-                vae.save_weights(model_name)
+                vae.save_weights(dir_model_name)
                 print("Saved", model_name, "model weights to disk")
 
                 loss_history = history_callback.history
@@ -487,17 +550,31 @@ def main():
                     text_file.write(str(np_loss_history))
 
             test_data = x_test # x_test x_train
+            train_data = x_train
+            # names = "" # no labels for x_train
+            # test_data = x_train and x_test
+
+            # load_data = False # for now
+            train_test_data = 0
+            # encoded_vec = 0 # don't need it
+            encoded_vec_train = 0 # don't need it
+            encoded_vec_train_test = 0 # don't need it
 
             latent_representation = encoder.predict(test_data)
             encoded_vec = latent_representation[2]
             print('encoded_vec after reparam trick:', encoded_vec.shape) # (batch-size, latent_dim)
-            fig=plt.figure()
-            plt.tight_layout()
-            #fig.set_size_inches(8, 6)
-            plt.suptitle('3d_vae: Latent vectors')
-            plt.imshow(encoded_vec)
-            fig.savefig('{}/latent.png'.format(dir_res_model))
-            plt.close(fig)
+            # fig=plt.figure()
+            # plt.tight_layout()
+            # #fig.set_size_inches(8, 6)
+            # plt.suptitle('3d_vae: Latent vectors')
+            # plt.imshow(encoded_vec)
+            # fig.savefig('{}/latent.png'.format(dir_res_model))
+            # plt.close(fig)
+
+            # clustering perf eval in the feature space
+            n_clusters = 8
+            kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
+            # continue
 
             decoded_imgs = vae.predict(test_data)
             print('decoded_imgs:', decoded_imgs.shape)
@@ -524,6 +601,27 @@ def main():
             # draw original and reconstructed data
             draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset, temporal)
 
+            # # train data
+            # latent_representation = encoder.predict(train_data)
+            # encoded_vec_train = latent_representation[2]
+            # print('encoded_vec_train after reparam trick:', encoded_vec_train.shape) # (batch-size, latent_dim)
+
+            # decoded_imgs = vae.predict(train_data)
+            # print('decoded_imgs:', decoded_imgs.shape)
+            # print('dec max:', decoded_imgs.max())
+            # print('dec min:', decoded_imgs.min())
+
+            train_test_data = np.concatenate((train_data, test_data), axis=0)
+            # train and test data
+            latent_representation = encoder.predict(train_test_data)
+            encoded_vec_train_test = latent_representation[2]
+            print('encoded_vec_train_test after reparam trick:', encoded_vec_train_test.shape) # (batch-size, latent_dim)
+
+            decoded_imgs = vae.predict(train_test_data)
+            print('decoded_imgs:', decoded_imgs.shape)
+            print('dec max:', decoded_imgs.max())
+            print('dec min:', decoded_imgs.min())
+
         if (project == True):
             # project using PCA (then t-sne) and visualize the scatterplot
             #print("PCA projection")
@@ -533,13 +631,14 @@ def main():
             print("t-SNE projection")
             title_tsne = title + 'Latent -> t-SNE scatterplot, perp='
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=20)
-            tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, temporal=True, perp=30)
+            # tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, temporal=True, perp=30)
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=40)
 
             # project using UMAP and visualize the scatterplot
             print("UMAP projection")
             title_umap = title + 'Latent -> UMAP scatterplot'
-            umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names, temporal=True)
+            # umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names, temporal=True)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names, temporal=True)
 
         if (interpolation == True):
             #Interpolation in the latent space

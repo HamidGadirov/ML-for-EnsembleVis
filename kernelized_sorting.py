@@ -149,35 +149,20 @@ def cmp(a, b):
     return (a > b) - (a < b)
 
 
-def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, title, proj, temporal):
-
-    if (dataset == "mnist"):
-        return
-    
-    ### Projection to regular grid (Kernelized sorting)
-    print("Grid Projection...")
-    print("data:", test_data.shape) # (300, 3, 160, 224, 1)
+def kernelized_sorting(encoded_vec_2d, test_data, dataset, dir_res_model, title, proj, temporal):
+    ### Kernelized sorting
+    print("Kernelized sorting...")
 
     if(dataset == 'flow'):
-        psize_x = 309 # 441 309 denosing or baseline
-        if("Raw data" in title): # baseline
-            psize_x = 309
+        psize_x = 309 # 441 309
         psize_y = 84
         ino = 6
         jno = 50
     elif(dataset == 'droplet'):
-        # before - 160 168
-        psize_x = 132
-        psize_y = 146 # 224 168 denosing or baseline
-        # if("Raw data" in title): # baseline
-            # psize_y = 168
-        ino = 30 # 30
-        jno = 40 # 40
-    elif(dataset == 'mcmc'):
-        psize_x = 50
-        psize_y = 50
-        ino = 50 #
-        jno = 50 #
+        psize_x = 160
+        psize_y = 168 # 224 168 denosing
+        ino = 20
+        jno = 30
 
     griddata = np.zeros((2,ino*jno))
     griddata[0,] = np.kron(range(1,ino+1),np.ones((1,jno)))
@@ -188,9 +173,6 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
     test_data = test_data[:ino*jno,]
 
     #print(test_data)
-    vmin = test_data.min()
-    vmax = test_data.max()
-    print("vmin, vmax:", vmin, vmax)
 
     # do kernelized sorting procedure
     PI = KS(encoded_vec_2d, griddata.T)
@@ -202,51 +184,14 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
     #encoded_vec_2d_sorted = encoded_vec_2d[i_sorting,]
 
     # now create a regular plot and put images with sorted indices:
-    encoded_vec_2d_sorted = encoded_vec_2d[i_sorting,]
 
     imgdata_sorted = test_data[i_sorting,]
-
-
-    vmin = imgdata_sorted.min()
-    vmax = imgdata_sorted.max()
-    print('range of data:', vmin, vmax)
-    if (dataset == "flow"):
-        vmax = 70 # uncropped - 80
-    if (dataset == "droplet"):
-        vmin = -1.5
-        vmax = 1.5
-    print('range of colormap:', vmin, vmax)
     #imgdata_sorted = test_data # without sorting
     #print(imgdata_sorted.shape)
     #print(imgdata_sorted)
 
     # we have only 1 channel for all data.
-    print("data to visualize:", imgdata_sorted.shape) # (300, 3, 160, 224, 1)
-
-    # border_width = 5
-    # w = imgdata_sorted.shape[3]
-    # h = imgdata_sorted.shape[2]
-
-    # from PIL import Image, ImageOps
-
-    # # Add border and save
-    # imgdata_sorted = ImageOps.expand(imgdata_sorted, border=5, fill=(0,0,0))
-
-    # for x in range(w):
-    #     for y in range(h):
-    #         if (x<border_width
-    #             or y<border_width 
-    #             or x>w-border_width-1 
-    #             or y>h-border_width-1):
-    #                 imgdata_sorted[:,:,y,x,0] = (0.4,0.4,0.4) # color
-
-    # (1.5,1.5,1.5) yellow
-    # (0.8,0.8,0.8) green
-    # (0.4,0.4,0.4) blue
-    # (-0.6,-0.6,-0.6)
-    # (-0.8,-0.8,-0.8)
-    # (-1.1,-1.1,-1.1) 
-    # (-1.3,-1.3,-1.3) 
+    print("data to visualize:", imgdata_sorted.shape) # (500, 3, 160, 224, 1)
     
     irange = range(0,psize_x*ino,psize_x)
     jrange = range(0,psize_y*jno,psize_y)
@@ -256,7 +201,7 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
         for j in range(jno):
             if (temporal):
                 patching[irange[i]:irange[i]+psize_x, jrange[j]:jrange[j]+psize_y] = \
-                    np.reshape(imgdata_sorted[(i)*jno+j,1,], [psize_x, psize_y]) # middle image
+                    np.reshape(imgdata_sorted[(i)*jno+j,0,], [psize_x, psize_y])
             else:
                 patching[irange[i]:irange[i]+psize_x, jrange[j]:jrange[j]+psize_y] = \
                     np.reshape(imgdata_sorted[(i)*jno+j,], [psize_x, psize_y])
@@ -271,19 +216,15 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
     # im = Image.fromarray(patching.astype(np.uint8))
     # im.show()
 
-    # vmin = patching.min()
-    # vmax = patching.max()
-    # print("vmin, vmax:", vmin, vmax)
+    vmin = patching.min()
+    vmax = patching.max()
+    print("vmin, vmax:", vmin, vmax)
 
     fig=plt.figure()
     title += ", frames on grid"
     plt.suptitle(title, fontsize=15)
     plt.axis('off')
-    cmap = 'viridis'
-    # if (dataset == "droplet"):
-    #     cmap='gray'
-
-    plt.imshow(patching, cmap=cmap, vmin=vmin, vmax=vmax)
+    plt.imshow(patching, cmap='viridis', vmin=vmin, vmax=vmax)
     # if(dataset == 'droplet'):
     #     #plt.imshow(patching.astype(np.uint8)) #, cmap='viridis', vmin=vmin, vmax=vmax)
     #     plt.imshow(patching, cmap='viridis', vmin=vmin, vmax=vmax)
@@ -296,61 +237,8 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
     if (proj == "tsne"):
         fig.savefig('{}/latent_tsne_grid.png'.format(dir_res_model), dpi=300)
     if (proj == "umap"):
-        fig.savefig('{}/latent_umap_grid_train.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_grid.png'.format(dir_res_model), dpi=300)
     plt.close(fig)
 
-    # if(dataset == 'droplet'):
-    #     names = [names[i] for i in i_sorting]
-    # print(names)
-    #     # 132 146
-    #     import matplotlib.patches as patches
-    #     fig, ax = plt.subplots()
-    #     ax.imshow(patching, cmap=cmap, vmin=vmin, vmax=vmax)
-    #     rect = patches.Rectangle((146+1, 132+1), 146-5, 132-5, linewidth=1, edgecolor='yellow', facecolor='none')
-    #     ax.add_patch(rect)
-    #     plt.show()
-    #     fig.savefig('{}/latent_umap_grid_frame.png'.format(dir_res_model), dpi=300)
 
-    #     fig, ax = plt.subplots()
-    #     ax.imshow(patching, cmap=cmap, vmin=vmin, vmax=vmax)
-    #     k = 0
-    #     for i in range(ino):
-    #         for j in range(jno):
-    #             # print(names[k])
-    #             if names[k]=='bubble': c='indigo' 
-    #             if names[k]=='bubble-splash': c='purple'
-    #             if names[k]=='column': c='orange'
-    #             if names[k]=='crown': c='darkblue'
-    #             if names[k]=='crown-splash': c='mediumblue'
-    #             if names[k]=='drop': c='limegreen'
-    #             if names[k]=='none': c='yellow'
-    #             if names[k]=='splash': c='dodgerblue'
-    #             rect = patches.Rectangle((j*(146), i*(132)), 146-5, 132-5, linewidth=0.5, edgecolor=c, facecolor='none')
-    #             ax.add_patch(rect)
-    #             k += 1
-    #     print(k)
-    #     plt.show()
-    #     fig.savefig('{}/latent_umap_grid_frames.png'.format(dir_res_model), dpi=300)
 
-    if(dataset == 'mcmc'):
-        names = [names[i] for i in i_sorting]
-        # print(names)
-        # 50 50
-        import matplotlib.patches as patches
-        fig, ax = plt.subplots()
-        ax.imshow(patching, cmap=cmap, vmin=vmin, vmax=vmax)
-        k = 0
-        for i in range(ino):
-            for j in range(jno):
-                # print(names[k])
-                if names[k]=='2': c='purple' 
-                if names[k]=='3': c='mediumblue'
-                if names[k]=='4': c='orange'
-                if names[k]=='5': c='limegreen'
-                if names[k]=='1': c='yellow'
-                rect = patches.Rectangle((j*(50), i*(50)), 50-2, 50-2, linewidth=0.5, edgecolor=c, facecolor='none')
-                ax.add_patch(rect)
-                k += 1
-        print(k)
-        plt.show()
-        fig.savefig('{}/latent_umap_grid_frames.png'.format(dir_res_model), dpi=300)

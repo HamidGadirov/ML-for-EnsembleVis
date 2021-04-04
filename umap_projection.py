@@ -164,12 +164,7 @@ def draw_movement(encoded_vec_2d, names, labels, title, dir_res_model):
     fig.savefig('{}/latent_umap_scatter_labels_movement.png'.format(dir_res_model), dpi=300)
     plt.close(fig)
 
-def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model, dataset="", names="", temporal=False):
-
-    # if encoded_vec is True - not loading from pickle
-    print(dir_res_model)
-    fn = os.path.join(dir_res_model, "encoded_umap_2d.pkl")
-    #print(encoded_vec)
+def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, x_train, train_test_data, latent_vector, title, dir_res_model, dataset="", names="", temporal=False):
 
     # pkl_file = open("sampled-300_labelled_names.pkl", 'wb')
     # pickle.dump(cylinder_names, pkl_file)
@@ -202,20 +197,211 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
 
         # Save the encoded data 
         #print(type(encoded_vec_2d))
+        # if encoded_vec is True - not loading from pickle
+        print(dir_res_model)
+        fn = os.path.join(dir_res_model, "encoded_umap_2d.pkl")
+        #print(encoded_vec)
         pkl_file = open(fn, 'wb')
         pickle.dump(encoded_vec_2d, pkl_file)
         print("Encoding vecs were saved to pickle")
         pkl_file.close
 
+        if (dataset == "droplet" or dataset == "mcmc"):
+
+            #  clustering in the projection
+            from sklearn.cluster import KMeans
+            kmeans = KMeans(n_clusters=8, random_state=0).fit(encoded_vec_2d)
+            # print(kmeans.labels_)
+
+            # Clustering performance evaluation of the proj
+            unique_names, indexed_names = np.unique(names, return_inverse=True)
+            # print(unique_names, indexed_names)
+            
+            from sklearn import metrics
+            labels_true = indexed_names
+            labels_pred = kmeans.labels_
+            rand_index = metrics.rand_score(labels_true, labels_pred)
+            print("Rand index:", rand_index)
+
+            # return
+
+            # # encoded_vec_train
+            # encoded_vec_train = (encoded_vec_train - encoded_vec_train.mean()) / encoded_vec_train.std()
+            # #print('tsne encoded_vec.mean:', encoded_vec.mean())
+            # #print('tsne encoded_vec.std:', encoded_vec.std())
+
+            # if (latent_vector == False):
+            #     encoded_vec_resized = encoded_vec_train
+            #     encoded_vec_resized = np.reshape( encoded_vec_resized, (encoded_vec_train.shape[0], encoded_vec_train.shape[1]*encoded_vec_train.shape[2]*encoded_vec_train.shape[3]) )
+            #     print(encoded_vec_resized.shape)
+            #     encoded_vec_train = encoded_vec_resized
+
+            # start_time = time.time()
+
+            # # fit = umap.UMAP(n_neighbors=50, min_dist=1.0)
+            # # fit = umap.UMAP(min_dist=0.5)
+            # fit = umap.UMAP(min_dist=1.0)
+            # encoded_vec_2d_train = fit.fit_transform(encoded_vec_train) # encoded_vec
+
+            # elapsed_time = time.time() - start_time
+            # print("UMAP accuracy was computed in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
+
+            # # encoded_vec_2d = encoded_vec # 2D dim latent space
+
+            # # Save the encoded data 
+            # #print(type(encoded_vec_2d_train))
+            # fn = os.path.join(dir_res_model, "encoded_umap_2d_train.pkl")
+            # pkl_file = open(fn, 'wb')
+            # pickle.dump(encoded_vec_2d_train, pkl_file)
+            # print("Encoding vecs train were saved to pickle")
+            # pkl_file.close
+
+
+            # encoded_vec_train_test
+            start_time = time.time()
+            # fit = umap.UMAP(n_neighbors=50, min_dist=1.0)
+            # fit = umap.UMAP(min_dist=0.5)
+            fit = umap.UMAP(min_dist=1.0)
+            print(encoded_vec_train_test.shape)
+            encoded_vec_2d_train_test = fit.fit_transform(encoded_vec_train_test) # encoded_vec
+
+            elapsed_time = time.time() - start_time
+            print("UMAP accuracy was computed in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
+
+            # encoded_vec_2d = encoded_vec # 2D dim latent space
+
+            # Save the encoded data 
+            #print(type(encoded_vec_2d_train))
+            fn = os.path.join(dir_res_model, "encoded_umap_2d_train_test.pkl")
+            pkl_file = open(fn, 'wb')
+            pickle.dump(encoded_vec_2d_train_test, pkl_file)
+            print("Encoding vecs train test were saved to pickle")
+            pkl_file.close
+
+
     else: # load directly from pickle
         if not ("Raw data" in title):
+            fn = os.path.join(dir_res_model, "encoded_umap_2d.pkl")
             pkl_file = open(fn, 'rb')
             encoded_vec_2d = pickle.load(pkl_file)
             print("Encoding vecs were loaded from pickle")
             encoded_vec_2d = np.asarray(encoded_vec_2d)
             print(encoded_vec_2d.shape)
 
+            if (dataset == "droplet" or dataset == "mcmc"):
+                # fn = os.path.join(dir_res_model, "encoded_umap_2d_train.pkl")
+                # pkl_file = open(fn, 'rb')
+                # encoded_vec_2d_train = pickle.load(pkl_file)
+                # print("Encoding vecs train were loaded from pickle")
+                # encoded_vec_2d_train = np.asarray(encoded_vec_2d_train)
+                # print(encoded_vec_2d_train.shape)
+
+                fn = os.path.join(dir_res_model, "encoded_umap_2d_train_test.pkl")
+                pkl_file = open(fn, 'rb')
+                encoded_vec_2d_train_test = pickle.load(pkl_file)
+                print("Encoding vecs train test were loaded from pickle")
+                encoded_vec_2d_train_test = np.asarray(encoded_vec_2d_train_test)
+                print(encoded_vec_2d_train_test.shape)
+
     filename = os.path.join(dir_res_model, "metrics.txt")
+
+    if (dataset == "mcmc"):
+        knn_title = "UMAP"
+
+        if("Raw data" in title): # baseline
+            test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
+            fit = umap.UMAP(min_dist=1.0)
+            encoded_vec_2d = fit.fit_transform(test_data_tmp) # encoded_vec
+
+        if (names):
+            # encoded_vec_2d_ = encoded_vec_2d
+            # encoded_vec_2d = encoded_vec # features
+            train_size = 8000
+            encoded_vec_2d = encoded_vec_2d_train_test[train_size:,...]
+            print(encoded_vec_2d.shape)
+            separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
+            print("Separability:", separability)
+            print(len(names), "labels considered")
+
+            with open(filename, "w") as text_file:
+                text_file.write("Separability ")
+                text_file.write("UMAP %f \n" % separability)
+                # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+
+            # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
+            # of a projected point that has the same class label
+            fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
+            print("Neighborhood hit (fraction):", fraction)
+            with open(filename, "a") as text_file:
+                text_file.write("Neighborhood_hit ")
+                text_file.write("UMAP %f \n" % fraction)
+
+            # Distance from cluster centers metric
+            dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
+            print("Mean of distances for all classes:", dist_to_centers_mean)
+            with open(filename, "a") as text_file:
+                text_file.write("Variance ")
+                text_file.write("UMAP %f \n" % dist_to_centers_mean)
+
+            print("Labels:", len(names))
+            print("unique:", np.unique(names))
+            unique_names, indexed_names = np.unique(names, return_inverse=True)
+            print(unique_names, indexed_names)
+            # draw a scatterplot with colored labels
+            fig, ax = plt.subplots()
+            # colors = ['tab:purple', 'tab:darkviolet', 'tab:blueviolet', 'tab:royalblue', 'tab:lime', 'tab:yellow', 'tab:blue']
+            colors = []
+            for i in indexed_names: # 0 1 2 3 4
+                colors.append('purple' if i==1 else 'mediumblue' if i==2 else 'orange' if i==3 else 'limegreen' if i==4 else 'yellow')
+            # for train data - color = gray
+
+            # encoded_vec_2d = encoded_vec_2d_
+
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=colors)
+            #plt.legend(unique_names)
+            # produce a legend with the unique colors from the scatter
+            handles = scatter.legend_elements()[0]
+            labels = unique_names
+            # legend1 = ax.legend(handles, labels)
+            # ax.add_artist(legend1)
+
+            #legend1(loc=1,prop={'size': 6})
+            #ax.legend(loc=1, fontsize = 12)
+            #cbar= plt.colorbar()
+            knn_title = title
+            # knn_title += ", separability="
+            # knn_title += str("%.3f" % separability)
+            knn_title += ", neigh hit="
+            knn_title += str("%.3f" % fraction)
+            knn_title += ", spread="
+            knn_title += str("%.3f" % dist_to_centers_mean)
+            #plt.suptitle(knn_title, fontsize=15)
+            #ax.set_title(knn_title, fontsize=17)
+        else:
+            # no labels
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c='gray')
+            knn_title = title
+
+        #ax.set_title(knn_title, fontsize=17)
+        plt.axis('off')
+        plt.tight_layout()
+        fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
+        plt.close(fig)
+
+        # full ensemble
+        # encoded_vec_train_test
+        fig, ax = plt.subplots()
+        train_size = 8000
+        scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='gray')
+        scatter = plt.scatter(encoded_vec_2d_train_test[train_size:, 0], encoded_vec_2d_train_test[train_size:, 1], c=colors)
+
+        plt.axis('off')
+        plt.show()
+        plt.tight_layout()
+        #fig.set_size_inches(12, 9)
+        fig.savefig('{}/latent_umap_scatter_labels_full.png'.format(dir_res_model), dpi=300)
+        plt.close(fig)
 
     # kNN for separability flow dataset
     if (dataset == "flow"):
@@ -292,7 +478,8 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
         knn_title += ", spread="
         knn_title += str("%.3f" % dist_to_centers_mean)
         #plt.suptitle(knn_title, fontsize=15)
-        ax.set_title(knn_title, fontsize=17)
+
+        #ax.set_title(knn_title, fontsize=17)
         plt.axis('off')
         plt.tight_layout()
         fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
@@ -302,12 +489,51 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
         
     elif (dataset == "droplet"):
 
+        from scipy.cluster.hierarchy import dendrogram
+        from sklearn.cluster import AgglomerativeClustering
+
+        def plot_dendrogram(model, **kwargs):
+            # Create linkage matrix and then plot the dendrogram
+
+            # create the counts of samples under each node
+            counts = np.zeros(model.children_.shape[0])
+            n_samples = len(model.labels_)
+            for i, merge in enumerate(model.children_):
+                current_count = 0
+                for child_idx in merge:
+                    if child_idx < n_samples:
+                        current_count += 1  # leaf node
+                    else:
+                        current_count += counts[child_idx - n_samples]
+                counts[i] = current_count
+
+            linkage_matrix = np.column_stack([model.children_, model.distances_,
+                                            counts]).astype(float)
+
+            # Plot the corresponding dendrogram
+            dendrogram(linkage_matrix, **kwargs)
+
+        # setting distance_threshold=0 ensures we compute the full tree.
+        model = AgglomerativeClustering(distance_threshold=0, n_clusters=None)
+
+        # model = model.fit(encoded_vec_2d_train_test) # encoded_vec_2d
+        # plt.title('Hierarchical Clustering Dendrogram')
+        # # plot the top three levels of the dendrogram
+        # plot_dendrogram(model, truncate_mode='level', p=8)
+        # plt.xlabel("Number of points in node (or index of point if no parenthesis).")
+        # plt.show()
+        # plt.savefig('{}/hierarch_clust.png'.format(dir_res_model), dpi=300)
+
         knn_title = "UMAP"
 
         if("Raw data" in title): # baseline
+            test_data = train_test_data # full ensemble
             test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
             fit = umap.UMAP(min_dist=1.0)
             encoded_vec_2d = fit.fit_transform(test_data_tmp) # encoded_vec
+
+            test_test_data_tmp = np.reshape(train_test_data, (train_test_data.shape[0], train_test_data.shape[1]*train_test_data.shape[2]))
+            encoded_vec_2d_train_test = fit.fit_transform(test_test_data_tmp) # encoded_vec
 
         # # measure the uncertainty
         # accuracy = []
@@ -327,60 +553,99 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
         # acc_mean, acc_std = statistics.mean(accuracy), statistics.stdev(accuracy)
         # print("Accuracy mean and std:", acc_mean, acc_std)
 
-        separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
-        print("Separability:", separability)
-        print(len(names), "labels considered")
+        if (names):
+            # encoded_vec_2d_ = encoded_vec_2d
+            # encoded_vec_2d = encoded_vec # features
+            if (temporal):
+                train_size = 4000
+            else:
+                train_size = 9600
+            encoded_vec_2d = encoded_vec_2d_train_test[train_size:,...]
+            print(encoded_vec_2d.shape)
 
-        with open(filename, "a") as text_file:
-            text_file.write("Separability ")
-            text_file.write("UMAP %f \n" % separability)
-            # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
+            separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
+            print("Separability:", separability)
+            print(len(names), "labels considered")
 
-        # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
-        # of a projected point that has the same class label
-        fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
-        print("Neighborhood hit (fraction):", fraction)
-        with open(filename, "a") as text_file:
-            text_file.write("Neighborhood_hit ")
-            text_file.write("UMAP %f \n" % fraction)
+            with open(filename, "w") as text_file:
+                text_file.write("Separability ")
+                text_file.write("UMAP %f \n" % separability)
+                # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
 
-        # Distance from cluster centers metric
-        dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
-        print("Mean of distances for all classes:", dist_to_centers_mean)
-        with open(filename, "a") as text_file:
-            text_file.write("Variance ")
-            text_file.write("UMAP %f \n" % dist_to_centers_mean)
+            # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
+            # of a projected point that has the same class label
+            fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
+            print("Neighborhood hit (fraction):", fraction)
+            with open(filename, "a") as text_file:
+                text_file.write("Neighborhood_hit ")
+                text_file.write("UMAP %f \n" % fraction)
 
-        print("Labels:", len(names))
-        print("unique:", np.unique(names))
-        unique_names, indexed_names = np.unique(names, return_inverse=True)
-        #print(unique_names, indexed_names)
-        # draw a scatterplot with colored labels
-        fig, ax = plt.subplots()
-        scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=indexed_names)
-        #plt.legend(unique_names)
-        # produce a legend with the unique colors from the scatter
-        handles = scatter.legend_elements()[0]
-        labels = unique_names
-        legend1 = ax.legend(handles, labels)
-        ax.add_artist(legend1)
-        #legend1(loc=1,prop={'size': 6})
-        #ax.legend(loc=1, fontsize = 12)
-        #cbar= plt.colorbar()
-        knn_title = title
-        # knn_title += ", separability="
-        # knn_title += str("%.3f" % separability)
-        knn_title += ", neigh hit="
-        knn_title += str("%.3f" % fraction)
-        knn_title += ", spread="
-        knn_title += str("%.3f" % dist_to_centers_mean)
-        #plt.suptitle(knn_title, fontsize=15)
-        ax.set_title(knn_title, fontsize=17)
+            # Distance from cluster centers metric
+            dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
+            print("Mean of distances for all classes:", dist_to_centers_mean)
+            with open(filename, "a") as text_file:
+                text_file.write("Variance ")
+                text_file.write("UMAP %f \n" % dist_to_centers_mean)
+
+            print("Labels:", len(names))
+            print("unique:", np.unique(names))
+            unique_names, indexed_names = np.unique(names, return_inverse=True)
+            print(unique_names, indexed_names)
+            
+            # draw a scatterplot with colored labels
+            fig, ax = plt.subplots()
+            # colors = ['tab:purple', 'tab:darkviolet', 'tab:blueviolet', 'tab:royalblue', 'tab:lime', 'tab:yellow', 'tab:blue']
+            colors = []
+            for i in indexed_names:
+                colors.append('indigo' if i==0 else 'purple' if i==1 else 'orange' if i==2 else 'darkblue' if i==3 \
+                    else 'mediumblue' if i==4 else 'limegreen' if i==5 else 'yellow' if i==6 else 'dodgerblue')
+            # for train data - color = gray
+
+            # encoded_vec_2d = encoded_vec_2d_
+
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1], c=colors)
+            #plt.legend(unique_names)
+            # produce a legend with the unique colors from the scatter
+            handles = scatter.legend_elements()[0]
+            labels = unique_names
+            # legend1 = ax.legend(handles, labels)
+            # ax.add_artist(legend1)
+
+            #legend1(loc=1,prop={'size': 6})
+            #ax.legend(loc=1, fontsize = 12)
+            #cbar= plt.colorbar()
+            knn_title = title
+            # knn_title += ", separability="
+            # knn_title += str("%.3f" % separability)
+            knn_title += ", neigh hit="
+            knn_title += str("%.3f" % fraction)
+            knn_title += ", spread="
+            knn_title += str("%.3f" % dist_to_centers_mean)
+            #plt.suptitle(knn_title, fontsize=15)
+            #ax.set_title(knn_title, fontsize=17)
+        else:
+            # no labels
+            fig, ax = plt.subplots()
+            scatter = plt.scatter(encoded_vec_2d[:, 0], encoded_vec_2d[:, 1])
+
         plt.axis('off')
-        #plt.show()
+        plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
         fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
+        plt.close(fig)
+
+        # full ensemble
+        # encoded_vec_train_test
+        fig, ax = plt.subplots()
+        scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='gray')
+        scatter = plt.scatter(encoded_vec_2d_train_test[train_size:, 0], encoded_vec_2d_train_test[train_size:, 1], c=colors)
+
+        plt.axis('off')
+        plt.show()
+        plt.tight_layout()
+        #fig.set_size_inches(12, 9)
+        fig.savefig('{}/latent_umap_scatter_labels_full.png'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
     if (dataset == "mnist"):
@@ -427,8 +692,9 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
         # produce a legend with the unique colors from the scatter
         handles = scatter.legend_elements()[0]
         labels = unique_names
-        legend1 = ax.legend(handles, labels)
-        ax.add_artist(legend1)
+        # legend1 = ax.legend(handles, labels)
+        # ax.add_artist(legend1)
+
         #cbar= plt.colorbar()
         knn_title = title
         # knn_title += ", separability="
@@ -462,10 +728,27 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
 
     ### Kernelized sorting
     proj = "umap"
-    grid_projection(encoded_vec_2d, test_data, dataset, dir_res_model, title, proj, temporal)
+    # if (dataset == "droplet"):
+    #     test_data = x_train # more data
+    #     encoded_vec_2d = encoded_vec_2d_train
+    # grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, title, proj, temporal)
 
-    x = encoded_vec_2d[:, 0]
-    y = encoded_vec_2d[:, 1]
+    # test_data =  train_test_data # x_train # more data
+    # encoded_vec_2d = encoded_vec_2d_train_test
+    # train_size = 4000
+    # encoded_vec_2d = encoded_vec_2d[train_size-600:]
+    # print(encoded_vec_2d.shape)
+    # encoded_vec_2d_[:600] = np.expand_dims(encoded_vec_2d[:600], axis=-1)
+    # encoded_vec_2d[:600] = 
+    # encoded_vec_2d_[600:]= 
+
+    # test_data = test_data[train_size-600:]
+    # print(test_data.shape)
+    # test_data[:600] = np.expand_dims(test_data[:600], axis=-1)
+
+    # print(encoded_vec_2d.shape)
+    # print(test_data.shape)
+    # grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, title, proj, temporal)
 
     if (temporal):
         model_name="3d_beta-vae"
@@ -480,8 +763,10 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
     if (dataset == "mnist"):
         zoom = 0.6
     if (dataset == "droplet"):
-        zoom = 0.15
+        zoom = 0.1 # 0.15
     if (dataset == "flow"):
+        zoom = 0.15
+    if (dataset == "mcmc"):
         zoom = 0.15
 
         # annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
@@ -538,6 +823,13 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
 
     # draw a scatterplot with images and annotations
     #fig=plt.figure()
+    # if (dataset == "droplet" or dataset == "mcmc"):
+    #     test_data = train_test_data # full ensemble
+    print(test_data.shape)
+
+    x = encoded_vec_2d[:, 0]
+    y = encoded_vec_2d[:, 1]
+
     fig, ax = plt.subplots()
     if (temporal == True):
         print("3D data")
@@ -557,7 +849,7 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
     #     #fig.canvas.mpl_connect("motion_notify_event", hover)
 
     title += ', frames'
-    ax.set_title(title, fontsize=17)
+    #ax.set_title(title, fontsize=17)
     #plt.suptitle(title, fontsize=15)
 
     # ZoomPan scrollig
@@ -577,3 +869,42 @@ def umap_projection(encoded_vec, test_data, latent_vector, title, dir_res_model,
     # filename = os.path.join(model_name, "tsne_scatter_images.png")
     # fig.savefig(filename)
     plt.close(fig)
+
+    # full ensemble
+    if (dataset == "droplet" or dataset == "mcmc"):
+        test_data = train_test_data # full ensemble
+        print(test_data.shape)
+        x = encoded_vec_2d_train_test[:, 0] # encoded_vec_2d[:, 0]
+        y = encoded_vec_2d_train_test[:, 1] # encoded_vec_2d[:, 1]
+
+        fig, ax = plt.subplots()
+        if (temporal == True):
+            print("3D data")
+            #image_path = test_data[0,0,:,:,0]
+            im = im_scatter(x, y, test_data, dataset, ax=ax, zoom=zoom, temporal=True)
+        else:
+            #image_path = test_data[0,:,:,0]
+            im = im_scatter(x, y, test_data, dataset, ax=ax, zoom=zoom)
+        #ax.plot(x, y)
+
+        title += ', frames'
+        #ax.set_title(title, fontsize=17)
+        #plt.suptitle(title, fontsize=15)
+
+        # ZoomPan scrollig
+        scale = 1.1
+        zp = ZoomPan()
+        figZoom = zp.zoom_factory(ax, base_scale = scale)
+        figPan = zp.pan_factory(ax)
+
+        #fig.colorbar(im.get_children()[0])
+
+        plt.axis('off')
+        #plt.tight_layout(pad=2)
+        plt.tight_layout() # (pad=2)
+        #fig.set_size_inches(12, 9)
+        #plt.show()
+        fig.savefig('{}/latent_umap_full.png'.format(dir_res_model), dpi=300)
+        # filename = os.path.join(model_name, "tsne_scatter_images.png")
+        # fig.savefig(filename)
+        plt.close(fig)

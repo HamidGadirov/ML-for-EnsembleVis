@@ -52,13 +52,13 @@ def load_labelled_data():
 
     start_time = time.time()
     print("Loading data from pickle dump...")
-    pkl_file = open("droplet_sampled_labelled_data.pkl", 'rb') # droplet_labelled_data_2
+    pkl_file = open("mcmc_labelled_data.pkl", 'rb')
     data = []
     data = pickle.load(pkl_file)
     pkl_file.close
 
     print("Loading names from pickle dump...")
-    pkl_file = open("droplet_sampled_labelled_names.pkl", 'rb') # droplet_labelled_names_2
+    pkl_file = open("mcmc_labelled_names.pkl", 'rb')
     names = []
     names = pickle.load(pkl_file)
     pkl_file.close
@@ -66,12 +66,22 @@ def load_labelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    # if data.shape[0] != len(names):
-    #     input("!!! Inconstintency in data and names !!!")
-    
-    data_sampled = data[:1800,...] # 3000
-    names_sampled = names[:1800]
-    # test_idx = np.random.randint(data.shape[0], size=900) #3D
+    print(data.shape)
+    print(len(names))
+    if data.shape[0] != len(names):
+        input("!!! Inconstintency in data and names !!!")
+    # data = data[0:3000]
+    # names = names[0:3000]
+    from sklearn.utils import shuffle
+    data, names = shuffle(data, names, random_state=0)
+    print("Shuffled test set")
+    print(data.shape)
+    print(len(names))
+    # data = data[0:1000]
+    # names = names[0:1000]
+
+    # #data = data[:600,...]
+    # test_idx = np.random.randint(data.shape[0], size=600)
     # #print(test_idx)
     # data = data[test_idx,]
     # #names = names[test_idx,]
@@ -80,36 +90,13 @@ def load_labelled_data():
     #     names_new.append(names[idx])
     # names = names_new
     # print("Randomized sampling from test data")
-    print(data.shape)
-    print(len(names))
-    print(names[0])
-    print(np.unique(names))
+    # print(data.shape)
+    # print(len(names))
+    # print(names[0])
+    # print(np.unique(names))
 
     # for _ in np.unique(names):
     #     print(_)
-
-    print("Loading data from pickle dump...")
-    pkl_file = open("droplet_labelled_data_2.pkl", 'rb') # droplet_labelled_data_2
-    data = []
-    data = pickle.load(pkl_file)
-    pkl_file.close
-
-    print("Loading names from pickle dump...")
-    pkl_file = open("droplet_labelled_names_2.pkl", 'rb') # droplet_labelled_names_2
-    names = []
-    names = pickle.load(pkl_file)
-    pkl_file.close
-
-    data = data[:3600,...] # 3000
-    names = names[:3600]
-
-    data = np.concatenate((data, data_sampled), axis=0)
-    names = names + names_sampled
-
-    print(data.shape)
-    print(len(names))
-    print(names[0])
-    print(np.unique(names))
 
     return data, names
 
@@ -117,7 +104,7 @@ def load_unlabelled_data():
 
     start_time = time.time()
     print("Loading data from pickle dump...")
-    pkl_file = open("droplet_unlabelled_data.pkl", 'rb')
+    pkl_file = open("mcmc.pkl", 'rb')
     #pkl_file = open("droplet-part.pkl", 'rb')
     data = []
     data = pickle.load(pkl_file)
@@ -126,7 +113,7 @@ def load_unlabelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    data = data[0:9600] # 12000
+    data = data[0:12000] # 12000
     print(data.shape)
 
     return data
@@ -147,25 +134,17 @@ def load_preprocess():
     data_test, names = load_labelled_data() # for test only, 
     data_train = load_unlabelled_data() # for train only, 
 
-    data = np.zeros((data_test.shape[0]+data_train.shape[0], 160, 224, 1))
+    data = np.zeros((data_test.shape[0]+data_train.shape[0], 50, 50))
     data[:data_train.shape[0],] = data_train
     data[data_train.shape[0]:,] = data_test
 
-    dataset = "droplet" # for pca t-sne umap preprocessing vis
+    dataset = "mcmc" # for pca t-sne umap preprocessing vis
 
     visualize_data = False
     data, data_mean, data_std = preprocess(dataset, visualize_data, data) # reshape, visualize, normalize, scale
     print(data.shape)
 
     data = brightness_normalization(data) # test
-
-    # cropping:
-    crop_left = int(data.shape[2]*0.15) # start from left 10 15
-    crop_right = int(data.shape[2]*0.8) # end at right 15 20
-    crop_bottom = int(data.shape[1]*0.83) # remove bottom 10 15 18 17+ 16- 15still 12bad
-    data = data[:,:,crop_left:crop_right,:]
-    data = data[:,:crop_bottom,:,:]
-    print("data cropped: ", data.shape)
 
     # visualize_data = False
     # data, data_mean, data_std = preprocess(dataset, visualize_data, data) # reshape, visualize, normalize, scale
@@ -179,6 +158,10 @@ def load_preprocess():
     data_train, data_val = train_test_split(data_train, test_size=0.2, random_state=1)
     print('train & val', data_train.shape, data_val.shape)
 
+    data_train = np.expand_dims(data_train, axis=-1)
+    data_test = np.expand_dims(data_test, axis=-1)
+    data_val = np.expand_dims(data_val, axis=-1)
+
     x_train, x_test, x_val = data_train, data_test, data_val
 
     return x_train, x_test, x_val, names, data_mean, data_std, data_test_vis
@@ -186,7 +169,7 @@ def load_preprocess():
 def main():
 
     x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
-    dataset = "droplet" 
+    dataset = "mcmc" 
 
     # network parameters
     #input_shape = (image_size, image_size, 1)
@@ -208,11 +191,8 @@ def main():
     # skript: combine 5 experiment: m arc, loss val, all results
     # everything must be fully automated!
 
-    # model_names = {"baseline_norm_crop_relu.h5"}
+    model_names = {"baseline_norm_1.h5", "baseline_norm_2.h5", "baseline_norm_3.h5"}
 
-    model_names = {"baseline_norm_cropb_1.h5", "baseline_norm_cropb_2.h5", 
-    "baseline_norm_cropb_3.h5", "baseline_norm_cropb_4.h5", "baseline_norm_cropb_5.h5"}
-    
     for model_name in model_names:
         print("model_name:", model_name)
 
@@ -245,7 +225,6 @@ def main():
         train_data = 0
         # train_test_data = 0
 
-        dataset = "droplet" # for pca t-sne vis
         title = 'Raw data ' # for baseline subtitle
 
         encoded_vec = np.zeros((300, 128))

@@ -11,6 +11,7 @@ from fully_conn import generate_dense_layers, generate_fully_conn
 #from pca_projection import pca_projection
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
+from kmeans_rand import kmeans_rand
 
 from visualization import visualize_keract, visualize_keras
 from latent_sp_interpolation import interpolate, find_interpolatable
@@ -52,13 +53,13 @@ def load_labelled_data():
 
     start_time = time.time()
     print("Loading data from pickle dump...")
-    pkl_file = open("droplet_labelled_data.pkl", 'rb')
+    pkl_file = open("droplet_sampled_labelled_data.pkl", 'rb') # droplet_labelled_data_2
     data = []
     data = pickle.load(pkl_file)
     pkl_file.close
 
     print("Loading names from pickle dump...")
-    pkl_file = open("droplet_labelled_names.pkl", 'rb')
+    pkl_file = open("droplet_sampled_labelled_names.pkl", 'rb') # droplet_labelled_names_2
     names = []
     names = pickle.load(pkl_file)
     pkl_file.close
@@ -66,22 +67,12 @@ def load_labelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    print(data.shape)
-    print(len(names))
-    if data.shape[0] != len(names):
-        input("!!! Inconstintency in data and names !!!")
-    # data = data[0:3000]
-    # names = names[0:3000]
-    from sklearn.utils import shuffle
-    data, names = shuffle(data, names, random_state=0)
-    print("Shuffled test set")
-    print(data.shape)
-    print(len(names))
-    data = data[0:600]
-    names = names[0:600]
-
-    # #data = data[:600,...]
-    # test_idx = np.random.randint(data.shape[0], size=600)
+    # if data.shape[0] != len(names):
+    #     input("!!! Inconstintency in data and names !!!")
+    
+    data_sampled = data[:1800,...] # 3000
+    names_sampled = names[:1800]
+    # test_idx = np.random.randint(data.shape[0], size=900) #3D
     # #print(test_idx)
     # data = data[test_idx,]
     # #names = names[test_idx,]
@@ -90,13 +81,36 @@ def load_labelled_data():
     #     names_new.append(names[idx])
     # names = names_new
     # print("Randomized sampling from test data")
-    # print(data.shape)
-    # print(len(names))
-    # print(names[0])
-    # print(np.unique(names))
+    print(data.shape)
+    print(len(names))
+    print(names[0])
+    print(np.unique(names))
 
     # for _ in np.unique(names):
     #     print(_)
+
+    print("Loading data from pickle dump...")
+    pkl_file = open("droplet_labelled_data_2.pkl", 'rb') # droplet_labelled_data_2
+    data = []
+    data = pickle.load(pkl_file)
+    pkl_file.close
+
+    print("Loading names from pickle dump...")
+    pkl_file = open("droplet_labelled_names_2.pkl", 'rb') # droplet_labelled_names_2
+    names = []
+    names = pickle.load(pkl_file)
+    pkl_file.close
+
+    data = data[:3600,...] # 3000
+    names = names[:3600]
+
+    data = np.concatenate((data, data_sampled), axis=0)
+    names = names + names_sampled
+
+    print(data.shape)
+    print(len(names))
+    print(names[0])
+    print(np.unique(names))
 
     return data, names
 
@@ -147,10 +161,16 @@ def load_preprocess():
     data = brightness_normalization(data) # test
 
     # cropping:
-    crop_left = int(data.shape[2]*0.1) # start from left
-    crop_right = int(data.shape[2]*0.85) # end at right
+    crop_left = int(data.shape[2]*0.15) # start from left 10 15
+    crop_right = int(data.shape[2]*0.8) # end at right 15 20
+    crop_bottom = int(data.shape[1]*0.83) # remove bottom 10 15 18 17+ 16- 15still 12bad
     data = data[:,:,crop_left:crop_right,:]
-    print("data cropped: ", data.shape)
+    data_train = data_train[:,:,crop_left:crop_right,:]
+    data_train = data_train[:,:crop_bottom,:,:]
+    data_test = data_test[:,:,crop_left:crop_right,:]
+    data_test = data_test[:,:crop_bottom,:,:]
+    print("train set cropped: ", data_train.shape)
+    print("test set:", data_test.shape, len(names))
 
     # visualize_data = False
     # data, data_mean, data_std = preprocess(dataset, visualize_data, data) # reshape, visualize, normalize, scale
@@ -174,14 +194,20 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data: 
         dir_res = "Results/2D_VAE" # test data is same for vae and ae
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
         pkl_file = open(fn, 'rb')
-        data = pickle.load(pkl_file)
+        data_test = pickle.load(pkl_file)
         print("Test data were loaded from pickle")
+        pkl_file.close
+
+        fn = os.path.join(dir_res, "train_data.pkl")
+        pkl_file = open(fn, 'rb')
+        data_train = pickle.load(pkl_file)
+        print("Train data were loaded from pickle")
         pkl_file.close
 
         fn = os.path.join(dir_res, "test_labels.pkl")
@@ -190,13 +216,19 @@ def main():
         print("Test labels were loaded from pickle")
         pkl_file.close
 
-        test_data = np.asarray(data)
+        test_data = np.asarray(data_test)
         print(test_data.shape)
+        train_data = np.asarray(data_train)
+        print(train_data.shape)
 
         names = labels
         print(len(names))
 
+        train_test_data = np.concatenate((train_data, test_data), axis=0)
+
         encoded_vec = 0 # don't need it
+        encoded_vec_train = 0 # don't need it
+        encoded_vec_train_test = 0 # don't need it
     else:
         # preprocess the data and save test subset as pickle
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
@@ -207,16 +239,27 @@ def main():
         # print("Test data were saved as pickle")
         # pkl_file.close
 
+        # fn = os.path.join(dir_res, "train_data.pkl")
+        # pkl_file = open(fn, 'wb')
+        # pickle.dump(x_train, pkl_file)
+        # print("Train data were saved as pickle")
+        # pkl_file.close
+
         # fn = os.path.join(dir_res, "test_labels.pkl")
         # pkl_file = open(fn, 'wb')
         # pickle.dump(names, pkl_file)
         # print("Test labels were saved as pickle")
-        # pkl_file.close   
+        # pkl_file.close
 
     model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5", \
     "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
     "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
     "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5"} 
+
+    model_names = {"2d_ae_croppedb_128_relu_reg_norm_1.h5", "2d_ae_croppedb_128_relu_reg_norm_2.h5", \
+    "2d_ae_croppedb_128_relu_reg_norm_3.h5", "2d_ae_croppedb_128_relu_reg_norm_4.h5", "2d_ae_croppedb_128_relu_reg_norm_5.h5", \
+    "2d_ae_croppedb_256_relu_reg_norm_1.h5", "2d_ae_croppedb_256_relu_reg_norm_2.h5", \
+    "2d_ae_croppedb_256_relu_reg_norm_3.h5", "2d_ae_croppedb_256_relu_reg_norm_4.h5", "2d_ae_croppedb_256_relu_reg_norm_5.h5"} 
 
     dir_res = "Results/2D_AE" # directory with all models
     dataset = "droplet"
@@ -255,7 +298,7 @@ def main():
             generic = False
             dense_dim = 1024
             latent_dim = 256
-            epochs = 0 # 500
+            epochs = 10 # 500
             conv_layers = 4
             stride = 2
             latent_vector = True
@@ -382,11 +425,13 @@ def main():
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
             
             try:
-                f = open(model_name)
-                autoencoder.load_weights(model_name)
-                print("Loaded", model_name, "model from disk")
+                dir_model_name = os.path.join("weights", model_name)
+                f = open(dir_model_name)
+                autoencoder.load_weights(dir_model_name)
+                print("Loaded", dir_model_name, "model from disk")
             except IOError:
-                print(model_name, "model not accessible")
+                print(dir_model_name, "model not accessible")
+                epochs = 20 # train if no weights found
             
             #autoencoder.compile(optimizer='adadelta', loss='mse') #
             lr = 0.0005
@@ -442,24 +487,42 @@ def main():
             # Keract visualizations
             #visualize(x_train, encoder, decoder)
 
-            
-            test_data = x_test # x_test x_train x_test_noisy
+            test_data = x_test # x_test x_train
+            train_data = x_train
+            # names = "" # no labels for x_train
+            # test_data = x_train and x_test
+
+            # load_data = False # for now
+            train_test_data = 0
+            # encoded_vec = 0 # don't need it
+            encoded_vec_train = 0 # don't need it
+            encoded_vec_train_test = 0 # don't need it
 
             encoded_vec = encoder.predict(test_data)
+            # print(encoded_vec)
             print('encoded_vectors:', encoded_vec.shape) # (batch-size, latent_dim)
             fig=plt.figure()
             plt.tight_layout()
             #fig.set_size_inches(8, 6)
-            plt.suptitle('2d_ae: Latent vectors')
+            plt.suptitle('3d_ae: Latent vectors')
             plt.imshow(encoded_vec)
             fig.savefig('{}/latent.png'.format(dir_res_model))
             plt.close(fig)
+
+            # clustering in the feature space
+            from sklearn.cluster import KMeans
+            kmeans = KMeans(n_clusters=8, random_state=0).fit(encoded_vec)
+            # print(kmeans.labels_)
+
+            # clustering perf eval in the feature space
+            n_clusters = 8
+            kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
+            # continue
 
             decoded_imgs = autoencoder.predict(test_data)
             print('decoded_imgs:', decoded_imgs.shape)
             print('dec max:', decoded_imgs.max())
             print('dec min:', decoded_imgs.min())
-
 
             # spherical interpolation in the latent space 
             #dec_interpol_sample_slerp, dec_interpol_sample_traversal = interpolate(encoded_vec, decoder)
@@ -471,26 +534,28 @@ def main():
             # print("test_data, encoded_vec, decoded_imgs")
             print('normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
             print('normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
-            # normalized max: 3.448445829885598 0.88685006 1.1053748
-            # normalized min: -4.12281306460826 0.0 -2.841378
-            #  test_data = test_data * data_std + data_mean
+            #test_data = test_data * data_std + data_mean
             #encoded_vec = encoded_vec * data_std + data_mean
-            #  decoded_imgs = decoded_imgs * data_std + data_mean
+            #decoded_imgs = decoded_imgs * data_std + data_mean
             # print('un-normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
             # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
-            dataset = "droplet" # for pca t-sne vis
-            title = '2D AE: ' # for subtitle
-            # title = 'Raw data ' # for baseline
-
             # test_data = data_test_vis # visualize the original
 
-            #draw original and reconstructed data
+            # draw original and reconstructed data
             draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
 
-            # test_data = data_test_vis # visualize the original
-            # test_data = x_test
-            # encoded_vec = np.zeros((600, 128))
+            #test_data = data_test_vis # visualize the original
+
+            train_test_data = np.concatenate((train_data, test_data), axis=0)
+            # train and test data
+            encoded_vec_train_test = encoder.predict(train_test_data)
+            print('encoded_vec_train_test after reparam trick:', encoded_vec_train_test.shape) # (batch-size, latent_dim)
+
+            decoded_imgs = autoencoder.predict(train_test_data)
+            print('decoded_imgs:', decoded_imgs.shape)
+            print('dec max:', decoded_imgs.max())
+            print('dec min:', decoded_imgs.min())
 
         if (project == True):
             # project using PCA (then t-sne) and visualize the scatterplot
@@ -502,14 +567,14 @@ def main():
             #title_tsne = title + 'Latent -> t-SNE scatterplot, perp='
             title_tsne = title + '-> t-SNE scatterplot, perp='
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=20)
-            tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, perp=30)
+            # tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, perp=30)
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=40)
 
             # project using UMAP and visualize the scatterplot
             print("UMAP projection")
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
-            umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
 
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 from tsne_projection import tsne_projection
 from umap_projection import umap_projection
 from img_scatterplot import im_scatter
-from classification import kNN_classification_flow, kNN_classification_droplet
+# from classification import kNN_classification_flow, kNN_classification_droplet
 
 class ZoomPan:
     def __init__(self):

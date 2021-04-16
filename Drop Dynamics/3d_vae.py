@@ -223,7 +223,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    load_data = True
     if load_data:
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -309,6 +309,8 @@ def main():
     "3d_beta4_vae_croppedb_256_relu_norm_3.h5", "3d_beta4_vae_croppedb_256_relu_norm_4.h5", "3d_beta4_vae_croppedb_256_relu_norm_5.h5",
     "3d_beta10_vae_croppedb_256_relu_norm_1.h5", "3d_beta10_vae_croppedb_256_relu_norm_2.h5",
     "3d_beta10_vae_croppedb_256_relu_norm_3.h5", "3d_beta10_vae_croppedb_256_relu_norm_4.h5", "3d_beta10_vae_croppedb_256_relu_norm_5.h5"}
+
+    model_names = {"3d_vae_croppedb_256_relu_norm_1.h5"}
 
     dataset = "droplet"
     title = '3D VAE: ' # for subtitle

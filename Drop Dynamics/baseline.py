@@ -126,7 +126,7 @@ def load_unlabelled_data():
     elapsed_time = time.time() - start_time
     print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
-    data = data[0:9600] # 12000
+    data = data[0:12000] # 12000
     print(data.shape)
 
     return data
@@ -235,6 +235,7 @@ def main():
         # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
         test_data_vis = x_test # baseline
+        test_data = x_test
         # print(test_data_vis.min(), test_data_vis.max())
         # test_data_vis = test_data_vis * data_std + data_mean
         # print(test_data_vis.min(), test_data_vis.max())
@@ -269,7 +270,7 @@ def main():
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
             #umap_projection(encoded_vec, test_data_vis, latent_vector, title_umap, dir_res_model, dataset, names)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data_vis, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
 
 
 

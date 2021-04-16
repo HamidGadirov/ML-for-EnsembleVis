@@ -192,7 +192,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    load_data = True
     if load_data: 
         dir_res = "Results/2D_VAE" # test data is same for vae and ae
         # load test_data from pickle and later encoded_vec_2d
@@ -250,19 +250,31 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close 
 
-    model_names = {"2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
+    model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5",
+    "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
     "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
     "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5",
     "2d_ae_64_relu_reg_norm_1.h5", "2d_ae_64_relu_reg_norm_2.h5", "2d_ae_64_relu_reg_norm_3.h5",
-    "2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5"} 
+    "2d_ae_64_relu_reg_norm_4.h5", "2d_ae_64_relu_reg_norm_5.h5"} 
 
     # model_names = {"2d_ae_2_relu_reg_norm_1.h5", "2d_ae_2_relu_reg_norm_2.h5", "2d_ae_2_relu_reg_norm_3.h5", \
+
+    mod_nam = {"2d_ae_32_relu_reg_norm"}
 
     dir_res = "Results/2D_AE" # directory with all models
     dataset = "mcmc"
     title = '2D AE: ' # for subtitle
 
-    # model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5"}
+    model_names_all = []
+    for m_n in mod_nam:
+        for i in range(5):    
+            m_n_index = m_n + "_" + str(i+1) + ".h5"
+            model_names_all.append(m_n_index)
+
+    model_names = model_names_all
+    print(model_names)
+
+    # input("x")
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -280,7 +292,7 @@ def main():
         # draw_data(x_test, x_test, dataset, dir_res_model)
         # input()
 
-        project = False
+        project = True
         latent_vector = True
 
         #load_data = False
@@ -299,7 +311,6 @@ def main():
             conv_layers = 2
             stride = 2
             latent_vector = True
-            project = False
             regularization = False
             dropout_sparcity = False
             denoising = False
@@ -435,6 +446,7 @@ def main():
                 f = open(dir_model_name)
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
+                # continue # skip existing models
             except IOError:
                 print(dir_model_name, "model not accessible")
                 epochs = 20 # train if no weights found

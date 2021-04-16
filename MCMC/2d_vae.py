@@ -300,6 +300,27 @@ def main():
     dataset = "mcmc"
     title = '2D VAE: ' # for subtitle
 
+    mod_nam = {"2d_vae_cropped_128_relu_norm", "2d_vae_cropped_256_relu_norm", 
+    "2d_beta_vae_cropped_128_relu_norm", "2d_beta_vae_cropped_256_relu_norm", 
+    "2d_beta2_vae_cropped_32_relu_norm", "2d_beta2_vae_cropped_64_relu_norm", 
+    "2d_beta2_vae_cropped_128_relu_norm", "2d_beta2_vae_cropped_256_relu_norm", 
+    "2d_beta6_vae_cropped_128_relu_norm", "2d_beta6_vae_cropped_256_relu_norm", 
+    "2d_beta8_vae_cropped_32_relu_norm", "2d_beta8_vae_cropped_64_relu_norm",
+    "2d_beta8_vae_cropped_128_relu_norm", "2d_beta8_vae_cropped_256_relu_norm",
+    "2d_beta10_vae_cropped_128_relu_norm", "2d_beta10_vae_cropped_256_relu_norm",
+    "2d_beta20_vae_cropped_32_relu_norm", "2d_beta20_vae_cropped_64_relu_norm",
+    "2d_beta20_vae_cropped_128_relu_norm", "2d_beta20_vae_cropped_256_relu_norm",
+    "2d_beta100_vae_cropped_128_relu_norm", "2d_beta100_vae_cropped_256_relu_norm"}
+
+    model_names_all = []
+    for m_n in mod_nam:
+        for i in range(5):    
+            m_n_index = m_n + "_" + str(i+1) + ".h5"
+            model_names_all.append(m_n_index)
+
+    model_names = model_names_all
+    print(model_names)
+
     for model_name in model_names:
         print("model_name:", model_name)
 
@@ -312,7 +333,7 @@ def main():
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
 
-        project = False
+        project = True
         interpolation = False
         if load_data:
             interpolation = False
@@ -336,7 +357,6 @@ def main():
             latent_vector = True
             beta_vae = False
             beta = 4
-            project = False
             regularization = False
 
             # Grid search in: latent_dim, activation, beta
@@ -475,6 +495,7 @@ def main():
                 f = open(dir_model_name)
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
+                continue # skip existing models
             except IOError:
                 print(dir_model_name, "model not accessible")
                 epochs = 20 # train if no weights found

@@ -191,7 +191,7 @@ def main():
     # skript: combine 5 experiment: m arc, loss val, all results
     # everything must be fully automated!
 
-    model_names = {"baseline_norm_1.h5", "baseline_norm_2.h5", "baseline_norm_3.h5"}
+    model_names = {"baseline_norm_1.h5", "baseline_norm_2.h5", "baseline_norm_3.h5", "baseline_norm_4.h5", "baseline_norm_5.h5"}
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -215,10 +215,11 @@ def main():
         # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
         test_data_vis = x_test # baseline
+        train_data = x_train[0:8000]
         # print(test_data_vis.min(), test_data_vis.max())
         # test_data_vis = test_data_vis * data_std + data_mean
         # print(test_data_vis.min(), test_data_vis.max())
-        train_test_data = np.concatenate((x_train, x_test), axis=0)
+        train_test_data = np.concatenate((train_data, x_test), axis=0)
         # test_data_vis = train_test_data # full
         encoded_vec_train = 0
         encoded_vec_train_test = 0

@@ -309,9 +309,13 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         knn_title = "UMAP"
 
         if("Raw data" in title): # baseline
+            test_data = train_test_data # full ensemble
             test_data_tmp = np.reshape(test_data, (test_data.shape[0], test_data.shape[1]*test_data.shape[2]))
             fit = umap.UMAP(min_dist=1.0)
-            encoded_vec_2d = fit.fit_transform(test_data_tmp) # encoded_vec
+            # encoded_vec_2d = fit.fit_transform(test_data_tmp) # encoded_vec
+
+            train_test_data_tmp = np.reshape(train_test_data, (train_test_data.shape[0], train_test_data.shape[1]*train_test_data.shape[2]))
+            encoded_vec_2d_train_test = fit.fit_transform(train_test_data_tmp) # encoded_vec
 
         if (names):
             # encoded_vec_2d_ = encoded_vec_2d
@@ -532,8 +536,8 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
             fit = umap.UMAP(min_dist=1.0)
             encoded_vec_2d = fit.fit_transform(test_data_tmp) # encoded_vec
 
-            test_test_data_tmp = np.reshape(train_test_data, (train_test_data.shape[0], train_test_data.shape[1]*train_test_data.shape[2]))
-            encoded_vec_2d_train_test = fit.fit_transform(test_test_data_tmp) # encoded_vec
+            train_test_data_tmp = np.reshape(train_test_data, (train_test_data.shape[0], train_test_data.shape[1]*train_test_data.shape[2]))
+            encoded_vec_2d_train_test = fit.fit_transform(train_test_data_tmp) # encoded_vec
 
         # # measure the uncertainty
         # accuracy = []

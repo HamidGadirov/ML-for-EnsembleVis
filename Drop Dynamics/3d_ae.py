@@ -216,7 +216,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    load_data = True
     if load_data: 
         dir_res = "Results/3D_VAE" # same as for 3D VAE
         # load test_data from pickle and later encoded_vec_2d

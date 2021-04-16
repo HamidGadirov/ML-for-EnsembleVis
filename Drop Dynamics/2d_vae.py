@@ -175,6 +175,9 @@ def load_preprocess():
 
     data = brightness_normalization(data) # test
 
+    data_train = data[:data_train.shape[0],]
+    data_test = data[data_train.shape[0]:,]
+
     # # cropping:
     # crop_left = int(data.shape[2]*0.1) # start from left
     # crop_right = int(data.shape[2]*0.85) # end at right
@@ -185,7 +188,7 @@ def load_preprocess():
     crop_left = int(data.shape[2]*0.15) # start from left 10 15
     crop_right = int(data.shape[2]*0.8) # end at right 15 20
     crop_bottom = int(data.shape[1]*0.83) # remove bottom 10 15 18 17+ 16- 15still 12bad
-    data = data[:,:,crop_left:crop_right,:]
+    # data = data[:,:,crop_left:crop_right,:]
     data_train = data_train[:,:,crop_left:crop_right,:]
     data_train = data_train[:,:crop_bottom,:,:]
     data_test = data_test[:,:,crop_left:crop_right,:]
@@ -194,9 +197,6 @@ def load_preprocess():
     print("test set:", data_test.shape, len(names))
 
     data_test_vis = data_test # unnormalized, uncropped
-
-    data_train = data[:data_train.shape[0],]
-    data_test = data[data_train.shape[0]:,]
 
     data_train, data_val = train_test_split(data_train, test_size=0.2, random_state=1)
     print('train & val', data_train.shape, data_val.shape)
@@ -211,7 +211,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    load_data = True
     if load_data: 
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -279,7 +279,7 @@ def main():
     "2d_vae_croppedb_128_relu_norm_3.h5", "2d_vae_croppedb_128_relu_norm_4.h5", "2d_vae_croppedb_128_relu_norm_5.h5", \
     "2d_vae_croppedb_256_relu_norm_1.h5", "2d_vae_croppedb_256_relu_norm_2.h5", \
     "2d_vae_croppedb_256_relu_norm_3.h5", "2d_vae_croppedb_256_relu_norm_4.h5", "2d_vae_croppedb_256_relu_norm_5.h5", \
-    "2d_beta_vae_croppedb_128_relu_norm_2.h5", \
+    "2d_beta_vae_croppedb_128_relu_norm_1.h5", "2d_beta_vae_croppedb_128_relu_norm_2.h5", \
     "2d_beta_vae_croppedb_128_relu_norm_3.h5", "2d_beta_vae_croppedb_128_relu_norm_4.h5", "2d_beta_vae_croppedb_128_relu_norm_5.h5"}
 
     dataset = "droplet"
@@ -355,6 +355,9 @@ def main():
             if("128" in model_name):
                 dense_dim = 512
                 latent_dim = 128
+            if("64" in model_name):
+                dense_dim = 256
+                latent_dim = 64
 
             # build encoder model
             inputs = Input(shape=(x_train.shape[1], x_train.shape[2], 1), name='encoded_input')
@@ -500,7 +503,7 @@ def main():
                         #callbacks=[TensorBoard(log_dir='/tmp/autoencoder')]))
             
             if(epochs):
-                vae.save_weights(model_name)
+                vae.save_weights(dir_model_name)
                 print("Saved", model_name, "model weights to disk")
 
                 loss_history = history_callback.history

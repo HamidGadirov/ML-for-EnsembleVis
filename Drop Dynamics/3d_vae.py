@@ -280,24 +280,21 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5", \
-    "3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5", \
-    "3d_beta_vae_cropped_256_relu_norm_1.h5", "3d_beta_vae_cropped_256_relu_norm_2.h5", \
-    "3d_beta_vae_cropped_256_relu_norm_3.h5", "3d_beta_vae_cropped_256_relu_norm_4.h5", "3d_beta_vae_cropped_256_relu_norm_5.h5", \
-    "3d_beta2_vae_cropped_256_relu_norm_1.h5", "3d_beta2_vae_cropped_256_relu_norm_2.h5", \
-    "3d_beta2_vae_cropped_256_relu_norm_3.h5", "3d_beta2_vae_cropped_256_relu_norm_4.h5", "3d_beta2_vae_cropped_256_relu_norm_5.h5", \
-    "3d_beta10_vae_cropped_256_relu_norm_1.h5", "3d_beta10_vae_cropped_256_relu_norm_2.h5", \
-    "3d_beta100_vae_cropped_256_relu_norm_1.h5", "3d_beta100_vae_cropped_256_relu_norm_2.h5", \
-    "3d_beta100_vae_cropped_256_relu_norm_3.h5", "3d_beta100_vae_cropped_256_relu_norm_4.h5",  "3d_beta100_vae_cropped_256_relu_norm_5.h5", \
-    "3d_vae_cropped_512_relu_norm_1.h5", "3d_vae_cropped_512_relu_norm_2.h5", \
-    "3d_vae_cropped_512_relu_norm_3.h5", "3d_vae_cropped_512_relu_norm_4.h5", "3d_vae_cropped_512_relu_norm_5.h5", \
-    "3d_beta0.5_vae_cropped_512_relu_norm_1.h5", "3d_beta0.5_vae_cropped_512_relu_norm_2.h5", \
-    "3d_beta0.5_vae_cropped_512_relu_norm_3.h5", "3d_beta0.5_vae_cropped_512_relu_norm_4.h5", "3d_beta0.5_vae_cropped_512_relu_norm_5.h5", \
-    "3d_beta0.1_vae_cropped_256_relu_norm_1.h5", "3d_beta0.1_vae_cropped_256_relu_norm_2.h5", \
-    "3d_beta0.1_vae_cropped_256_relu_norm_3.h5", "3d_beta0.1_vae_cropped_256_relu_norm_4.h5", "3d_beta0.1_vae_cropped_256_relu_norm_5.h5"} # 20 ep
-
-    #model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5"}
-    #"3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5"}
+    # model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5", \
+    # "3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5", \
+    # "3d_beta_vae_cropped_256_relu_norm_1.h5", "3d_beta_vae_cropped_256_relu_norm_2.h5", \
+    # "3d_beta_vae_cropped_256_relu_norm_3.h5", "3d_beta_vae_cropped_256_relu_norm_4.h5", "3d_beta_vae_cropped_256_relu_norm_5.h5", \
+    # "3d_beta2_vae_cropped_256_relu_norm_1.h5", "3d_beta2_vae_cropped_256_relu_norm_2.h5", \
+    # "3d_beta2_vae_cropped_256_relu_norm_3.h5", "3d_beta2_vae_cropped_256_relu_norm_4.h5", "3d_beta2_vae_cropped_256_relu_norm_5.h5", \
+    # "3d_beta10_vae_cropped_256_relu_norm_1.h5", "3d_beta10_vae_cropped_256_relu_norm_2.h5", \
+    # "3d_beta100_vae_cropped_256_relu_norm_1.h5", "3d_beta100_vae_cropped_256_relu_norm_2.h5", \
+    # "3d_beta100_vae_cropped_256_relu_norm_3.h5", "3d_beta100_vae_cropped_256_relu_norm_4.h5",  "3d_beta100_vae_cropped_256_relu_norm_5.h5", \
+    # "3d_vae_cropped_512_relu_norm_1.h5", "3d_vae_cropped_512_relu_norm_2.h5", \
+    # "3d_vae_cropped_512_relu_norm_3.h5", "3d_vae_cropped_512_relu_norm_4.h5", "3d_vae_cropped_512_relu_norm_5.h5", \
+    # "3d_beta0.5_vae_cropped_512_relu_norm_1.h5", "3d_beta0.5_vae_cropped_512_relu_norm_2.h5", \
+    # "3d_beta0.5_vae_cropped_512_relu_norm_3.h5", "3d_beta0.5_vae_cropped_512_relu_norm_4.h5", "3d_beta0.5_vae_cropped_512_relu_norm_5.h5", \
+    # "3d_beta0.1_vae_cropped_256_relu_norm_1.h5", "3d_beta0.1_vae_cropped_256_relu_norm_2.h5", \
+    # "3d_beta0.1_vae_cropped_256_relu_norm_3.h5", "3d_beta0.1_vae_cropped_256_relu_norm_4.h5", "3d_beta0.1_vae_cropped_256_relu_norm_5.h5"} # 20 ep
 
     model_names = {"3d_beta0.1_vae_croppedb_256_relu_norm_1.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_2.h5", \
     "3d_beta0.1_vae_croppedb_256_relu_norm_3.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_4.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_5.h5",
@@ -310,10 +307,23 @@ def main():
     "3d_beta10_vae_croppedb_256_relu_norm_1.h5", "3d_beta10_vae_croppedb_256_relu_norm_2.h5",
     "3d_beta10_vae_croppedb_256_relu_norm_3.h5", "3d_beta10_vae_croppedb_256_relu_norm_4.h5", "3d_beta10_vae_croppedb_256_relu_norm_5.h5"}
 
-    model_names = {"3d_vae_croppedb_256_relu_norm_1.h5"}
-
     dataset = "droplet"
     title = '3D VAE: ' # for subtitle
+
+    mod_nam = {"3d_beta0.1_vae_croppedb_256_relu_norm", 
+    "3d_vae_croppedb_256_relu_norm", 
+    "3d_beta2_vae_croppedb_256_relu_norm", 
+    "3d_beta4_vae_croppedb_256_relu_norm", 
+    "3d_beta10_vae_croppedb_256_relu_norm"}
+
+    model_names_all = []
+    for m_n in mod_nam:
+        for i in range(5):    
+            m_n_index = m_n + "_" + str(i+1) + ".h5"
+            model_names_all.append(m_n_index)
+
+    model_names = model_names_all
+    print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)

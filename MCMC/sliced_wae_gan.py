@@ -34,6 +34,46 @@ from keras.models import Model
 from keras import backend as K
 from keras import optimizers, regularizers
 
+import keras.utils
+from keras.models import load_model, Model
+from keras.layers import Conv2D, UpSampling2D, AveragePooling2D
+from keras.layers import LeakyReLU,Reshape
+from keras.models import save_model
+import tensorflow as tf
+
+def generateTheta(L,endim):
+    # This function generates L random samples from the unit `ndim'-u
+    theta=[w/np.sqrt((w**2).sum()) for w in np.random.normal(size=(L,endim))]
+    return np.asarray(theta)
+
+# def generateZ(batchsize):
+#     # This function generates 2D samples from a `circle' distribution in 
+#     # a 2-dimensional space
+#     r=np.random.uniform(size=(batchsize))
+#     theta=2*np.pi*np.random.uniform(size=(batchsize))
+#     x=r*np.cos(theta)
+#     y=r*np.sin(theta)
+#     z_=np.array([x,y]).T
+#     return z_
+
+def generateZ(batchsize,endim):
+    # This function generates samples from a uniform distribution in 
+    # the `endim'-dimensional space
+    z=2*(np.random.uniform(size=(batchsize,endim))-0.5)
+    return z
+
+def stitchImages(I,axis=0):
+    n,N,M,K=I.shape
+    if axis==0:
+        img=np.zeros((N*n,M,K))
+        for i in range(n):
+            img[i*N:(i+1)*N,:,:]=I[i,:,:,:]
+    else:
+        img=np.zeros((N,M*n,K))
+        for i in range(n):
+            img[:,i*M:(i+1)*M,:]=I[i,:,:,:]
+    return img
+
 def cropping_output(decoded, input_shape):
 
     dec_shape = K.int_shape(decoded)
@@ -188,8 +228,6 @@ def load_preprocess():
 
 def main():
 
-    dir_res = "Results/2D_AE" # directory with all models
-
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
     load_data = False
@@ -250,6 +288,10 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close 
 
+    dir_res = "Results/2D_WAE" # directory with all models
+    dataset = "mcmc"
+    title = '2D WAE: ' # for subtitle
+
     model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5",
     "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
     "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
@@ -259,11 +301,7 @@ def main():
 
     # model_names = {"2d_ae_2_relu_reg_norm_1.h5", "2d_ae_2_relu_reg_norm_2.h5", "2d_ae_2_relu_reg_norm_3.h5", \
 
-    mod_nam = {"2d_ae_64_relu_reg_norm", "2d_ae_cropped_128_relu_reg_norm", "2d_ae_cropped_256_relu_reg_norm"}
-
-    dir_res = "Results/2D_AE" # directory with all models
-    dataset = "mcmc"
-    title = '2D AE: ' # for subtitle
+    mod_nam = {"2d_ae_32_relu_reg_norm"}
 
     model_names_all = []
     for m_n in mod_nam:
@@ -275,6 +313,25 @@ def main():
     print(model_names)
 
     # input("x")
+    model_names = {"2d_wae_128_lrelu_reg_norm_1.h5"} # bad
+    model_names = {"2d_wae_2_lrelu_reg_norm_1.h5"} # just 2, good, interesting!
+    model_names = {"2d_wae_4_lrelu_reg_norm_1.h5"} # good
+    model_names = {"2d_wae_8_lrelu_reg_norm_1.h5", "2d_wae_16_lrelu_reg_norm_1.h5", "2d_wae_32_lrelu_reg_norm_1.h5",
+    "2d_wae_64_lrelu_reg_norm_1.h5"}
+    model_names = {"2d_wae_2_lrelu_reg_norm_2.h5", "2d_wae_4_lrelu_reg_norm_2.h5", "2d_wae_8_lrelu_reg_norm_2.h5", 
+    "2d_wae_16_lrelu_reg_norm_2.h5", "2d_wae_32_lrelu_reg_norm_2.h5", "2d_wae_64_lrelu_reg_norm_2.h5", "2d_wae_128_lrelu_reg_norm_2.h5"}
+
+    mod_nam = {"2d_wae_2_lrelu_reg_norm", "2d_wae_4_lrelu_reg_norm", "2d_wae_8_lrelu_reg_norm",
+    "2d_wae_16_lrelu_reg_norm", "2d_wae_32_lrelu_reg_norm", "2d_wae_64_lrelu_reg_norm", "2d_wae_128_lrelu_reg_norm"}
+
+    model_names_all = []
+    for m_n in mod_nam:
+        for i in range(5):    
+            m_n_index = m_n + "_" + str(i+1) + ".h5"
+            model_names_all.append(m_n_index)
+
+    model_names = model_names_all
+    print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -331,106 +388,120 @@ def main():
             if("reg" in model_name):
                 regularization = True
                 #epochs *= 2
-
             if("drop" in model_name):
                 dropout_sparcity = True
                 #epochs *= 2
-
             if("denoising" in model_name):
                 denoising = True
                 #epochs *= 2
+
+            interdim=128 # This is the dimension of intermediate latent variable 
+                        #(after convolution and before embedding)
+            endim=4 # Dimension of the embedding space
 
             if("256" in model_name):
                 dense_dim = 1024
                 latent_dim = 256
             if("128" in model_name):
-                dense_dim = 512
+                dense_dim = 256
                 latent_dim = 128
             if("64" in model_name):
-                dense_dim = 256
+                dense_dim = 128
                 latent_dim = 64
             if("32" in model_name):
                 dense_dim = 128
                 latent_dim = 32
+            if("16" in model_name):
+                dense_dim = 128
+                latent_dim = 16
+            if("8" in model_name):
+                dense_dim = 128
+                latent_dim = 8
             if("ae_2" in model_name):
                 dense_dim = 128
                 latent_dim = 2
 
-            # build encoder model
-            inputs = Input(shape=(x_train.shape[1], x_train.shape[2], 1), name='encoded_input')
+            interdim = dense_dim
+            endim = latent_dim
+            print("Dimesnions:", interdim, endim)
 
-            encoded = inputs
+            # Defining the Encoder/Decoder as Keras graphs
+            img=Input((x_train.shape[1], x_train.shape[2],1)) #Input image 
+            embedd=Input((endim,)) #Keras input to Decoder
+            depth=16 # This is a design parameter and in fact it is not the depth!
+            L=50 # Number of random projections
+            batchsize=500
 
-            for _ in range(conv_layers):
-                encoded = Conv2D(filters=filters,
-                            kernel_size=kernel_size,
-                            activation=activation,
-                            kernel_initializer=kernel_initializer,
-                            strides=stride,
-                            padding='same')(encoded)
-                if (generic == True): filters //= 2
-                #encoded = BatchNormalization()(encoded)
-            # num of conv param: kernel*kernel * channels_in * kernel_num + bias
+            # Define Encoder
+            x=Conv2D(depth*1, (3, 3), padding='same')(img)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Conv2D(depth*1, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=AveragePooling2D((2, 2), padding='same')(x)
+            x=Conv2D(depth*2, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Conv2D(depth*2, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=AveragePooling2D((2, 2), padding='same')(x)
+            x=Conv2D(depth*4, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Conv2D(depth*4, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=AveragePooling2D((2, 2), padding='same')(x)
+            x=Flatten()(x)
+            x=Dense(interdim,activation='relu')(x)
+            encoded=Dense(endim)(x)
 
-            # Shape info needed to build Decoder Model
-            encoded_shape = K.int_shape(encoded)
-            print(encoded_shape)
+            encoder=Model(inputs=[img],outputs=[encoded])
+            # encoder.summary()
 
-            if(dropout_sparcity):
-                encoded = Dropout(0.5, seed=1)(encoded)
+            # Define Decoder
+            x=Dense(interdim)(embedd)
+            x=Dense(depth*196,activation='relu')(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Reshape((7,7,4*depth))(x)
+            x=UpSampling2D((2, 2))(x)
+            x=Conv2D(depth*4, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Conv2D(depth*4, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            x=UpSampling2D((2, 2))(x)
+            x=Conv2D(depth*4, (3, 3), padding='valid')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Conv2D(depth*4, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            x=UpSampling2D((2, 2))(x)
+            x=Conv2D(depth*2, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            x=Conv2D(depth*2, (3, 3), padding='same')(x)
+            x=LeakyReLU(alpha=0.2)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            # x=BatchNormalization(momentum=0.8)(x)
+            decoded=Conv2D(1, (3, 3), padding='same',activation='sigmoid')(x)
 
-            if (latent_vector == True): # generate dense layer and latent space
-                encoded = generate_dense_layers(encoded, dense_dim, encoded_shape, activation, kernel_initializer,
-                                                    latent_dim, regularization)
-            
-            #encoded = BatchNormalization()(encoded) # for relu
+            decoded = cropping_output(decoded, x_train.shape)
 
-            #latent_dim = 256
-            #encoded = Dense(latent_dim, activation='tanh', name='latent_vec')(encoded)
+            decoder=Model(inputs=[embedd],outputs=[decoded])
+            # decoder.summary()
 
-            # Instantiate Encoder Model
-            encoder = Model(inputs, encoded, name='encoder')
-            print('Shape:',encoder.layers[-1].output_shape[1:])
-            #encoder.summary()
+            theta=K.variable(generateTheta(L,endim)) #Define a Keras Variable for \theta_ls
+            # z=K.variable(generateZ(batchsize)) #Define a Keras Variable for samples of z
+            z=K.variable(generateZ(batchsize,endim)) #Define a Keras Variable for samples of z
 
-            # build decoder model
-
-            if (latent_vector == True): # generate the latent vector
-                decoded_input = Input(shape=(latent_dim, ), name='decoded_input')
-                decoded = generate_fully_conn(decoded_input, encoded_shape, activation, kernel_initializer)
-            else:
-                decoded_input = Input(shape=(encoded_shape[1], encoded_shape[2], encoded_shape[3]), name='decoded_input')
-                decoded = decoded_input
-            
-            for _ in range(conv_layers):
-                if (generic == True): filters *= 2
-                decoded = Conv2DTranspose(filters=filters,
-                                    kernel_size=kernel_size,
-                                    activation=activation,
-                                    kernel_initializer=kernel_initializer,
-                                    strides=stride,
-                                    padding='same')(decoded)
-                #decoded = BatchNormalization()(decoded)
-
-            decoded = Conv2DTranspose(filters=1,
-                                kernel_size=kernel_size,
-                                padding='same')(decoded)
-
-            # Crop the decoded output so that dimensions are equal to the input
-            decoded = cropping_output(decoded, x_train.shape)               
-
-            outputs = Activation('linear', name='decoder_output')(decoded) # linear or sigmoid [0,1] tanh [-1,1]
-            # sigmoid - slow training? yes, as the derivative is small
-
-            # instantiate decoder model
-            decoder = Model(decoded_input, outputs, name='decoder')
-            #decoder.summary()
-
-            # instantiate Autoencoder model
-            outputs = decoder(encoder(inputs))
-            #print('output:', outputs.shape)
-            autoencoder = Model(inputs, outputs, name='autoencoder')
-            #autoencoder.summary()
+            # Generate the autoencoder by combining encoder and decoder
+            aencoded=encoder(img)
+            ae=decoder(aencoded)
+            autoencoder=Model(inputs=[img],outputs=[ae])
+            # autoencoder.summary()
 
             from pathlib import Path
             my_file = Path(filename)
@@ -441,28 +512,120 @@ def main():
                     decoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
             
-            try:
-                dir_model_name = os.path.join("weights", model_name)
-                f = open(dir_model_name)
-                autoencoder.load_weights(dir_model_name)
-                print("Loaded", dir_model_name, "model from disk")
-                # continue # skip existing models
-            except IOError:
-                print(dir_model_name, "model not accessible")
-                epochs = 20 # train if no weights found
+            # try:
+            #     dir_model_name = os.path.join("weights", model_name)
+            #     f = open(dir_model_name)
+            #     autoencoder.load_weights(dir_model_name)
+            #     print("Loaded", dir_model_name, "model from disk")
+            #     # continue # skip existing models
+            # except IOError:
+            #     print(dir_model_name, "model not accessible")
+            #     epochs = 20 # train if no weights found
+
+            # Let projae be the projection of the encoded samples
+            projae=K.dot(aencoded,K.transpose(theta))
+            # Let projz be the projection of the $q_Z$ samples
+            projz=K.dot(z,K.transpose(theta))
+            # Calculate the Sliced Wasserstein distance by sorting 
+            # the projections and calculating the L2 distance between
+            W2=(tf.nn.top_k(tf.transpose(projae),k=batchsize).values-tf.nn.top_k(tf.transpose(projz),k=batchsize).values)**2
             
+            w2weight=K.variable(10.0)
+            crossEntropyLoss= (1.0)*K.mean(K.binary_crossentropy(K.flatten(img),K.flatten(ae)))
+            L1Loss= (1.0)*K.mean(K.abs(K.flatten(img)-K.flatten(ae)))
+            W2Loss= w2weight*K.mean(W2)
+            # I have a combination of L1 and Cross-Entropy loss for the first term and then 
+            # W2 for the second term
+            vae_Loss=L1Loss+crossEntropyLoss+W2Loss
+            autoencoder.add_loss(vae_Loss) # Add the custom loss to the model
+
+            #Compile the model
+            autoencoder.compile(optimizer='adam') # rmsprop
+
             #autoencoder.compile(optimizer='adadelta', loss='mse') #
             lr = 0.0005
             adam = optimizers.Adam(lr=lr, beta_1=0.9, beta_2=0.999, amsgrad=False) # lr=0.0005
 
-            from keras.losses import mse, binary_crossentropy, categorical_crossentropy
-            # do not scale to [0,1] if using mse loss
-            #mse = mse(K.flatten(inputs), K.flatten(outputs[:,:-diff_x,:-diff_y,:]))
-            #mse = mse(K.flatten(inputs), K.flatten(outputs[:,:-diff_x,:-diff_y,:]))
-            autoencoder.compile(optimizer=adam, loss='mse') # binary_crossentropy if normalized [0,1]  mse
-            # K.optimizer.Adam(lr=0.001) 'adadelta'
+            # print("z:", K.get_value(z))
+            # print("theta:", K.get_value(theta))
 
-            # cluster properly, e.g. same turbulency but diff place
+            loss=[]
+            fig1=plt.figure()
+            for epoch in range(20):
+                ind=np.random.permutation(x_train.shape[0])    
+                if epoch>10:
+                    K.set_value(w2weight,1.1*K.eval(w2weight))
+                for i in range(int(x_train.shape[0]/batchsize)):
+                    Xtr=x_train[ind[i*batchsize:(i+1)*batchsize],...]
+                    theta_=generateTheta(L,endim)
+                    # z_=generateZ(batchsize)
+                    z_=generateZ(batchsize,endim)
+                    K.set_value(z,z_)
+                    K.set_value(theta,theta_)        
+                    loss.append(autoencoder.train_on_batch(x=Xtr,y=None))        
+                plt.plot(np.asarray(loss))
+                # display.clear_output(wait=True)
+                # display.display(plt.gcf()) 
+                time.sleep(1e-3)
+
+            # try:
+            #     fn = os.path.join(dir_res, "z1.pkl")
+            #     pkl_file = open(fn, 'rb')
+            #     K.set_value(z, pickle.load(pkl_file)) # K.set_value(z)
+            #     print("z were loaded from pickle")
+            #     pkl_file.close
+
+            #     fn = os.path.join(dir_res, "theta1.pkl")
+            #     pkl_file = open(fn, 'rb')
+            #     K.set_value(theta, pickle.load(pkl_file)) # K.set_value(theta)
+            #     print("theta were loaded from pickle")
+            #     pkl_file.close
+            # except:
+            #     for epoch in range(20):
+            #         ind=np.random.permutation(x_train.shape[0])    
+            #         if epoch>10:
+            #             K.set_value(w2weight,1.1*K.eval(w2weight))
+            #         for i in range(int(x_train.shape[0]/batchsize)):
+            #             Xtr=x_train[ind[i*batchsize:(i+1)*batchsize],...]
+            #             theta_=generateTheta(L,endim)
+            #             # z_=generateZ(batchsize)
+            #             z_=generateZ(batchsize,endim)
+            #             K.set_value(z,z_)
+            #             K.set_value(theta,theta_)        
+            #             loss.append(autoencoder.train_on_batch(x=Xtr,y=None))        
+            #         plt.plot(np.asarray(loss))
+            #         # display.clear_output(wait=True)
+            #         # display.display(plt.gcf()) 
+            #         time.sleep(1e-3)
+
+            #     fn = os.path.join(dir_res, "z1.pkl")
+            #     pkl_file = open(fn, 'wb')
+            #     pickle.dump(K.get_value(z), pkl_file)
+            #     print("z were saved as pickle")
+            #     pkl_file.close
+
+            #     fn = os.path.join(dir_res, "theta1.pkl")
+            #     pkl_file = open(fn, 'wb')
+            #     pickle.dump(K.get_value(theta), pkl_file)
+            #     print("theta were saved as pickle")
+            #     pkl_file.close
+
+            # # Test autoencoder
+            # en=encoder.predict(x_test)# Encode the images
+            # dec=decoder.predict(en) # Decode the encodings
+
+            # # Distribution of the encoded samples
+            # plt.figure(figsize=(10,10))
+            # unique_names, indexed_names = np.unique(names, return_inverse=True)
+            # # print(unique_names, indexed_names)
+            # colors = []
+            # for i in indexed_names:
+            #     colors.append('indigo' if i==0 else 'purple' if i==1 else 'orange' if i==2 else 'darkblue' if i==3 \
+            #         else 'mediumblue' if i==4 else 'limegreen' if i==5 else 'yellow' if i==6 else 'dodgerblue')
+            # plt.scatter(en[:,0],-en[:,1],c=colors, cmap=plt.cm.Spectral)
+            # plt.xlim([-1.5,1.5])
+            # plt.ylim([-1.5,1.5])
+            # plt.show()
 
             #from keras.callbacks import TensorBoard
 
@@ -473,41 +636,33 @@ def main():
                                 verbose=2, mode='auto',
                                 restore_best_weights=True)]
 
-            if (denoising): # Denoising AE:
-                noise = np.random.normal(loc=0.5, scale=0.5, size=x_train.shape)
-                x_train_noisy = x_train + noise
-                noise = np.random.normal(loc=0.5, scale=0.5, size=x_val.shape)
-                x_val_noisy = x_val + noise
-                noise = np.random.normal(loc=0.5, scale=0.5, size=x_test.shape)
-                x_test_noisy = x_test + noise
-
-            # train the whole autoencoder
-            history_callback = autoencoder.fit(x_train, x_train, #norm - not forget renormalize
-                            epochs=epochs,
-                            batch_size=batch_size, # batch size & learning rate
-                            shuffle=True, verbose=2,
-                            callbacks=early_stopping,
-                            validation_data=(x_val, x_val)) # divide properly
+            # # train the whole autoencoder
+            # history_callback = autoencoder.fit(x_train, #norm - not forget renormalize
+            #                 epochs=epochs,
+            #                 batch_size=batch_size, # batch size & learning rate
+            #                 shuffle=True, verbose=2,
+            #                 callbacks=early_stopping)
+                            #validation_data=(x_val))
                             #callbacks=[TensorBoard(log_dir='/tmp/autoencoder')]))
 
-            if(epochs):
-                autoencoder.save_weights(dir_model_name)
-                print("Saved", dir_model_name, "model weights to disk")
+            # if(epochs):
+            #     autoencoder.save_weights(dir_model_name)
+            #     print("Saved", dir_model_name, "model weights to disk")
 
-                loss_history = history_callback.history
-                np_loss_history = np.array(loss_history)
-                #print(np_loss_history)
-                #np.savetxt("loss_history.txt", np_loss_history, delimiter=",")
-                with open(filename, "a") as text_file:
-                    text_file.write("loss_history: ")
-                    text_file.write(str(np_loss_history))
-
-            # Keract visualizations
-            #visualize(x_train, encoder, decoder)
-
+            #     loss_history = history_callback.history
+            #     np_loss_history = np.array(loss_history)
+            #     #print(np_loss_history)
+            #     #np.savetxt("loss_history.txt", np_loss_history, delimiter=",")
+            #     with open(filename, "a") as text_file:
+            #         text_file.write("loss_history: ")
+            #         text_file.write(str(np_loss_history))
             
-            test_data = x_test # x_test x_train x_test_noisy
+            test_data = x_test # x_test x_train
             train_data = x_train[0:8000]
+
+            # Test autoencoder
+            # en=encoder.predict(x_train)# Encode the images
+            # dec=decoder.predict(en) # Decode the encodings
 
             encoded_vec = encoder.predict(test_data)
             print('encoded_vectors:', encoded_vec.shape) # (batch-size, latent_dim)
@@ -529,7 +684,6 @@ def main():
             print('dec max:', decoded_imgs.max())
             print('dec min:', decoded_imgs.min())
 
-
             # spherical interpolation in the latent space 
             #dec_interpol_sample_slerp, dec_interpol_sample_traversal = interpolate(encoded_vec, decoder)
 
@@ -548,7 +702,7 @@ def main():
             # print('un-normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
             # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
-            title = '2D AE: ' # for subtitle
+            title = '2D WAE: ' # for subtitle
             # title = 'Raw data ' # for baseline
 
             # test_data = data_test_vis # visualize the original

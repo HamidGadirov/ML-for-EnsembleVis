@@ -211,7 +211,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data: 
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -268,12 +268,12 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    model_names = {"2d_vae_cropped_128_relu_norm_1.h5", "2d_vae_cropped_128_relu_norm_2.h5", \
-    "2d_vae_cropped_128_relu_norm_3.h5", "2d_vae_cropped_128_relu_norm_4.h5", "2d_vae_cropped_128_relu_norm_5.h5", \
-    "2d_vae_cropped_256_relu_norm_1.h5", "2d_vae_cropped_256_relu_norm_2.h5", \
-    "2d_vae_cropped_256_relu_norm_3.h5", "2d_vae_cropped_256_relu_norm_4.h5", "2d_vae_cropped_256_relu_norm_5.h5", \
-    "2d_beta_vae_cropped_128_relu_norm_2.h5", \
-    "2d_beta_vae_cropped_128_relu_norm_3.h5", "2d_beta_vae_cropped_128_relu_norm_4.h5", "2d_beta_vae_cropped_128_relu_norm_5.h5"}
+    # model_names = {"2d_vae_cropped_128_relu_norm_1.h5", "2d_vae_cropped_128_relu_norm_2.h5", \
+    # "2d_vae_cropped_128_relu_norm_3.h5", "2d_vae_cropped_128_relu_norm_4.h5", "2d_vae_cropped_128_relu_norm_5.h5", \
+    # "2d_vae_cropped_256_relu_norm_1.h5", "2d_vae_cropped_256_relu_norm_2.h5", \
+    # "2d_vae_cropped_256_relu_norm_3.h5", "2d_vae_cropped_256_relu_norm_4.h5", "2d_vae_cropped_256_relu_norm_5.h5", \
+    # "2d_beta_vae_cropped_128_relu_norm_2.h5", \
+    # "2d_beta_vae_cropped_128_relu_norm_3.h5", "2d_beta_vae_cropped_128_relu_norm_4.h5", "2d_beta_vae_cropped_128_relu_norm_5.h5"}
 
     model_names = {"2d_vae_croppedb_128_relu_norm_1.h5", "2d_vae_croppedb_128_relu_norm_2.h5", \
     "2d_vae_croppedb_128_relu_norm_3.h5", "2d_vae_croppedb_128_relu_norm_4.h5", "2d_vae_croppedb_128_relu_norm_5.h5", \
@@ -284,6 +284,21 @@ def main():
 
     dataset = "droplet"
     title = '2D VAE: ' # for subtitle
+
+    mod_nam = {"2d_vae_croppedb_128_relu_norm", 
+    "2d_vae_croppedb_256_relu_norm", 
+    "2d_beta_vae_croppedb_128_relu_norm"}
+
+    mod_nam = {"2d_vae_croppedb_128_relu_norm"}
+
+    model_names_all = []
+    for m_n in mod_nam:
+        for i in range(5):    
+            m_n_index = m_n + "_" + str(i+1) + ".h5"
+            model_names_all.append(m_n_index)
+
+    model_names = model_names_all
+    print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -315,7 +330,7 @@ def main():
             generic = False
             dense_dim = 1024
             latent_dim = 256
-            epochs = 10 # 500
+            epochs = 0 # 500
             conv_layers = 4
             stride = 2
             latent_vector = True

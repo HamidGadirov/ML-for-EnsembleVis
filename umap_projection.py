@@ -397,7 +397,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         # encoded_vec_train_test
         fig, ax = plt.subplots()
         train_size = 8000
-        scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='gray')
+        scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='silver') # gray
         scatter = plt.scatter(encoded_vec_2d_train_test[train_size:, 0], encoded_vec_2d_train_test[train_size:, 1], c=colors)
 
         plt.axis('off')
@@ -601,8 +601,9 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
             # colors = ['tab:purple', 'tab:darkviolet', 'tab:blueviolet', 'tab:royalblue', 'tab:lime', 'tab:yellow', 'tab:blue']
             colors = []
             for i in indexed_names:
-                colors.append('indigo' if i==0 else 'purple' if i==1 else 'orange' if i==2 else 'darkblue' if i==3 \
-                    else 'mediumblue' if i==4 else 'limegreen' if i==5 else 'yellow' if i==6 else 'dodgerblue')
+                colors.append('darkviolet' if i==0 else 'magenta' if i==1 else 'orange' if i==2 else 'darkblue' if i==3 \
+                    else 'royalblue' if i==4 else 'limegreen' if i==5 else 'yellow' if i==6 else 'mediumturquoise')
+                    # 'indigo' 'purple' 'orange' 'darkblue' 'mediumblue' 'limegreen' 'yellow' 'dodgerblue' aqua
             # for train data - color = gray
 
             # encoded_vec_2d = encoded_vec_2d_
@@ -642,7 +643,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         # full ensemble
         # encoded_vec_train_test
         fig, ax = plt.subplots()
-        scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='gray')
+        scatter = plt.scatter(encoded_vec_2d_train_test[:train_size, 0], encoded_vec_2d_train_test[:train_size, 1], c='silver') # gray
         scatter = plt.scatter(encoded_vec_2d_train_test[train_size:, 0], encoded_vec_2d_train_test[train_size:, 1], c=colors)
 
         plt.axis('off')

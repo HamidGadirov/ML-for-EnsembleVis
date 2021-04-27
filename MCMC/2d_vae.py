@@ -204,7 +204,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    load_data = True
     if load_data: 
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -311,6 +311,8 @@ def main():
     "2d_beta20_vae_cropped_32_relu_norm", "2d_beta20_vae_cropped_64_relu_norm",
     "2d_beta20_vae_cropped_128_relu_norm", "2d_beta20_vae_cropped_256_relu_norm",
     "2d_beta100_vae_cropped_128_relu_norm", "2d_beta100_vae_cropped_256_relu_norm"}
+
+    # mod_nam = {"2d_beta10_vae_cropped_128_relu_norm"}
 
     model_names_all = []
     for m_n in mod_nam:
@@ -495,7 +497,7 @@ def main():
                 f = open(dir_model_name)
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
-                continue # skip existing models
+                # continue # skip existing models
             except IOError:
                 print(dir_model_name, "model not accessible")
                 epochs = 20 # train if no weights found

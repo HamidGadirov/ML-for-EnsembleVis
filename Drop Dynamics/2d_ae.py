@@ -250,10 +250,10 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5", \
-    "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
-    "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
-    "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5"} 
+    # model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5", \
+    # "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
+    # "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
+    # "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5"} 
 
     model_names = {"2d_ae_croppedb_128_relu_reg_norm_1.h5", "2d_ae_croppedb_128_relu_reg_norm_2.h5", \
     "2d_ae_croppedb_128_relu_reg_norm_3.h5", "2d_ae_croppedb_128_relu_reg_norm_4.h5", "2d_ae_croppedb_128_relu_reg_norm_5.h5", \
@@ -266,7 +266,9 @@ def main():
     dataset = "droplet"
     title = '2D AE: ' # for subtitle
 
-    # model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5"}
+    mod_nam = {"2d_ae_croppedb_128_relu_reg_norm", 
+    "2d_ae_croppedb_256_relu_reg_norm", 
+    "2d_ae_croppedb_64_relu_reg_norm"}
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -299,7 +301,7 @@ def main():
             generic = False
             dense_dim = 1024
             latent_dim = 256
-            epochs = 10 # 500
+            epochs = 0 # 500
             conv_layers = 4
             stride = 2
             latent_vector = True

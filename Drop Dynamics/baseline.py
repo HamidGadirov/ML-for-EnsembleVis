@@ -4,6 +4,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
 
+from utils import model_directories, models_metrics_stability_droplet
 from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
@@ -15,7 +16,7 @@ from umap_projection import umap_projection
 from visualization import visualize_keract, visualize_keras
 from latent_sp_interpolation import interpolate, find_interpolatable
 
-import os
+import os, re
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import numpy as np
 from matplotlib import pyplot as plt
@@ -25,6 +26,7 @@ from progress.bar import Bar
 import pickle
 import json
 from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
 
 from keras.layers import Activation, Input, Dense, Conv2D, Conv2DTranspose
 from keras.layers import Flatten, Reshape, Cropping2D, Dropout
@@ -69,7 +71,7 @@ def load_labelled_data():
     # if data.shape[0] != len(names):
     #     input("!!! Inconstintency in data and names !!!")
     
-    data_sampled = data[:1800,...] # 3000
+    data_sampled = data[:1800,...] # 1800 in total
     names_sampled = names[:1800]
     # test_idx = np.random.randint(data.shape[0], size=900) #3D
     # #print(test_idx)
@@ -100,11 +102,14 @@ def load_labelled_data():
     names = pickle.load(pkl_file)
     pkl_file.close
 
-    data = data[:3600,...] # 3000
-    names = names[:3600]
+    data = data[:5400,...] # 5682 in total
+    names = names[:5400]
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
+
+    data, names = shuffle(data, names, random_state=0)
+    print("Shuffled test set")
 
     print(data.shape)
     print(len(names))
@@ -207,21 +212,28 @@ def main():
 
     # skript: combine 5 experiment: m arc, loss val, all results
     # everything must be fully automated!
+    # model_names = {"baseline_norm_cropb_1.h5", "baseline_norm_cropb_2.h5", 
+    # "baseline_norm_cropb_3.h5", "baseline_norm_cropb_4.h5", "baseline_norm_cropb_5.h5"}
 
-    # model_names = {"baseline_norm_crop_relu.h5"}
+    mod_nam = {"baseline_norm_cropb"}
 
-    model_names = {"baseline_norm_cropb_1.h5", "baseline_norm_cropb_2.h5", 
-    "baseline_norm_cropb_3.h5", "baseline_norm_cropb_4.h5", "baseline_norm_cropb_5.h5"}
+    # metrics stability add-on
+    model_names = models_metrics_stability_droplet(mod_nam)
+
+    # model_names_all = []
+    # for m_n in mod_nam:
+    #     for i in range(5):    
+    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
+    #         model_names_all.append(m_n_index)
+
+    # model_names = model_names_all
+    # print(model_names)
     
     for model_name in model_names:
         print("model_name:", model_name)
 
         dir_res = "Results/Baseline"
-        model = model_name[:-5]
-        dir_res = os.path.join(dir_res, model)
-        print("Saved here:", dir_res)
-        model = model_name[:-3]
-        dir_res_model = os.path.join(dir_res, model)
+        dir_res_model = model_directories(dir_res, model_name)
         os.makedirs(dir_res_model, exist_ok=True)
 
         # print("test_data, encoded_vec, decoded_imgs")
@@ -234,12 +246,25 @@ def main():
         # print('un-normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
         # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
-        test_data_vis = x_test # baseline
-        test_data = x_test
+        # metrics stability add-on
+        step = 400
+        for lab in reversed(range(400,2400+step, step)):
+            # print(lab)
+            to_remove = "_" + str(lab)
+            if to_remove in model_name:
+                x_test_ = x_test[:lab*3,...] # #labels to consider
+                names_ = names[:lab*3] # #labels to consider
+                print("Labels considered:", x_test_.shape[0])
+                model_name = model_name.replace(to_remove, '')
+        print(model_name)
+        ###
+
+        test_data_vis = x_test_ # baseline
+        test_data = x_test_
         # print(test_data_vis.min(), test_data_vis.max())
         # test_data_vis = test_data_vis * data_std + data_mean
         # print(test_data_vis.min(), test_data_vis.max())
-        train_test_data = np.concatenate((x_train, x_test), axis=0)
+        train_test_data = np.concatenate((x_train, test_data), axis=0)
         # test_data_vis = train_test_data # full
         encoded_vec_train = 0
         encoded_vec_train_test = 0
@@ -270,7 +295,7 @@ def main():
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
             #umap_projection(encoded_vec, test_data_vis, latent_vector, title_umap, dir_res_model, dataset, names)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_)
 
 
 

@@ -5,6 +5,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
+from utils import model_directories, models_metrics_stability, model_name_metrics_stability
 from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
@@ -74,12 +75,12 @@ def load_labelled_data():
     pkl_file.close
 
     elapsed_time = time.time() - start_time
-    print("All", data.shape[0], "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
+    print("All", data.shape[0], "labelled frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
 
     # if data.shape[0] != len(names):
     #     input("!!! Inconstintency in data and names !!!")
     
-    data_sampled = data[:1800,...] # 3000
+    data_sampled = data[:1800,...] # 1800 in total
     names_sampled = names[:1800]
     # test_idx = np.random.randint(data.shape[0], size=900) #3D
     # #print(test_idx)
@@ -110,8 +111,10 @@ def load_labelled_data():
     names = pickle.load(pkl_file)
     pkl_file.close
 
-    data = data[:3600,...] # 3000
-    names = names[:3600]
+    print("All", data.shape[0], "labelled frames were loaded successfully")
+
+    data = data[:5400,...] # 5682 in total
+    names = names[:5400]
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
@@ -223,7 +226,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data:
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -316,23 +319,24 @@ def main():
     "3d_beta4_vae_croppedb_256_relu_norm", 
     "3d_beta10_vae_croppedb_256_relu_norm"}
 
-    model_names_all = []
-    for m_n in mod_nam:
-        for i in range(5):    
-            m_n_index = m_n + "_" + str(i+1) + ".h5"
-            model_names_all.append(m_n_index)
+    mod_nam = {"3d_vae_croppedb_256_relu_norm", "3d_beta4_vae_croppedb_256_relu_norm"}
 
-    model_names = model_names_all
-    print(model_names)
+    # metrics stability add-on
+    model_names = models_metrics_stability(mod_nam, dataset)
+
+    # model_names_all = []
+    # for m_n in mod_nam:
+    #     for i in range(5):    
+    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
+    #         model_names_all.append(m_n_index)
+
+    # model_names = model_names_all
+    # print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
 
-        model = model_name[:-5] # [:-5]
-        dir_res_m = os.path.join(dir_res, model)
-        print("Saved here:", dir_res_m)
-        model = model_name[:-3] # [:-3]
-        dir_res_model = os.path.join(dir_res_m, model)
+        dir_res_model = model_directories(dir_res, model_name)
         os.makedirs(dir_res_model, exist_ok=True)
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
@@ -355,7 +359,7 @@ def main():
             generic = False
             dense_dim = 1024
             latent_dim = 512
-            epochs = 10 # 500
+            epochs = 0 # 500
             conv_layers = 4
             stride = (3, 2, 2)
             beta_vae = False
@@ -491,8 +495,10 @@ def main():
                     vae.summary(print_fn=lambda x: text_file.write(x + '\n'))
 
             try:
-                dir_model_name = os.path.join("weights", model_name)
-                f = open(dir_model_name)
+                # metrics stability add-on
+                model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                #dir_model_name = os.path.join("weights", model_name)
+
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
             except IOError:
@@ -561,7 +567,7 @@ def main():
                     text_file.write("loss_history: ")
                     text_file.write(str(np_loss_history))
 
-            test_data = x_test # x_test x_train
+            test_data = x_test_ # x_test x_train
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test
@@ -585,7 +591,7 @@ def main():
 
             # clustering perf eval in the feature space
             n_clusters = 8
-            kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
+            kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
             # continue
 
             decoded_imgs = vae.predict(test_data)
@@ -611,7 +617,7 @@ def main():
             # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
             # draw original and reconstructed data
-            draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset, temporal)
+            # draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset, temporal)
 
             # # train data
             # latent_representation = encoder.predict(train_data)
@@ -650,7 +656,7 @@ def main():
             print("UMAP projection")
             title_umap = title + 'Latent -> UMAP scatterplot'
             # umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names, temporal=True)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names, temporal=True)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_, temporal=True)
 
         if (interpolation == True):
             #Interpolation in the latent space
@@ -677,6 +683,8 @@ def main():
             # encoded_vec = latent_representation[2]
 
             # latent_dim_traversal(encoded_vec, decoder, dir_res_model, dataset, temporal)
+
+        K.clear_session()
 
 if __name__ == '__main__':
     main()

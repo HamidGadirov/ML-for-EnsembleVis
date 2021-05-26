@@ -3,6 +3,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
 
+from utils import model_directories, models_metrics_stability, model_name_metrics_stability
 from preprocessing import preprocess
 from draw_data import draw_data
 from draw_original_reconstruction import draw_orig_reconstr
@@ -26,6 +27,7 @@ from progress.bar import Bar
 import pickle
 import json
 from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
 
 from keras.layers import Activation, Input, Dense, Conv2D, Conv2DTranspose
 from keras.layers import Flatten, Reshape, Cropping2D, Dropout
@@ -70,7 +72,7 @@ def load_labelled_data():
     # if data.shape[0] != len(names):
     #     input("!!! Inconstintency in data and names !!!")
     
-    data_sampled = data[:1800,...] # 3000
+    data_sampled = data[:1800,...] # 1800 in total
     names_sampled = names[:1800]
     # test_idx = np.random.randint(data.shape[0], size=900) #3D
     # #print(test_idx)
@@ -101,8 +103,8 @@ def load_labelled_data():
     names = pickle.load(pkl_file)
     pkl_file.close
 
-    data = data[:3600,...] # 3000
-    names = names[:3600]
+    data = data[:5400,...] # 5682 in total
+    names = names[:5400]
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
@@ -163,6 +165,10 @@ def load_preprocess():
     data_train = data[:data_train.shape[0],]
     data_test = data[data_train.shape[0]:,]
 
+    data_test, names = shuffle(data_test, names, random_state=0)
+    print("Shuffled test set")
+    print(data_test.shape)
+
     # cropping:
     crop_left = int(data.shape[2]*0.15) # start from left 10 15
     crop_right = int(data.shape[2]*0.8) # end at right 15 20
@@ -193,7 +199,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data: 
         dir_res = "Results/2D_VAE" # test data is same for vae and ae
         # load test_data from pickle and later encoded_vec_2d
@@ -266,18 +272,25 @@ def main():
     dataset = "droplet"
     title = '2D AE: ' # for subtitle
 
-    mod_nam = {"2d_ae_croppedb_128_relu_reg_norm", 
-    "2d_ae_croppedb_256_relu_reg_norm", 
-    "2d_ae_croppedb_64_relu_reg_norm"}
+    mod_nam = {"2d_ae_croppedb_128_relu_reg_norm", "2d_ae_croppedb_256_relu_reg_norm", "2d_ae_croppedb_64_relu_reg_norm"}
+    mod_nam = {"2d_ae_croppedb_64_relu_reg_norm"}
+
+    # metrics stability add-on
+    model_names = models_metrics_stability_droplet(mod_nam)
+
+    # model_names_all = []
+    # for m_n in mod_nam:
+    #     for i in range(5):    
+    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
+    #         model_names_all.append(m_n_index)
+
+    # model_names = model_names_all
+    # print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
 
-        model = model_name[:-5]
-        dir_res_m = os.path.join(dir_res, model)
-        print("Saved here:", dir_res_m)
-        model = model_name[:-3]
-        dir_res_model = os.path.join(dir_res_m, model)
+        dir_res_model = model_directories(dir_res, model_name)
         os.makedirs(dir_res_model, exist_ok=True)
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
@@ -429,10 +442,11 @@ def main():
                     encoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
                     decoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
-            
             try:
-                dir_model_name = os.path.join("weights", model_name)
-                f = open(dir_model_name)
+                # metrics stability add-on
+                model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                #dir_model_name = os.path.join("weights", model_name)
+
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
             except IOError:
@@ -449,8 +463,6 @@ def main():
             #mse = mse(K.flatten(inputs), K.flatten(outputs[:,:-diff_x,:-diff_y,:]))
             autoencoder.compile(optimizer=adam, loss='mse') # binary_crossentropy if normalized [0,1]  mse
             # K.optimizer.Adam(lr=0.001) 'adadelta'
-
-            # cluster properly, e.g. same turbulency but diff place
 
             #from keras.callbacks import TensorBoard
 
@@ -493,7 +505,7 @@ def main():
             # Keract visualizations
             #visualize(x_train, encoder, decoder)
 
-            test_data = x_test # x_test x_train
+            test_data = x_test_ # x_test x_train
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test
@@ -522,7 +534,7 @@ def main():
 
             # clustering perf eval in the feature space
             n_clusters = 8
-            kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
+            kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
             # continue
 
             decoded_imgs = autoencoder.predict(test_data)
@@ -549,7 +561,7 @@ def main():
             # test_data = data_test_vis # visualize the original
 
             # draw original and reconstructed data
-            draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
+            # draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
 
             #test_data = data_test_vis # visualize the original
 
@@ -580,8 +592,9 @@ def main():
             print("UMAP projection")
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_)
 
+        K.clear_session()
 
 if __name__ == '__main__':
     main()

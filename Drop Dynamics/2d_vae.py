@@ -19,6 +19,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
 
+from utils import model_directories, models_metrics_stability, model_name_metrics_stability
 from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
@@ -41,6 +42,7 @@ import time
 from progress.bar import Bar
 import pickle
 from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
 
 from keras.layers import Activation, Input, Dense, Conv2D, Conv2DTranspose
 from keras.layers import Flatten, Reshape, Cropping2D, Lambda, Dropout
@@ -178,6 +180,10 @@ def load_preprocess():
     data_train = data[:data_train.shape[0],]
     data_test = data[data_train.shape[0]:,]
 
+    data_test, names = shuffle(data_test, names, random_state=0)
+    print("Shuffled test set")
+    print(data_test.shape)
+
     # # cropping:
     # crop_left = int(data.shape[2]*0.1) # start from left
     # crop_right = int(data.shape[2]*0.85) # end at right
@@ -291,23 +297,12 @@ def main():
 
     mod_nam = {"2d_vae_croppedb_128_relu_norm"}
 
-    model_names_all = []
-    for m_n in mod_nam:
-        for i in range(5):    
-            m_n_index = m_n + "_" + str(i+1) + ".h5"
-            model_names_all.append(m_n_index)
-
-    model_names = model_names_all
-    print(model_names)
+    model_names = models_metrics_stability(mod_nam, dataset)
 
     for model_name in model_names:
         print("model_name:", model_name)
-
-        model = model_name[:-5]
-        dir_res_m = os.path.join(dir_res, model)
-        print("Saved here:", dir_res_m)
-        model = model_name[:-3]
-        dir_res_model = os.path.join(dir_res_m, model)
+        
+        dir_res_model = model_directories(dir_res, model_name)
         os.makedirs(dir_res_model, exist_ok=True)
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
@@ -583,7 +578,7 @@ def main():
             # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
             # draw original and reconstructed data
-            draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
+            # draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset)
 
             train_test_data = np.concatenate((train_data, test_data), axis=0)
             # train and test data
@@ -637,6 +632,8 @@ def main():
             # encoded_vec = latent_representation[2]
             
             # latent_dim_traversal(encoded_vec, decoder, dir_res_model)
+
+        K.clear_session()
 
 if __name__ == '__main__':
     main()

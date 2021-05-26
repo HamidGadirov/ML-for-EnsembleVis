@@ -9,9 +9,6 @@ try to add Dropout -
 such as interpolating between two samples +
 sampling in the vicinity of a sample -
 exploring differences between a pair of samples applied to a third sample -
-
-18 Aug
-Why questions
 """
 
 import os,sys,inspect
@@ -19,6 +16,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
 
+from utils import model_directories, models_metrics_stability, model_name_metrics_stability
 from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
@@ -32,7 +30,7 @@ from kmeans_rand import kmeans_rand
 from visualization import visualize_keract, visualize_keras
 from latent_sp_interpolation import interpolate, find_interpolatable, latent_dim_traversal
 
-import os
+import os, re
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import numpy as np
 from matplotlib import pyplot as plt
@@ -93,8 +91,8 @@ def load_labelled_data():
     print("Shuffled test set")
     print(data.shape)
     print(len(names))
-    # data = data[0:600]
-    # names = names[0:600]
+    data = data[0:2500]
+    names = names[0:2500]
 
     # #data = data[:600,...]
     # test_idx = np.random.randint(data.shape[0], size=600)
@@ -204,7 +202,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data: 
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -242,6 +240,7 @@ def main():
     else:
         # preprocess the data and save test subset as pickle
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
+        print("Test data:", x_test.shape)
 
         # fn = os.path.join(dir_res, "test_data.pkl")
         # pkl_file = open(fn, 'wb')
@@ -261,7 +260,6 @@ def main():
         # pickle.dump(names, pkl_file)
         # print("Test labels were saved as pickle")
         # pkl_file.close
-
 
     model_names = {"2d_beta10_vae_cropped_128_relu_norm_1.h5", "2d_beta10_vae_cropped_128_relu_norm_2.h5", \
     "2d_beta6_vae_cropped_128_relu_norm_1.h5", "2d_beta6_vae_cropped_128_relu_norm_2.h5", \
@@ -312,25 +310,24 @@ def main():
     "2d_beta20_vae_cropped_128_relu_norm", "2d_beta20_vae_cropped_256_relu_norm",
     "2d_beta100_vae_cropped_128_relu_norm", "2d_beta100_vae_cropped_256_relu_norm"}
 
-    # mod_nam = {"2d_beta10_vae_cropped_128_relu_norm"}
+    mod_nam = {"2d_beta8_vae_cropped_128_relu_norm", "2d_beta2_vae_cropped_128_relu_norm"}
 
-    model_names_all = []
-    for m_n in mod_nam:
-        for i in range(5):    
-            m_n_index = m_n + "_" + str(i+1) + ".h5"
-            model_names_all.append(m_n_index)
+    # metrics stability add-on
+    model_names = models_metrics_stability(mod_nam, dataset)
 
-    model_names = model_names_all
-    print(model_names)
+    # model_names_all = []
+    # for m_n in mod_nam:
+    #     for i in range(5):    
+    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
+    #         model_names_all.append(m_n_index)
+
+    # model_names = model_names_all
+    # print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
 
-        model = model_name[:-5]
-        dir_res_m = os.path.join(dir_res, model)
-        print("Saved here:", dir_res_m)
-        model = model_name[:-3]
-        dir_res_model = os.path.join(dir_res_m, model)
+        dir_res_model = model_directories(dir_res, model_name)
         os.makedirs(dir_res_model, exist_ok=True)
 
         filename = os.path.join(dir_res_model, "model_structure.txt")
@@ -398,10 +395,10 @@ def main():
             if("128" in model_name):
                 dense_dim = 512
                 latent_dim = 128
-            if("64" in model_name):
+            if("_64_" in model_name):
                 dense_dim = 256
                 latent_dim = 64
-            if("32" in model_name):
+            if("_32_" in model_name):
                 dense_dim = 256
                 latent_dim = 32
 
@@ -493,14 +490,19 @@ def main():
                     vae.summary(print_fn=lambda x: text_file.write(x + '\n'))
 
             try:
-                dir_model_name = os.path.join("weights", model_name)
-                f = open(dir_model_name)
+                # metrics stability add-on
+                model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                #dir_model_name = os.path.join("weights", model_name)
+
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
+                # input("!!!")
                 # continue # skip existing models
             except IOError:
                 print(dir_model_name, "model not accessible")
                 epochs = 20 # train if no weights found
+
+            # input("!!!")
 
             #autoencoder.compile(optimizer='adadelta', loss='mse') #
             lr = 0.0005
@@ -561,14 +563,7 @@ def main():
                     text_file.write("loss_history: ")
                     text_file.write(str(np_loss_history))
 
-            # Keract visualizations
-            #visualize_keract(x_train[:,int(0.3*x_train.shape[1]):,:,:], encoder, decoder)
-            #visualize_keras(x_train, encoder, decoder)
-
-            # How convolutional neural networks see the world
-            
-
-            test_data = x_test # x_test x_train
+            test_data = x_test_ # x_test x_train
             train_data = x_train[0:8000]
 
             latent_representation = encoder.predict(test_data)
@@ -586,22 +581,22 @@ def main():
 
             # clustering perf eval in the feature space
             n_clusters = 5
-            kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
+            # kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
             # continue
 
             decoded_imgs = vae.predict(test_data)
-            print('decoded_imgs:', decoded_imgs.shape)
-            print('dec max:', decoded_imgs.max())
-            print('dec min:', decoded_imgs.min())
+            # print('decoded_imgs:', decoded_imgs.shape)
+            # print('dec max:', decoded_imgs.max())
+            # print('dec min:', decoded_imgs.min())
 
             #print(test_data.mean()) # 0
             #print(test_data.std()) # 1
 
-            print('normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
-            print('normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
+            # print('normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
+            # print('normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
             # un-normalize all using data_mean, data_std
             #test_data = test_data * data_std + data_mean
-            # encoded_vec = encoded_vec * data_std + data_mean # ?
+            # encoded_vec = encoded_vec * data_std + data_mean
             #decoded_imgs = decoded_imgs * data_std + data_mean
             # print('un-normalized max:', test_data.max(), encoded_vec.max(), decoded_imgs.max())
             # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
@@ -624,8 +619,8 @@ def main():
 
             decoded_imgs = vae.predict(train_data)
             print('decoded_imgs:', decoded_imgs.shape)
-            print('dec max:', decoded_imgs.max())
-            print('dec min:', decoded_imgs.min())
+            # print('dec max:', decoded_imgs.max())
+            # print('dec min:', decoded_imgs.min())
 
             train_test_data = np.concatenate((train_data, test_data), axis=0)
             # train and test data
@@ -635,8 +630,8 @@ def main():
 
             decoded_imgs = vae.predict(train_test_data)
             print('decoded_imgs:', decoded_imgs.shape)
-            print('dec max:', decoded_imgs.max())
-            print('dec min:', decoded_imgs.min())
+            # print('dec max:', decoded_imgs.max())
+            # print('dec min:', decoded_imgs.min())
 
 
         if (project == True):
@@ -648,7 +643,7 @@ def main():
             print("UMAP projection")
             title_umap = title + 'Latent -> UMAP scatterplot'
             # umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_)
 
             # project using t-sne and visualize the scatterplot
             print("t-SNE projection")
@@ -679,6 +674,8 @@ def main():
             # encoded_vec = latent_representation[2]
             
             # latent_dim_traversal(encoded_vec, decoder, dir_res_model)
+
+        K.clear_session()
 
 if __name__ == '__main__':
     main()

@@ -296,7 +296,7 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
     if (proj == "tsne"):
         fig.savefig('{}/latent_tsne_grid.png'.format(dir_res_model), dpi=300)
     if (proj == "umap"):
-        fig.savefig('{}/latent_umap_grid_train.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_grid.png'.format(dir_res_model), dpi=300)
     plt.close(fig)
 
     # if(dataset == 'droplet'):
@@ -349,6 +349,33 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
                 if names[k]=='5': c='limegreen'
                 if names[k]=='1': c='yellow'
                 rect = patches.Rectangle((j*(50), i*(50)), 50-2, 50-2, linewidth=0.5, edgecolor=c, facecolor='none')
+                ax.add_patch(rect)
+                k += 1
+        print(k)
+        plt.show()
+        fig.savefig('{}/latent_umap_grid_frames.png'.format(dir_res_model), dpi=300)
+
+    if(dataset == "droplet"):
+        names = [names[i] for i in i_sorting]
+        print(names)
+        # 30 40
+        # 132 146
+        import matplotlib.patches as patches
+        fig, ax = plt.subplots()
+        ax.imshow(patching, cmap=cmap, vmin=vmin, vmax=vmax)
+        k = 0
+        for i in range(ino):
+            for j in range(jno):
+                # print(names[k])
+                if names[k]=='bubble': c='darkviolet' 
+                if names[k]=='bubble-splash': c='magenta'
+                if names[k]=='column': c='orange'
+                if names[k]=='crown': c='darkblue'
+                if names[k]=='crown-splash': c='royalblue'
+                if names[k]=='splash': c='mediumturquoise'
+                if names[k]=='drop': c='limegreen'
+                if names[k]=='none': c='yellow'
+                rect = patches.Rectangle((j*(146), i*(132)), 146-2, 132-2, linewidth=0.5, edgecolor=c, facecolor='none')
                 ax.add_patch(rect)
                 k += 1
         print(k)

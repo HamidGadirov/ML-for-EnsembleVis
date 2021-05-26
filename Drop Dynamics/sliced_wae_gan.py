@@ -139,8 +139,8 @@ def load_labelled_data():
     names = pickle.load(pkl_file)
     pkl_file.close
 
-    data = data[:3600,...] # 3000
-    names = names[:3600]
+    data = data[:5400,...] # 5682
+    names = names[:5400]
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
@@ -315,19 +315,31 @@ def main():
     # model_names = {"2d_ae_2_relu_reg_norm_1.h5", "2d_ae_2_relu_reg_norm_2.h5", "2d_ae_2_relu_reg_norm_3.h5", \
 
     mod_nam = {"3d_wae_256_lrelu_reg_norm", "3d_wae_128_lrelu_reg_norm", "3d_wae_64_lrelu_reg_norm", "3d_wae_32_lrelu_reg_norm"}
+    mod_nam = {"3d_wae_32_lrelu_reg_norm"}
 
+    # metrics stability add-on
     model_names_all = []
-    for m_n in mod_nam:
-        for i in range(2,5):    
-            m_n_index = m_n + "_" + str(i+1) + ".h5"
-            model_names_all.append(m_n_index)
+    step = 400
+    for lab in range(400,2400+step, step): # labels to consider
+        #print(i)
+
+        for m_n in mod_nam:
+            for i in range(5):    
+                m_n_index = m_n + "_" + str(lab) + "_" + str(i+1) + ".h5"
+                model_names_all.append(m_n_index)
 
     model_names = model_names_all
     print(model_names)
+    ###
 
-    # input("x")
-    model_names = {"3d_wae_128_lrelu_reg_norm_4.h5", "3d_wae_128_lrelu_reg_norm_5.h5",
-    "3d_wae_64_lrelu_reg_norm_3.h5", "3d_wae_64_lrelu_reg_norm_4.h5", "3d_wae_64_lrelu_reg_norm_5.h5"}
+    # model_names_all = []
+    # for m_n in mod_nam:
+    #     for i in range(5):    
+    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
+    #         model_names_all.append(m_n_index)
+
+    # model_names = model_names_all
+    # print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -523,6 +535,18 @@ def main():
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
             
             try:
+                # metrics stability add-on
+                for lab in reversed(range(400,2400+step, step)):
+                    # print(lab)
+                    to_remove = "_" + str(lab)
+                    if to_remove in model_name:
+                        x_test_ = x_test[:lab*3,...] # #labels to consider
+                        names_ = names[:lab*3] # #labels to consider
+                        print("Labels considered:", x_test_.shape[0])
+                        model_name = model_name.replace(to_remove, '')
+                print(model_name)
+                ###
+
                 dir_model_name = os.path.join("weights", model_name)
                 f = open(dir_model_name)
                 autoencoder.load_weights(dir_model_name)
@@ -622,7 +646,7 @@ def main():
             #         text_file.write("loss_history: ")
             #         text_file.write(str(np_loss_history))
             
-            test_data = x_test # x_test x_train
+            test_data = x_test_ # x_test x_train
             train_data = x_train[0:8000]
 
             # Test autoencoder
@@ -641,7 +665,7 @@ def main():
 
             # clustering perf eval in the feature space
             n_clusters = 8
-            kmeans_rand(n_clusters, encoded_vec, names, dir_res_model)
+            kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
             # continue
 
             decoded_imgs = autoencoder.predict(test_data)
@@ -712,9 +736,9 @@ def main():
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
             # umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names, temporal=True)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_, temporal=True)
 
-
+        K.clear_session()
 
 if __name__ == '__main__':
     main()

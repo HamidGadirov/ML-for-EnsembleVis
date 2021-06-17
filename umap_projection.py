@@ -161,7 +161,7 @@ def draw_movement(encoded_vec_2d, names, labels, title, dir_res_model):
     #plt.show()
     plt.tight_layout()
     #fig.set_size_inches(10, 8)
-    fig.savefig('{}/latent_umap_scatter_labels_movement.png'.format(dir_res_model), dpi=300)
+    fig.savefig('{}/latent_umap_scatter_labels_movement.pdf'.format(dir_res_model), dpi=300)
     plt.close(fig)
 
 def calculate_metrics(encoded_vec_2d, names, knn_title, filename):
@@ -216,11 +216,13 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         # fit = umap.UMAP(min_dist=0.5)
         fit = umap.UMAP(min_dist=1.0)
         encoded_vec_2d = fit.fit_transform(encoded_vec) # encoded_vec
+        
+        print("Encoded vec:", encoded_vec.shape)
+        if (encoded_vec.shape[1]==2): # 2D dim latent space
+            encoded_vec_2d = encoded_vec
 
         elapsed_time = time.time() - start_time
         print("UMAP accuracy was computed in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
-
-        # encoded_vec_2d = encoded_vec # 2D dim latent space
 
         # Save the encoded data 
         #print(type(encoded_vec_2d))
@@ -291,10 +293,12 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
             print(encoded_vec_train_test.shape)
             encoded_vec_2d_train_test = fit.fit_transform(encoded_vec_train_test) # encoded_vec
 
+            print("Encoded vec train test:", encoded_vec_train_test.shape)
+            if (encoded_vec_train_test.shape[1]==2): # 2D dim latent space
+                encoded_vec_2d_train_test = encoded_vec_train_test
+
             elapsed_time = time.time() - start_time
             print("UMAP accuracy was computed in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")
-
-            # encoded_vec_2d = encoded_vec # 2D dim latent space
 
             # Save the encoded data 
             #print(type(encoded_vec_2d_train))
@@ -425,7 +429,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #ax.set_title(knn_title, fontsize=17)
         plt.axis('off')
         plt.tight_layout()
-        fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
         # full ensemble
@@ -438,7 +442,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels_full.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels_full.pdf'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
     if (dataset == "flow"):
@@ -519,7 +523,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #ax.set_title(knn_title, fontsize=17)
         plt.axis('off')
         plt.tight_layout()
-        fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
         draw_movement(encoded_vec_2d, names, labels, title, dir_res_model)
@@ -559,7 +563,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         # plot_dendrogram(model, truncate_mode='level', p=8)
         # plt.xlabel("Number of points in node (or index of point if no parenthesis).")
         # plt.show()
-        # plt.savefig('{}/hierarch_clust.png'.format(dir_res_model), dpi=300)
+        # plt.savefig('{}/hierarch_clust.pdf'.format(dir_res_model), dpi=300)
 
         knn_title = "UMAP"
 
@@ -643,7 +647,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
         # Full ensemble: encoded_vec_train_test
@@ -654,7 +658,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels_full.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels_full.pdf'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
     if (dataset == "mnist"):
@@ -714,7 +718,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
         plt.close(fig)
 
     # elapsed_time = time.time() - start_time
@@ -815,7 +819,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     #title += 'Latent -> UMAP'
     #plt.suptitle(title)
     #plt.show()
-    #filename = os.path.join(model_name, "umap_scatter.png")
+    #filename = os.path.join(model_name, "umap_scatter.pdf")
     #fig.savefig(filename)
 
     # from getkey import getkey, keys
@@ -872,8 +876,8 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     # plt.tight_layout() # (pad=2)
     # #fig.set_size_inches(12, 9)
     # #plt.show()
-    # fig.savefig('{}/latent_umap.png'.format(dir_res_model), dpi=300)
-    # # filename = os.path.join(model_name, "tsne_scatter_images.png")
+    # fig.savefig('{}/latent_umap.pdf'.format(dir_res_model), dpi=300)
+    # # filename = os.path.join(model_name, "tsne_scatter_images.pdf")
     # # fig.savefig(filename)
     # plt.close(fig)
 
@@ -913,7 +917,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     # #     plt.tight_layout() # (pad=2)
     # #     #fig.set_size_inches(12, 9)
     # #     #plt.show()
-    # #     fig.savefig('{}/latent_umap_full.png'.format(dir_res_model), dpi=300)
-    # #     # filename = os.path.join(model_name, "tsne_scatter_images.png")
+    # #     fig.savefig('{}/latent_umap_full.pdf'.format(dir_res_model), dpi=300)
+    # #     # filename = os.path.join(model_name, "tsne_scatter_images.pdf")
     # #     # fig.savefig(filename)
     # #     plt.close(fig)

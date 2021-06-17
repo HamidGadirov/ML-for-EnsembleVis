@@ -56,41 +56,9 @@ def main():
     with Bar("Loading the data...", max=len(listOfFiles)/2 ) as bar:
         for elem in listOfFiles:
             if elem.endswith(('.bna')):
-                if ("1435a_Hexahexa_0,499_viewA.bna" in elem): 
-                    # 248_Hexa-Hexa_0,51mm_viewA problematic
-                    print(elem)
-                    tmp_data = np.fromfile(elem, dtype='uint8')
-                    print(tmp_data.shape)
-                    frame_num = tmp_data.shape[0]/(160*224)
-                    #print(frame_num)
-                    tmp_data.resize(int(frame_num), 160, 224, 1)
-                    tmp_data = np.flip(tmp_data, 1)
-                    data = np.append(data, tmp_data, axis=0)
-                    print(data.shape)
-
-                    fig=plt.figure()
-                    columns = 10
-                    rows = 8
-                    for i in range(1, columns*rows+1 ):
-                        if (i == data.shape[0]):
-                            break
-                        img = data[i,:,:,0]
-                        #img.reshape(84,444)
-                        #print(img.shape)
-                        fig.add_subplot(rows, columns, i)
-                        plt.imshow(img)
-                        plt.axis('off')
-
-                    fig = plt.gcf()
-                    plt.suptitle(elem) 
-                    plt.axis('off')
-                    plt.show()
-
-                    input("prompt")
-                else:
-                    continue
-
-                input("prompt")
+                # if ("1435a_Hexahexa_0,499_viewA.bna" in elem): 
+                # 248_Hexa-Hexa_0,51mm_viewA problematic
+                print(elem)
                 tmp_data = np.fromfile(elem, dtype='uint8')
                 print(tmp_data.shape)
                 frame_num = tmp_data.shape[0]/(160*224)
@@ -98,13 +66,46 @@ def main():
                 tmp_data.resize(int(frame_num), 160, 224, 1)
                 tmp_data = np.flip(tmp_data, 1)
                 data = np.append(data, tmp_data, axis=0)
-                #print(elem)
-                #print(tmp_data)
+                print(data.shape)
+
+                # fig=plt.figure()
+                # columns = 10
+                # rows = 8
+                # for i in range(1, columns*rows+1 ):
+                #     if (i == data.shape[0]):
+                #         break
+                #     img = data[i,:,:,0]
+                #     #img.reshape(84,444)
+                #     #print(img.shape)
+                #     fig.add_subplot(rows, columns, i)
+                #     plt.imshow(img)
+                #     plt.axis('off')
+
+                # fig = plt.gcf()
+                # plt.suptitle(elem) 
+                # plt.axis('off')
+                # plt.show()
+
+                # input("prompt")
 
                 count += 1
                 #if (count==40): # ~5K frames
                 #    break
                 bar.next()
+
+            # else:
+            #     continue
+
+            # input("prompt")
+            # tmp_data = np.fromfile(elem, dtype='uint8')
+            # print(tmp_data.shape)
+            # frame_num = tmp_data.shape[0]/(160*224)
+            # #print(frame_num)
+            # tmp_data.resize(int(frame_num), 160, 224, 1)
+            # tmp_data = np.flip(tmp_data, 1)
+            # data = np.append(data, tmp_data, axis=0)
+            #print(elem)
+            #print(tmp_data)
 
     #print(data)
     #print(tmp_data)
@@ -113,6 +114,8 @@ def main():
     print('data shape:', data.shape)
     print(count)
 
+    input("prompt")
+    input("prompt")
 
     elapsed_time = time.time() - start_time
     print("All", count, "frames were loaded successfully in", "{0:.2f}".format(round(elapsed_time, 2)), "seconds.")

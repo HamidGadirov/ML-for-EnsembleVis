@@ -22,13 +22,13 @@ def models_metrics_stability(mod_nam, dataset):
     model_names_all = []
     num_of_runs = 20
     if (dataset == "droplet"):
-        start = 400
-        end = 2400
-        step = 400
+        start = 20 # 400   60 180 300
+        end = 100 # 2400
+        step = 40 # 400
     if (dataset == "mcmc"):
-        start = 500
-        end = 2500
-        step = 250
+        start = 20 # 500
+        end = 50 # 2500
+        step = 30 # 250
     for lab in range(start,end+step, step): # labels to consider
         #print(i)
 
@@ -45,21 +45,21 @@ def models_metrics_stability(mod_nam, dataset):
 def model_name_metrics_stability(model_name, x_test, names, dataset):
     # metrics stability, remove numbers
     if (dataset == "droplet"):
-        start = 400
-        end = 2400
-        step = 400
+        start = 20 # 400   60 180 300
+        end = 100 # 2400
+        step = 40 # 400
     if (dataset == "mcmc"):
-        start = 500
-        end = 2500
-        step = 250
+        start = 20 # 500
+        end = 50 # 2500
+        step = 30 # 250
     for lab in reversed(range(start,end+step, step)):
         # print(lab)
         to_remove = "_" + str(lab)
-        if to_remove in model_name:
+        if to_remove in model_name[:-5]:
             x_test_ = x_test[:lab,...] # #labels to consider
             names_ = names[:lab] # #labels to consider
             print("Labels considered:", x_test_.shape[0])
-            model_name = model_name.replace(to_remove, '')
+            model_name = model_name[:-5].replace(to_remove, '') + model_name[-5:]
     print(model_name)
 
 

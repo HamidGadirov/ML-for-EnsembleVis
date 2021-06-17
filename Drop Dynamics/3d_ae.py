@@ -242,9 +242,9 @@ def main():
         pkl_file.close
 
         test_data = np.asarray(data_test)
-        print(test_data.shape)
+        print("Test data: ", test_data.shape)
         train_data = np.asarray(data_train)
-        print(train_data.shape)
+        print("Train data: ", train_data.shape)
 
         names = labels
         print(len(names))
@@ -259,6 +259,7 @@ def main():
         # preprocess the data and save test subset as pickle
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
 
+        # dir_res = "Results/3D_VAE" # same as for 3D VAE
         # fn = os.path.join(dir_res, "test_data.pkl")
         # pkl_file = open(fn, 'wb')
         # pickle.dump(x_test, pkl_file)
@@ -276,6 +277,8 @@ def main():
         # pickle.dump(names, pkl_file)
         # print("Test labels were saved as pickle")
         # pkl_file.close
+
+        # input("x")
 
     # model_names = {"3d_ae_cropped_256_relu_norm_1.h5", "3d_ae_cropped_256_relu_norm_2.h5", \
     # "3d_ae_cropped_256_relu_norm_3.h5", "3d_ae_cropped_256_relu_norm_4.h5", "3d_ae_cropped_256_relu_norm_5.h5", \
@@ -310,19 +313,23 @@ def main():
     "3d_ae_croppedb_128_relu_norm", 
     "3d_ae_croppedb_64_relu_norm"}
 
-    mod_nam = {"3d_ae_croppedb_256_relu_norm"}
+    mod_nam = {"3d_ae_croppedb_256_relu_norm.h5"}
+    # mod_nam = {"3d_ae_croppedb_16_relu_norm"}
 
     # metrics stability add-on
-    model_names = models_metrics_stability(mod_nam, dataset)
+    stability_study = True
+    if (stability_study):
+        print("Stability Study")
+        model_names = models_metrics_stability(mod_nam, dataset)
+    else:
+        model_names_all = []
+        for m_n in mod_nam:
+            for i in range(5):    
+                m_n_index = m_n + "_" + str(i+1) + ".h5"
+                model_names_all.append(m_n_index)
 
-    # model_names_all = []
-    # for m_n in mod_nam:
-    #     for i in range(5):    
-    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
-    #         model_names_all.append(m_n_index)
-
-    # model_names = model_names_all
-    # print(model_names)
+        model_names = model_names_all
+        print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -388,6 +395,9 @@ def main():
             if("32" in model_name):
                 dense_dim = 128
                 latent_dim = 32
+            if("_16_" in model_name):
+                dense_dim = 128
+                latent_dim = 16
 
             # build encoder model
             inputs = Input(shape=(x_train.shape[1], x_train.shape[2], x_train.shape[3], 1), name='encoded_input')
@@ -482,8 +492,11 @@ def main():
             
             try:
                 # metrics stability add-on
-                model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                #dir_model_name = os.path.join("weights", model_name)
+                if (stability_study):
+                    print("Stability Study")
+                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                else:
+                    dir_model_name = os.path.join("weights", model_name)
 
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
@@ -534,7 +547,13 @@ def main():
             # Keract visualizations
             #visualize(x_train, encoder, decoder)
 
-            test_data = x_test_ # x_test x_train
+            if (stability_study):
+                print("Stability Study")
+                test_data = x_test_
+                test_names = names_
+            else:
+                test_data = x_test # x_test x_train x_test_
+                test_names = names
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test
@@ -548,13 +567,13 @@ def main():
             encoded_vec = encoder.predict(test_data)
             # print(encoded_vec)
             print('encoded_vectors:', encoded_vec.shape) # (batch-size, latent_dim)
-            fig=plt.figure()
-            plt.tight_layout()
-            #fig.set_size_inches(8, 6)
-            plt.suptitle('3d_ae: Latent vectors')
-            plt.imshow(encoded_vec)
-            fig.savefig('{}/latent.png'.format(dir_res_model))
-            plt.close(fig)
+            # fig=plt.figure()
+            # plt.tight_layout()
+            # #fig.set_size_inches(8, 6)
+            # plt.suptitle('3d_ae: Latent vectors')
+            # plt.imshow(encoded_vec)
+            # fig.savefig('{}/latent.png'.format(dir_res_model))
+            # plt.close(fig)
 
             # clustering in the feature space
             from sklearn.cluster import KMeans
@@ -563,7 +582,7 @@ def main():
 
             # clustering perf eval in the feature space
             n_clusters = 8
-            kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
+            # kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
             # continue
 
             decoded_imgs = autoencoder.predict(test_data)
@@ -619,7 +638,7 @@ def main():
             #pca_projection(encoded_vec, test_data, latent_vector, title, dataset)
 
             # project using t-sne and visualize the scatterplot
-            print("t-SNE projection")
+            # print("t-SNE projection")
             #title_tsne = title + 'Latent -> t-SNE scatterplot, perp='
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=20)
             # tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, temporal=True, perp=30)
@@ -628,7 +647,7 @@ def main():
             # project using UMAP and visualize the scatterplot
             print("UMAP projection")
             title_umap = title + 'Latent -> UMAP scatterplot'
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_, temporal=True)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, test_names, temporal=True)
 
         if (interpolation == True):
             #Interpolation in the latent space

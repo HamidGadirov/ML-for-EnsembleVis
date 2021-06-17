@@ -249,7 +249,15 @@ pareto_list = []
 for key, value in d.items():
     if d[key]["Neighborhood_hit"]: # test
         print(key)
-        if("100" in key) or ("32" in key) or ("512" in key):
+        if("100" in key) or ("512" in key):
+            continue
+        if("2d_ae" in key) and ("128" in key) and ("reg" in key):
+            continue
+        if("2d_ae" in key) and ("128" in key) and ("reg" in key):
+            continue
+        if("3d_ae" in key) and ("16" in key):
+            continue
+        if("wae" in key) and ("256" in key):
             continue
 
         print(d[key])
@@ -377,6 +385,8 @@ with open(filename, "w") as text_file:
         text_file.write(str(round(x_all[i],4)) + "±" + str(round(xerr[i],3)) + "  ")
         text_file.write(str(round(y_all[i],4)) + "±" + str(round(yerr[i],3)) + "\n")
 
+# input("stop")
+
 #uncertainty equal to the standard deviation
 
 # # draw a scatterplot with annotations
@@ -386,13 +396,25 @@ with open(filename, "w") as text_file:
 
 names = pareto_list # all unique models
 
+col = []
+for index in range(10):
+    col.append(list(plt.cm.tab10(index)))
+
+marker_size = 100
+
 # draw a scatterplot with annotations
 fig, ax = plt.subplots() # just a figure and only one subplot
+plt.grid()
+
 for i in range(len(x_all)):
-    if ('2d' in names[i]):
-        sc = ax.scatter(x_all[i], y_all[i], c='cyan', marker='s')
-    if ('3d' in names[i]):
-        sc = ax.scatter(x_all[i], y_all[i], c='blue', marker='o')
+    if ('_ae' in names[i] and '_reg' not in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[4], marker='^', s=marker_size)
+    if ('_ae' in names[i] and '_reg' in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[4], marker='v', s=marker_size)
+    if ('vae' in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[0], marker='o', s=marker_size) # ~blue
+    if ('wae' in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[1], marker='s', s=marker_size)
 
 models = []
 for name in names: # replace some characters
@@ -400,15 +422,26 @@ for name in names: # replace some characters
     name = name.replace('_', ' ')
     name = name.replace('cropped', 'crop')
     name = name.replace('norm crop', 'crop norm')
-    name = name.replace(' crop', '')
+    name = name.replace(' lrelu', '')
     name = name.replace(' relu', '')
     name = name.replace(' norm', '')
-    name = name.replace('beta', 'b')
+    name = name.replace(' cropb', '')
+    name = name.replace('beta', r'$\beta$')
     #print(name)
     name = name.replace('2d', '2D')
     name = name.replace('3d', '3D')
-    name = name.replace('vae', 'VAE')
-    name = name.replace('ae', 'AE')
+    name = name.replace('vae', '') # VAE
+    name = name.replace('wae', '') # SWAE
+    name = name.replace('ae', '') # AE
+    if 'WAE' in name:
+        name = name.replace('reg', '')
+    if 'reg' in name:
+        name = name.replace('AE', '') # Sparse AE
+        name = name.replace('reg', '')
+    if 'baseline' in name:
+        name = name.replace('baseline', '') # Baseline
+
+    name = name.replace('  ', ' ')
     models.append(name)
 # print("after repl:", names)
 # print("after repl:", models)
@@ -452,14 +485,15 @@ def hover(event):
 
 # fig.canvas.mpl_connect("motion_notify_event", hover)
 
-ax.plot(x_pareto, y_pareto, color='g') # connecting line for pareto front
-ax.scatter(x_pareto, y_pareto, c='g')
+ax.plot(x_pareto, y_pareto, color=col[2], linewidth=3) # connecting green line for pareto front
+# ax.scatter(x_pareto, y_pareto, c=col[2], marker='D', s=marker_size+25)
+plt.scatter(x_pareto, y_pareto, facecolors='none', edgecolors=col[2], s=marker_size+100)
 
 for i in range(len(pareto_list)):
     if ("baseline" in pareto_list[i]):
         #print(pareto_list[i])
         #print(x_all[i], y_all[i])
-        ax.scatter(x_all[i], y_all[i], c='r') # baseline
+        ax.scatter(x_all[i], y_all[i], c='r', s=marker_size) # baseline c=col[4]
 
 # ZoomPan scrollig
 scale = 1.1
@@ -469,22 +503,63 @@ figPan = zp.pan_factory(ax)
 
 # ax.set_xlim([0.24,0.82])
 #ax.set_ylim([ymin,ymax])
-plt.xticks(fontsize=20)
-plt.yticks(fontsize=20)
+fs = 16
+plt.xticks(fontsize=fs)
+plt.yticks(fontsize=fs)
 
-plt.xlabel('Neighborhood hit', fontsize=20)
-plt.ylabel('Spread', fontsize=20)
-plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
+plt.xlabel('Neighborhood hit', fontsize=fs)
+plt.ylabel('Spread', fontsize=fs)
+# plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
 
-texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=18) for i in range(len(x_all))]
-print(texts)
-adjust_text(texts, lim=0)
+texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=13) for i in range(len(x_all))]
+for i, text in enumerate(texts):
+    print(i, text)
+# adjust_text(texts, lim=0)
 # adjust_text(texts, lim=1, arrowprops=dict(arrowstyle="->", color='b', lw=0.5))
 # adjust_text(texts, x, y, arrowprops=dict(arrowstyle="-", color='black', lw=0.5), 
 #             autoalign='', only_move={'points':'y', 'text':'y'})
+adjust_text(texts, lim=1, precision=0.001)
 
-fig.set_size_inches(16, 9)
-plt.savefig('drop_pareto.png', dpi=300)
+# move annotation manually
+# texts[6].set_x(0.67) # 3D AE 256
+# texts[16].set_x(0.69) # 3D SWAE 64
+# texts[16].set_y(0.143) # 3D SWAE 64
+texts[5].set_x(0.64) # '3D 128'
+texts[8].set_x(0.61) # '3D 128'
+texts[12].set_y(0.107) # b4
+texts[12].set_x(0.36) # b4
+texts[13].set_x(0.55) # 3D AE 256
+texts[15].set_x(0.67) # 3D SWAE 32
+texts[14].set_x(0.71) # 3D SWAE 128
+texts[14].set_y(0.136) # 3D SWAE 128
+
+import matplotlib.lines as mlines
+purple_triangle_up = mlines.Line2D([], [], color=col[4], marker='^', linestyle='None',
+                          markersize=10, label='AE')
+purple_triangle = mlines.Line2D([], [], color=col[4], marker='v', linestyle='None',
+                          markersize=10, label='Sparse AE')
+orange_square = mlines.Line2D([], [], color=col[1], marker='s', linestyle='None',
+                          markersize=10, label='SWAE')
+blue_circle = mlines.Line2D([], [], color=col[0], marker='o', linestyle='None',
+                          markersize=10, label='VAE')
+red_circle = mlines.Line2D([], [], color='red', marker='o', linestyle='None',
+                          markersize=10, label='Baseline')
+green_ = mlines.Line2D([], [], color="white", marker='o', markeredgecolor=col[2], linestyle='None',
+                          markersize=10, label='Pareto efficient')
+
+plt.legend(handles=[purple_triangle_up, purple_triangle, orange_square, blue_circle, red_circle, green_], 
+    prop={'size': 13})
+
+# for i, txt in enumerate(models):
+#     if ('2D AE 128' in txt):
+#         print(txt)
+#         ax.annotate(txt, xy=(100,100))
+
+# fig.set_size_inches(16, 9)
+fig.set_size_inches(8, 8)
+plt.tight_layout()
+# plt.savefig('droplet_ae_vae_wae_pareto.png', dpi=300)
+plt.savefig('droplet_ae_vae_wae_pareto.pdf') 
 plt.show()
 
 

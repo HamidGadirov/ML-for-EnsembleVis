@@ -276,7 +276,19 @@ def main():
     mod_nam = {"2d_ae_croppedb_64_relu_reg_norm"}
 
     # metrics stability add-on
-    model_names = models_metrics_stability_droplet(mod_nam)
+    stability_study = True
+    if (stability_study):
+        print("Stability Study")
+        model_names = models_metrics_stability(mod_nam, dataset)
+    else:
+        model_names_all = []
+        for m_n in mod_nam:
+            for i in range(5):    
+                m_n_index = m_n + "_" + str(i+1) + ".h5"
+                model_names_all.append(m_n_index)
+
+        model_names = model_names_all
+        print(model_names)
 
     # model_names_all = []
     # for m_n in mod_nam:
@@ -444,8 +456,11 @@ def main():
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
             try:
                 # metrics stability add-on
-                model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                #dir_model_name = os.path.join("weights", model_name)
+                if (stability_study):
+                    print("Stability Study")
+                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                else:
+                    dir_model_name = os.path.join("weights", model_name)
 
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
@@ -505,7 +520,13 @@ def main():
             # Keract visualizations
             #visualize(x_train, encoder, decoder)
 
-            test_data = x_test_ # x_test x_train
+            if (stability_study):
+                print("Stability Study")
+                test_data = x_test_
+                test_names = names_
+            else:
+                test_data = x_test # x_test x_train x_test_
+                test_names = names
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test
@@ -519,13 +540,13 @@ def main():
             encoded_vec = encoder.predict(test_data)
             # print(encoded_vec)
             print('encoded_vectors:', encoded_vec.shape) # (batch-size, latent_dim)
-            fig=plt.figure()
-            plt.tight_layout()
-            #fig.set_size_inches(8, 6)
-            plt.suptitle('3d_ae: Latent vectors')
-            plt.imshow(encoded_vec)
-            fig.savefig('{}/latent.png'.format(dir_res_model))
-            plt.close(fig)
+            # fig=plt.figure()
+            # plt.tight_layout()
+            # #fig.set_size_inches(8, 6)
+            # plt.suptitle('3d_ae: Latent vectors')
+            # plt.imshow(encoded_vec)
+            # fig.savefig('{}/latent.png'.format(dir_res_model))
+            # plt.close(fig)
 
             # clustering in the feature space
             from sklearn.cluster import KMeans
@@ -592,7 +613,7 @@ def main():
             print("UMAP projection")
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, test_names)
 
         K.clear_session()
 

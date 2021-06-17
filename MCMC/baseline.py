@@ -4,7 +4,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir) 
 
-from utils import model_directories, models_metrics_stability_mcmc
+from utils import model_directories, models_metrics_stability, model_name_metrics_stability
 from preprocessing import preprocess
 from draw_original_reconstruction import draw_orig_reconstr
 from fully_conn import generate_dense_layers, generate_fully_conn
@@ -193,16 +193,19 @@ def main():
     mod_nam = {"baseline_norm"}
 
     # metrics stability add-on
-    model_names = models_metrics_stability_mcmc(mod_nam)
+    stability_study = True
+    if (stability_study):
+        print("Stability Study")
+        model_names = models_metrics_stability(mod_nam, dataset)
+    else:
+        model_names_all = []
+        for m_n in mod_nam:
+            for i in range(5):    
+                m_n_index = m_n + "_" + str(i+1) + ".h5"
+                model_names_all.append(m_n_index)
 
-    # model_names_all = []
-    # for m_n in mod_nam:
-    #     for i in range(5):    
-    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
-    #         model_names_all.append(m_n_index)
-
-    # model_names = model_names_all
-    # print(model_names)
+        model_names = model_names_all
+        print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -222,24 +225,24 @@ def main():
         # print('un-normalized min:', test_data.min(), encoded_vec.min(), decoded_imgs.min())
 
         # metrics stability add-on
-        step = 250
-        for lab in reversed(range(500,2500+step, step)):
-            # print(lab)
-            to_remove = "_" + str(lab)
-            if to_remove in model_name:
-                x_test_ = x_test[:lab,...] # #labels to consider
-                names_ = names[:lab] # #labels to consider
-                print("Labels considered:", x_test_.shape[0])
-                model_name = model_name.replace(to_remove, '')
-        print(model_name)
-        ###
+        if (stability_study):
+            print("Stability Study")
+            model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+        else:
+            dir_model_name = os.path.join("weights", model_name)
 
-        test_data_vis = x_test_ # baseline
+        if (stability_study):
+            print("Stability Study")
+            test_data = x_test_
+            test_names = names_
+        else:
+            test_data = x_test # x_test x_train x_test_
+            test_names = names
         train_data = x_train[0:8000]
         # print(test_data_vis.min(), test_data_vis.max())
         # test_data_vis = test_data_vis * data_std + data_mean
         # print(test_data_vis.min(), test_data_vis.max())
-        train_test_data = np.concatenate((train_data, test_data_vis), axis=0)
+        train_test_data = np.concatenate((train_data, test_data), axis=0)
         # test_data_vis = train_test_data # full
         encoded_vec_train = 0
         encoded_vec_train_test = 0
@@ -269,7 +272,7 @@ def main():
             #title_umap = title + 'Latent -> UMAP scatterplot'
             title_umap = title + '-> UMAP scatterplot'
             #umap_projection(encoded_vec, test_data_vis, latent_vector, title_umap, dir_res_model, dataset, names)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data_vis, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, test_names)
 
 
 

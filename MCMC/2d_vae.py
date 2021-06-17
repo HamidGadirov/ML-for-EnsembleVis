@@ -40,12 +40,19 @@ from progress.bar import Bar
 import pickle
 from sklearn.model_selection import train_test_split
 
+import keras
+import tensorflow as tf
+config = tf.ConfigProto()
+config.gpu_options.per_process_gpu_memory_fraction = 0.9  # 0.6 sometimes works better for folks
+keras.backend.tensorflow_backend.set_session(tf.Session(config=config))
+
 from keras.layers import Activation, Input, Dense, Conv2D, Conv2DTranspose
 from keras.layers import Flatten, Reshape, Cropping2D, Lambda, Dropout
 from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras import backend as K
-from keras import optimizers, regularizers       
+from keras import optimizers, regularizers   
+
 
 def cropping_output(decoded, input_shape):
 
@@ -203,7 +210,7 @@ def main():
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
     load_data = False
-    if load_data: 
+    if load_data:
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
         pkl_file = open(fn, 'rb')
@@ -313,16 +320,22 @@ def main():
     mod_nam = {"2d_beta8_vae_cropped_128_relu_norm", "2d_beta2_vae_cropped_128_relu_norm"}
 
     # metrics stability add-on
-    model_names = models_metrics_stability(mod_nam, dataset)
+    stability_study = True
+    if (stability_study):
+        print("Stability Study")
+        model_names = models_metrics_stability(mod_nam, dataset)
+    else:
+        model_names_all = []
+        for m_n in mod_nam:
+            for i in range(5):    
+                m_n_index = m_n + "_" + str(i+1) + ".h5"
+                model_names_all.append(m_n_index)
 
-    # model_names_all = []
-    # for m_n in mod_nam:
-    #     for i in range(5):    
-    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
-    #         model_names_all.append(m_n_index)
+        model_names = model_names_all
+        print(model_names)
 
-    # model_names = model_names_all
-    # print(model_names)
+    # model_names = {"2d_beta8_vae_cropped_32_relu_norm_1.h5", "2d_beta8_vae_cropped_128_relu_norm_1.h5",
+    # "2d_beta_vae_cropped_256_relu_norm_1.h5", "2d_beta2_vae_cropped_128_relu_norm_1.h5"}
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -491,8 +504,11 @@ def main():
 
             try:
                 # metrics stability add-on
-                model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                #dir_model_name = os.path.join("weights", model_name)
+                if (stability_study):
+                    print("Stability Study")
+                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                else:
+                    dir_model_name = os.path.join("weights", model_name)
 
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
@@ -563,7 +579,13 @@ def main():
                     text_file.write("loss_history: ")
                     text_file.write(str(np_loss_history))
 
-            test_data = x_test_ # x_test x_train
+            if (stability_study):
+                print("Stability Study")
+                test_data = x_test_
+                test_names = names_
+            else:
+                test_data = x_test # x_test x_train x_test_
+                test_names = names
             train_data = x_train[0:8000]
 
             latent_representation = encoder.predict(test_data)
@@ -643,7 +665,7 @@ def main():
             print("UMAP projection")
             title_umap = title + 'Latent -> UMAP scatterplot'
             # umap_projection(encoded_vec, test_data, latent_vector, title_umap, dir_res_model, dataset, names)
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names_)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, test_names)
 
             # project using t-sne and visualize the scatterplot
             print("t-SNE projection")

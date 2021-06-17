@@ -249,7 +249,13 @@ pareto_list = []
 for key, value in d.items():
     if d[key]["Neighborhood_hit"]: # test
         print(key)
-        if("100" in key) or ("32" in key) or ("512" in key):
+        if("100" in key) or ("20" in key):
+            continue
+        if("beta2" in key) and ("32" in key):
+            continue
+        if("beta6" in key) and ("128" in key):
+            continue
+        if("beta10" in key) and ("256" in key):
             continue
 
         print(d[key])
@@ -363,6 +369,17 @@ y_pareto = pareto_front[:, 1]
 
 z_all = metrics_pareto[:, 2]
 
+# import csv
+# filename = "mcmc_metrics.csv"
+
+# with open(filename, 'w', newline='') as file:
+#     writer = csv.writer(file)
+#     writer.writerow(["Method", "Separability", "Neighborhood hit", "Spread"])
+#     for i in range (len(x_all)):
+#         writer.writerow([str(pareto_list[i]), str(round(z_all[i],4))+u"\u00B1"+str(round(zerr[i],3)), \
+#         str(round(x_all[i],4)) + "±" + str(round(xerr[i],3)), \
+#         str(round(y_all[i],4)) + "±" + str(round(yerr[i],3)) ])
+
 filename = "metrics.txt"
 
 with open(filename, "w") as text_file:
@@ -372,6 +389,8 @@ with open(filename, "w") as text_file:
         text_file.write(str(round(z_all[i],4)) + "±" + str(round(zerr[i],3)) + "  ")
         text_file.write(str(round(x_all[i],4)) + "±" + str(round(xerr[i],3)) + "  ")
         text_file.write(str(round(y_all[i],4)) + "±" + str(round(yerr[i],3)) + "\n")
+        
+# input("stop")
 
 #uncertainty equal to the standard deviation
 
@@ -382,13 +401,23 @@ with open(filename, "w") as text_file:
 
 names = pareto_list # all unique models
 
+col = []
+for index in range(10):
+    col.append(list(plt.cm.tab10(index)))
+
+marker_size = 100
+
 # draw a scatterplot with annotations
 fig, ax = plt.subplots() # just a figure and only one subplot
+plt.grid()
+
 for i in range(len(x_all)):
-    if ('2d' in names[i]):
-        sc = ax.scatter(x_all[i], y_all[i], c='cyan', marker='s')
-    if ('3d' in names[i]):
-        sc = ax.scatter(x_all[i], y_all[i], c='blue', marker='o')
+    if ('_ae' in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[4], marker='v', s=marker_size)
+    if ('vae' in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[0], marker='o', s=marker_size) # ~blue
+    if ('wae' in names[i]):
+        sc = ax.scatter(x_all[i], y_all[i], c=col[1], marker='s', s=marker_size)
 
 models = []
 for name in names: # replace some characters
@@ -397,15 +426,27 @@ for name in names: # replace some characters
     name = name.replace('cropped', 'crop')
     name = name.replace('norm crop', 'crop norm')
     name = name.replace(' crop', '')
+    name = name.replace(' lrelu', '')
     name = name.replace(' relu', '')
     name = name.replace(' norm', '')
-    name = name.replace('beta', 'b')
+    name = name.replace('beta', r'$\beta$')
     #print(name)
     name = name.replace('2d', '2D')
     name = name.replace('3d', '3D')
-    name = name.replace('vae', 'VAE')
+    name = name.replace('vae', '') # VAE
+    name = name.replace('wae', '') # SWAE
     name = name.replace('ae', 'AE')
+    name = name.replace('2D', '')
+    if 'WAE' in name:
+        name = name.replace('reg', '')
+    if 'reg' in name:
+        name = name.replace('AE', '') # Sparse AE
+        name = name.replace('reg', '')
+    if 'baseline' in name:
+        name = name.replace('baseline', '') # Baseline
     models.append(name)
+
+    name = name.replace('  ', ' ')
 # print("after repl:", names)
 # print("after repl:", models)
 
@@ -448,14 +489,21 @@ def hover(event):
 
 # fig.canvas.mpl_connect("motion_notify_event", hover)
 
-ax.plot(x_pareto, y_pareto, color='g') # connecting line for pareto front
-ax.scatter(x_pareto, y_pareto, c='g')
+ax.plot(x_pareto, y_pareto, color=col[2], linewidth=3) # connecting green line for pareto front
+# ax.scatter(x_pareto, y_pareto, c=col[2], marker='D', s=marker_size+25)
+plt.scatter(x_pareto, y_pareto, facecolors='none', edgecolors=col[2], s=marker_size+100)
+
+# ax.plot(x_pareto, y_pareto, marker='o', c=col[2], s=marker_size+25,
+#          linestyle='-', 
+#          markevery=[-1], 
+#          markerfacecolor='white', 
+#          markeredgewidth=1.5)
 
 for i in range(len(pareto_list)):
     if ("baseline" in pareto_list[i]):
         #print(pareto_list[i])
         #print(x_all[i], y_all[i])
-        ax.scatter(x_all[i], y_all[i], c='r') # baseline
+        ax.scatter(x_all[i], y_all[i], c='r', s=marker_size) # baseline
 
 # ZoomPan scrollig
 scale = 1.1
@@ -465,22 +513,52 @@ figPan = zp.pan_factory(ax)
 
 # ax.set_xlim([0.24,0.82])
 #ax.set_ylim([ymin,ymax])
-plt.xticks(fontsize=20)
-plt.yticks(fontsize=20)
+fs = 16
+plt.xticks(fontsize=fs)
+plt.yticks(fontsize=fs)
 
-plt.xlabel('Neighborhood hit', fontsize=20)
-plt.ylabel('Spread', fontsize=20)
-plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
+plt.xlabel('Neighborhood hit', fontsize=fs)
+plt.ylabel('Spread', fontsize=fs)
+# plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
 
-texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=18) for i in range(len(x_all))]
-print(texts)
-adjust_text(texts, lim=0)
+texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=13) for i in range(len(x_all))]
+for i, text in enumerate(texts):
+    print(i, text)
+
+adjust_text(texts, lim=1, precision=0.001)
 # adjust_text(texts, lim=1, arrowprops=dict(arrowstyle="->", color='b', lw=0.5))
 # adjust_text(texts, x, y, arrowprops=dict(arrowstyle="-", color='black', lw=0.5), 
 #             autoalign='', only_move={'points':'y', 'text':'y'})
 
-fig.set_size_inches(16, 9)
-plt.savefig('mcmc_pareto.png', dpi=300)
+# texts[4].set_y(0.1415) # beta2 VAE 128
+# texts[12].set_y(0.138) # beta4 VAE 128
+# texts[18].set_y(0.153) # beta4 VAE 128
+texts[4].set_x(0.9915) # beta2 VAE 128
+texts[4].set_y(0.144) # beta2 VAE 128
+texts[12].set_x(0.986) # b4 128
+texts[14].set_x(0.994) # 128
+texts[18].set_x(0.997) # SWAE 2
+texts[18].set_y(0.15) # SWAE 2
+
+import matplotlib.lines as mlines
+purple_triangle = mlines.Line2D([], [], color=col[4], marker='v', linestyle='None',
+                          markersize=10, label='Sparse AE')
+orange_square = mlines.Line2D([], [], color=col[1], marker='s', linestyle='None',
+                          markersize=10, label='SWAE')
+blue_circle = mlines.Line2D([], [], color=col[0], marker='o', linestyle='None',
+                          markersize=10, label='VAE')
+red_circle = mlines.Line2D([], [], color='red', marker='o', linestyle='None',
+                          markersize=10, label='Baseline')
+green_ = mlines.Line2D([], [], color="white", marker='o', markeredgecolor=col[2], linestyle='None',
+                          markersize=10, label='Pareto efficient')
+
+plt.legend(handles=[purple_triangle, orange_square, blue_circle, red_circle, green_], prop={'size': 13})
+
+# fig.set_size_inches(16, 9)
+fig.set_size_inches(8, 8)
+plt.tight_layout()
+# plt.savefig('mcmc_ae_vae_wae_pareto.png', dpi=300)
+plt.savefig('mcmc_ae_vae_wae_pareto.pdf')  
 plt.show()
 
 

@@ -294,9 +294,9 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
     plt.tight_layout()
     # fig.set_size_inches(10, 8)
     if (proj == "tsne"):
-        fig.savefig('{}/latent_tsne_grid.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_tsne_grid.pdf'.format(dir_res_model), dpi=300)
     if (proj == "umap"):
-        fig.savefig('{}/latent_umap_grid.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_grid.pdf'.format(dir_res_model), dpi=300)
     plt.close(fig)
 
     # if(dataset == 'droplet'):
@@ -348,16 +348,16 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
                 if names[k]=='4': c='orange'
                 if names[k]=='5': c='limegreen'
                 if names[k]=='1': c='yellow'
-                rect = patches.Rectangle((j*(50), i*(50)), 50-2, 50-2, linewidth=0.5, edgecolor=c, facecolor='none')
+                rect = patches.Rectangle((j*(50), i*(50)), 50-1, 50-1, linewidth=0.5, edgecolor=c, facecolor='none')
                 ax.add_patch(rect)
                 k += 1
         print(k)
         plt.show()
-        fig.savefig('{}/latent_umap_grid_frames.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_grid_frames.pdf'.format(dir_res_model), dpi=300)
 
     if(dataset == "droplet"):
         names = [names[i] for i in i_sorting]
-        print(names)
+        # print(names)
         # 30 40
         # 132 146
         import matplotlib.patches as patches
@@ -380,4 +380,4 @@ def grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, ti
                 k += 1
         print(k)
         plt.show()
-        fig.savefig('{}/latent_umap_grid_frames.png'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_grid_frames.pdf'.format(dir_res_model), dpi=300)

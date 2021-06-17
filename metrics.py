@@ -253,7 +253,7 @@ def kNN_classification_droplet(encoded_vec_2d, names, title):
 
     #data = np.zeros((0, encoded_vec_2d.shape[1])) # (0,2) after projections
 
-    n_neigh = 17 # 11
+    n_neigh = 17 # 17 11 7
     #print("kNN, n_neigh =", n_neigh)
     #print("decision is based on", int(n_neigh/2)+1, "votes")
 

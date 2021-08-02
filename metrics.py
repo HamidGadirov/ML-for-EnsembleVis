@@ -2,6 +2,28 @@ import os
 import time
 import numpy as np
 from matplotlib import pyplot as plt
+from sklearn import metrics
+
+def silhouette_coeff(encoded_vec_2d, names):
+    # Compute the mean Silhouette Coefficient of all samples
+    # https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html
+
+    silhouette = metrics.silhouette_score(encoded_vec_2d, names, metric='euclidean')
+    return silhouette
+
+def ch_index(encoded_vec_2d, names):
+    # Calinski-Harabasz Index
+    # https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation
+
+    ch_i = metrics.calinski_harabasz_score(encoded_vec_2d, names)
+    return ch_i
+
+def db_index(encoded_vec_2d, names):
+    # Davies-Bouldin Index
+    # https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation
+
+    db_i = metrics.davies_bouldin_score(encoded_vec_2d, names)
+    return db_i
 
 def variance_flow(encoded_vec_2d, names):
     # Get distances from cluster class centers
@@ -76,7 +98,7 @@ def variance_droplet(encoded_vec_2d, names):
     # for loop: measure dist from each vec to centers
 
     unique_names = np.unique(names)
-    print(unique_names)
+    # print(unique_names)
 
     # get the centers for each cluster
     centers = []
@@ -104,7 +126,7 @@ def variance_droplet(encoded_vec_2d, names):
         #print(dist_to_center)
         dist_to_centers.append(np.mean(dist_to_center, axis=0))
 
-    print("dist_to_centers:", dist_to_centers)
+    # print("dist_to_centers:", dist_to_centers)
 
     dist_to_centers_mean = np.mean(dist_to_centers, axis=0)
     #print("dist_to_centers_mean:", dist_to_centers_mean)

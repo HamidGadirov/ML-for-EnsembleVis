@@ -15,6 +15,7 @@ from img_scatterplot import im_scatter
 from metrics import kNN_classification_flow, kNN_classification_droplet, kNN_classification_mnist
 from metrics import kNN_fraction_flow, kNN_fraction_droplet, kNN_fraction_mnist
 from metrics import variance_flow, variance_droplet, variance_mnist
+from metrics import silhouette_coeff, ch_index, db_index
 from grid_projection import grid_projection
 
 class ZoomPan:
@@ -166,30 +167,50 @@ def draw_movement(encoded_vec_2d, names, labels, title, dir_res_model):
 
 def calculate_metrics(encoded_vec_2d, names, knn_title, filename):
     # Calculate metrics scores (Separability, Neighborhood_hit, Spread(Variance))
+    print("Clustering performance evaluation:", len(names), "labels considered")
 
     separability = kNN_classification_droplet(encoded_vec_2d, names, knn_title)
-    print("Separability:", separability)
-    print(len(names), "labels considered")
-
+    print("Separability: %0.3f" % separability)
     with open(filename, "w") as text_file:
         text_file.write("Separability ")
-        text_file.write("UMAP %f \n" % separability)
+        text_file.write("UMAP %0.3f \n" % separability)
         # print("UMAP mean and std: %f %f" % (acc_mean, acc_std), file=text_file)
 
     # Neighborhood hit metric: measure the fraction of the k-nearest neighbours 
     # of a projected point that has the same class label
     fraction = kNN_fraction_droplet(encoded_vec_2d, names, knn_title)
-    print("Neighborhood hit (fraction):", fraction)
+    print("Neighborhood hit (fraction): %0.3f" % fraction)
     with open(filename, "a") as text_file:
         text_file.write("Neighborhood_hit ")
-        text_file.write("UMAP %f \n" % fraction)
+        text_file.write("UMAP %0.3f \n" % fraction)
 
     # Distance from cluster centers metric
     dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
-    print("Mean of distances for all classes:", dist_to_centers_mean)
+    print("Mean of distances for all classes: %0.3f" % dist_to_centers_mean)
     with open(filename, "a") as text_file:
         text_file.write("Variance ")
-        text_file.write("UMAP %f \n" % dist_to_centers_mean)
+        text_file.write("UMAP %0.3f \n" % dist_to_centers_mean)
+
+    # Silhouette Coefficient metric
+    silhouette_c = silhouette_coeff(encoded_vec_2d, names)
+    print("Silhouette Coefficient: %0.3f" % silhouette_c)
+    with open(filename, "a") as text_file:
+        text_file.write("Silhouette ")
+        text_file.write("UMAP %0.3f \n" % silhouette_c)
+
+    # Calinski-Harabasz Index
+    ch_i = ch_index(encoded_vec_2d, names)
+    print("Calinski-Harabasz Index: %0.1f" % ch_i)
+    with open(filename, "a") as text_file:
+        text_file.write("CH ")
+        text_file.write("UMAP %0.1f \n" % ch_i)
+
+    # Davies-Bouldin Index
+    db_i = db_index(encoded_vec_2d, names)
+    print("Davies-Bouldin Index: %0.3f" % db_i)
+    with open(filename, "a") as text_file:
+        text_file.write("DB ")
+        text_file.write("UMAP %0.3f \n" % db_i)
 
 def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, x_train, train_test_data, latent_vector, title, dir_res_model, dataset="", names="", temporal=False):
 

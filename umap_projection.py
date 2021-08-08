@@ -186,7 +186,8 @@ def calculate_metrics(encoded_vec_2d, names, knn_title, filename):
 
     # Distance from cluster centers metric
     dist_to_centers_mean = variance_droplet(encoded_vec_2d, names) 
-    print("Mean of distances for all classes: %0.3f" % dist_to_centers_mean)
+    # Mean of distances for all classes
+    print("Spread: %0.3f" % dist_to_centers_mean)
     with open(filename, "a") as text_file:
         text_file.write("Variance ")
         text_file.write("UMAP %0.3f \n" % dist_to_centers_mean)
@@ -352,6 +353,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
                 print("Encoding vecs train test were loaded from pickle")
                 encoded_vec_2d_train_test = np.asarray(encoded_vec_2d_train_test)
                 print(encoded_vec_2d_train_test.shape)
+                
 
     if (dataset == "droplet" or dataset == "mcmc"):
         if("Raw data" in title): # baseline
@@ -408,9 +410,9 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
             calculate_metrics(encoded_vec_2d_train_test[train_size:,...], names, knn_title, filename)
 
             print("Labels:", len(names))
-            print("unique:", np.unique(names))
+            # print("unique:", np.unique(names))
             unique_names, indexed_names = np.unique(names, return_inverse=True)
-            print(unique_names, indexed_names)
+            # print(unique_names, indexed_names)
             # draw a scatterplot with colored labels
             fig, ax = plt.subplots()
             # colors = ['tab:purple', 'tab:darkviolet', 'tab:blueviolet', 'tab:royalblue', 'tab:lime', 'tab:yellow', 'tab:blue']
@@ -617,15 +619,18 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
             print("Encoded vecs: ", encoded_vec_2d.shape)
             print("Encoded vecs full: ", encoded_vec_2d_train_test.shape)
 
+            # # stability study add-on
+            # names = names[:encoded_vec_2d.shape[0]]
+
             filename = os.path.join(dir_res_model, "metrics.txt")
             calculate_metrics(encoded_vec_2d, names, knn_title, filename)
             filename = os.path.join(dir_res_model, "metrics_full.txt")
             calculate_metrics(encoded_vec_2d_train_test[train_size:,...], names, knn_title, filename)
 
             print("Labels:", len(names))
-            print("unique:", np.unique(names))
+            # print("unique:", np.unique(names))
             unique_names, indexed_names = np.unique(names, return_inverse=True)
-            print(unique_names, indexed_names)
+            # print(unique_names, indexed_names)
             
             # draw a scatterplot with colored labels
             fig, ax = plt.subplots()
@@ -715,7 +720,6 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
             text_file.write("Variance ")
             text_file.write("UMAP %f \n" % dist_to_centers_mean)
 
-
         print("unique:", np.unique(names))
         unique_names, indexed_names = np.unique(names, return_inverse=True)
         #print(unique_names, indexed_names)
@@ -782,24 +786,24 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     # print(test_data.shape)
     # grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, title, proj, temporal)
 
-    if (temporal):
-        model_name="3d_beta-vae"
-    else:
-        model_name="2d_beta-vae"
+    # if (temporal):
+    #     model_name="3d_beta-vae"
+    # else:
+    #     model_name="2d_beta-vae"
 
     # draw a scatterplot with annotations
     #fig, ax = plt.subplots()
     #sc = plt.scatter(x, y, c=labels)
     #sc = plt.scatter(x, y)
 
-    if (dataset == "mnist"):
-        zoom = 0.6
-    if (dataset == "droplet"):
-        zoom = 0.1 # 0.15
-    if (dataset == "flow"):
-        zoom = 0.15
-    if (dataset == "mcmc"):
-        zoom = 0.15
+    # if (dataset == "mnist"):
+    #     zoom = 0.6
+    # if (dataset == "droplet"):
+    #     zoom = 0.1 # 0.15
+    # if (dataset == "flow"):
+    #     zoom = 0.15
+    # if (dataset == "mcmc"):
+    #     zoom = 0.15
 
         # annot = ax.annotate("", xy=(0,0), xytext=(20,20),textcoords="offset points",
         #             bbox=dict(boxstyle="round", fc="w"),
@@ -835,13 +839,13 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #fig.canvas.mpl_connect("motion_notify_event", hover)
 
 
-    #fig = plt.gcf()
-    #title += str(perp)
-    #title += 'Latent -> UMAP'
-    #plt.suptitle(title)
-    #plt.show()
-    #filename = os.path.join(model_name, "umap_scatter.pdf")
-    #fig.savefig(filename)
+    # fig = plt.gcf()
+    # title += str(perp)
+    # title += 'Latent -> UMAP'
+    # plt.suptitle(title)
+    # plt.show()
+    # filename = os.path.join(model_name, "umap_scatter.pdf")
+    # fig.savefig(filename)
 
     # from getkey import getkey, keys
     # while True:  # making a loop
@@ -857,7 +861,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     #fig=plt.figure()
     # if (dataset == "droplet" or dataset == "mcmc"):
     #     test_data = train_test_data # full ensemble
-    print(test_data.shape)
+    # print(test_data.shape)
 
     # x = encoded_vec_2d[:, 0]
     # y = encoded_vec_2d[:, 1]
@@ -897,10 +901,13 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     # plt.tight_layout() # (pad=2)
     # #fig.set_size_inches(12, 9)
     # #plt.show()
-    # fig.savefig('{}/latent_umap.pdf'.format(dir_res_model), dpi=300)
+    # # fig.savefig('{}/latent_umap.pdf'.format(dir_res_model), dpi=300)
+    # fig.savefig('{}/latent_umap.pdf'.format(dir_res_model))
     # # filename = os.path.join(model_name, "tsne_scatter_images.pdf")
     # # fig.savefig(filename)
     # plt.close(fig)
+
+
 
     # # full ensemble
     # # if (dataset == "droplet" or dataset == "mcmc"):

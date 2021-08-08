@@ -187,14 +187,14 @@ def preprocess_3d(dataset, visualize, data, names=""):
     k += 1 #start in middle always
     step = 3
     for k in range(count-sampled_size, count, step):
-        for _ in range(3): # repeat labels 3 times
-            for timestep in range(3):
-                data_timesteps[i,timestep,:,:,:] = data[k-1,:,:,:]
-                data_timesteps[i,timestep,:,:,:] = data[k,:,:,:]
-                data_timesteps[i,timestep,:,:,:] = data[k+1,:,:,:]
-            i += 1
-            names_timesteps.append(names[k]) # middle label
-            # print(names[k])
+        # for _ in range(3): # repeat labels 3 times
+        for timestep in range(3):
+            data_timesteps[i,timestep,:,:,:] = data[k-1,:,:,:]
+            data_timesteps[i,timestep,:,:,:] = data[k,:,:,:]
+            data_timesteps[i,timestep,:,:,:] = data[k+1,:,:,:]
+        i += 1
+        names_timesteps.append(names[k]) # middle label
+        # print(names[k])
 
     data_timesteps = data_timesteps[:i]
 

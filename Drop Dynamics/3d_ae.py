@@ -103,13 +103,13 @@ def load_labelled_data():
 
     print("All", data.shape[0], "labelled frames were loaded successfully")
 
-    data = data[:5400,...] # 5682 in total
+    data = data[:5400,...] # 5400 # 5682 in total
     names = names[:5400]
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
 
-    print(data.shape)
+    print("Total labelled data:", data.shape)
     print(len(names))
     print(names[0])
     print(np.unique(names))
@@ -165,8 +165,7 @@ def load_preprocess():
 
     visualize_data = False
     data, data_mean, data_std, all_names = preprocess(dataset, visualize_data, data, all_names, temporal) # reshape, visualize, normalize, scale
-    print(data.shape)
-
+    print("Total data after 3D preprocessing:", data.shape) # 5000+7200
     data = brightness_normalization(data) # test
 
     train_shape = int(data_train.shape[0]/3) # after 3 in 1 preprocessing
@@ -247,6 +246,7 @@ def main():
         print("Train data: ", train_data.shape)
 
         names = labels
+        test_names = names
         print(len(names))
 
         train_test_data = np.concatenate((train_data, test_data), axis=0)
@@ -280,46 +280,35 @@ def main():
 
         # input("x")
 
-    # model_names = {"3d_ae_cropped_256_relu_norm_1.h5", "3d_ae_cropped_256_relu_norm_2.h5", \
-    # "3d_ae_cropped_256_relu_norm_3.h5", "3d_ae_cropped_256_relu_norm_4.h5", "3d_ae_cropped_256_relu_norm_5.h5", \
-    # "3d_ae_cropped_512_relu_norm_1.h5", "3d_ae_cropped_512_relu_norm_2.h5", \
-    # "3d_ae_cropped_512_relu_norm_3.h5", "3d_ae_cropped_512_relu_norm_4.h5", "3d_ae_cropped_512_relu_norm_5.h5", \
-    # "3d_ae_cropped_256_relu_reg_norm_1.h5", "3d_ae_cropped_256_relu_reg_norm_2.h5", \
-    # "3d_ae_cropped_256_relu_reg_norm_3.h5", "3d_ae_cropped_256_relu_reg_norm_4.h5", "3d_ae_cropped_256_relu_reg_norm_5.h5", \
-    # "3d_ae_cropped_512_relu_reg_norm_1.h5", "3d_ae_cropped_512_relu_reg_norm_2.h5", \
-    # "3d_ae_cropped_512_relu_reg_norm_3.h5", "3d_ae_cropped_512_relu_reg_norm_4.h5", "3d_ae_cropped_512_relu_reg_norm_5.h5", \
-    # "3d_ae_cropped_128_relu_norm_1.h5", "3d_ae_cropped_128_relu_norm_2.h5", \
-    # "3d_ae_cropped_128_relu_norm_3.h5", "3d_ae_cropped_128_relu_norm_4.h5", "3d_ae_cropped_128_relu_norm_5.h5", \
-    # "3d_ae_cropped_64_relu_norm_1.h5", "3d_ae_cropped_64_relu_norm_2.h5", \
-    # "3d_ae_cropped_64_relu_norm_3.h5", "3d_ae_cropped_64_relu_norm_4.h5", "3d_ae_cropped_64_relu_norm_5.h5", \
-    # "3d_ae_cropped_32_relu_norm_1.h5", "3d_ae_cropped_32_relu_norm_2.h5", \
-    # "3d_ae_cropped_32_relu_norm_3.h5", "3d_ae_cropped_32_relu_norm_4.h5", "3d_ae_cropped_32_relu_norm_5.h5"}
-
-    model_names = {"3d_ae_croppedb_256_relu_norm_1.h5", "3d_ae_croppedb_256_relu_norm_2.h5", \
-    "3d_ae_croppedb_256_relu_norm_3.h5", "3d_ae_croppedb_256_relu_norm_4.h5", "3d_ae_croppedb_256_relu_norm_5.h5", \
-    "3d_ae_croppedb_256_relu_reg_norm_1.h5", "3d_ae_croppedb_256_relu_reg_norm_2.h5", \
-    "3d_ae_croppedb_256_relu_reg_norm_3.h5", "3d_ae_croppedb_256_relu_reg_norm_4.h5", "3d_ae_croppedb_256_relu_reg_norm_5.h5", \
-    "3d_ae_croppedb_128_relu_norm_1.h5", "3d_ae_croppedb_128_relu_norm_2.h5", \
-    "3d_ae_croppedb_128_relu_norm_3.h5", "3d_ae_croppedb_128_relu_norm_4.h5", "3d_ae_croppedb_128_relu_norm_5.h5", \
-    "3d_ae_croppedb_64_relu_norm_1.h5", "3d_ae_croppedb_64_relu_norm_2.h5", \
-    "3d_ae_croppedb_64_relu_norm_3.h5", "3d_ae_croppedb_64_relu_norm_4.h5", "3d_ae_croppedb_64_relu_norm_5.h5"}
+    # model_names = {"3d_ae_croppedb_256_relu_norm_1.h5", "3d_ae_croppedb_256_relu_norm_2.h5", \
+    # "3d_ae_croppedb_256_relu_norm_3.h5", "3d_ae_croppedb_256_relu_norm_4.h5", "3d_ae_croppedb_256_relu_norm_5.h5", \
+    # "3d_ae_croppedb_256_relu_reg_norm_1.h5", "3d_ae_croppedb_256_relu_reg_norm_2.h5", \
+    # "3d_ae_croppedb_256_relu_reg_norm_3.h5", "3d_ae_croppedb_256_relu_reg_norm_4.h5", "3d_ae_croppedb_256_relu_reg_norm_5.h5", \
+    # "3d_ae_croppedb_128_relu_norm_1.h5", "3d_ae_croppedb_128_relu_norm_2.h5", \
+    # "3d_ae_croppedb_128_relu_norm_3.h5", "3d_ae_croppedb_128_relu_norm_4.h5", "3d_ae_croppedb_128_relu_norm_5.h5", \
+    # "3d_ae_croppedb_64_relu_norm_1.h5", "3d_ae_croppedb_64_relu_norm_2.h5", \
+    # "3d_ae_croppedb_64_relu_norm_3.h5", "3d_ae_croppedb_64_relu_norm_4.h5", "3d_ae_croppedb_64_relu_norm_5.h5"}
 
     dir_res = "Results/3D_AE" # directory with all models
     dataset = "droplet"
     title = '3D AE: ' # for subtitle
 
-    mod_nam = {"3d_ae_croppedb_256_relu_norm", 
-    "3d_ae_croppedb_256_relu_reg_norm", 
-    "3d_ae_croppedb_128_relu_norm", 
-    "3d_ae_croppedb_64_relu_norm"}
+    mod_nam = {
+    "3d_ae_croppedb_256_relu_norm",
+    "3d_ae_croppedb_256_relu_reg_norm",
+    "3d_ae_croppedb_128_relu_norm",
+    "3d_ae_croppedb_64_relu_norm"
+    } 
 
-    mod_nam = {"3d_ae_croppedb_256_relu_norm.h5"}
+    # mod_nam = {"3d_ae_croppedb_256_relu_norm"}
+
     # mod_nam = {"3d_ae_croppedb_16_relu_norm"}
 
     # metrics stability add-on
-    stability_study = True
+    stability_study = False
     if (stability_study):
         print("Stability Study")
+        mod_nam = {"3d_ae_croppedb_256_relu_norm"}
         model_names = models_metrics_stability(mod_nam, dataset)
     else:
         model_names_all = []
@@ -342,6 +331,16 @@ def main():
         project = True
         interpolation = False
         latent_vector = True
+
+        if (stability_study):
+            print("Stability Study")
+            model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, test_data, names, dataset)
+            test_data = x_test_
+            test_names = names_
+        else:
+            dir_model_name = os.path.join("weights", model_name)
+            test_data = x_test # x_test x_train x_test_
+            test_names = names
 
         if not load_data:
             # encoded_vec will be predicted with encoder
@@ -491,13 +490,6 @@ def main():
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
             
             try:
-                # metrics stability add-on
-                if (stability_study):
-                    print("Stability Study")
-                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                else:
-                    dir_model_name = os.path.join("weights", model_name)
-
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
             except IOError:
@@ -547,13 +539,6 @@ def main():
             # Keract visualizations
             #visualize(x_train, encoder, decoder)
 
-            if (stability_study):
-                print("Stability Study")
-                test_data = x_test_
-                test_names = names_
-            else:
-                test_data = x_test # x_test x_train x_test_
-                test_names = names
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test

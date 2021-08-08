@@ -217,7 +217,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    load_data = True
     if load_data: 
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -244,6 +244,7 @@ def main():
         print(train_data.shape)
 
         names = labels
+        test_names = names
         print(len(names))
 
         train_test_data = np.concatenate((train_data, test_data), axis=0)
@@ -274,19 +275,12 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    # model_names = {"2d_vae_cropped_128_relu_norm_1.h5", "2d_vae_cropped_128_relu_norm_2.h5", \
-    # "2d_vae_cropped_128_relu_norm_3.h5", "2d_vae_cropped_128_relu_norm_4.h5", "2d_vae_cropped_128_relu_norm_5.h5", \
-    # "2d_vae_cropped_256_relu_norm_1.h5", "2d_vae_cropped_256_relu_norm_2.h5", \
-    # "2d_vae_cropped_256_relu_norm_3.h5", "2d_vae_cropped_256_relu_norm_4.h5", "2d_vae_cropped_256_relu_norm_5.h5", \
-    # "2d_beta_vae_cropped_128_relu_norm_2.h5", \
-    # "2d_beta_vae_cropped_128_relu_norm_3.h5", "2d_beta_vae_cropped_128_relu_norm_4.h5", "2d_beta_vae_cropped_128_relu_norm_5.h5"}
-
-    model_names = {"2d_vae_croppedb_128_relu_norm_1.h5", "2d_vae_croppedb_128_relu_norm_2.h5", \
-    "2d_vae_croppedb_128_relu_norm_3.h5", "2d_vae_croppedb_128_relu_norm_4.h5", "2d_vae_croppedb_128_relu_norm_5.h5", \
-    "2d_vae_croppedb_256_relu_norm_1.h5", "2d_vae_croppedb_256_relu_norm_2.h5", \
-    "2d_vae_croppedb_256_relu_norm_3.h5", "2d_vae_croppedb_256_relu_norm_4.h5", "2d_vae_croppedb_256_relu_norm_5.h5", \
-    "2d_beta_vae_croppedb_128_relu_norm_1.h5", "2d_beta_vae_croppedb_128_relu_norm_2.h5", \
-    "2d_beta_vae_croppedb_128_relu_norm_3.h5", "2d_beta_vae_croppedb_128_relu_norm_4.h5", "2d_beta_vae_croppedb_128_relu_norm_5.h5"}
+    # model_names = {"2d_vae_croppedb_128_relu_norm_1.h5", "2d_vae_croppedb_128_relu_norm_2.h5", \
+    # "2d_vae_croppedb_128_relu_norm_3.h5", "2d_vae_croppedb_128_relu_norm_4.h5", "2d_vae_croppedb_128_relu_norm_5.h5", \
+    # "2d_vae_croppedb_256_relu_norm_1.h5", "2d_vae_croppedb_256_relu_norm_2.h5", \
+    # "2d_vae_croppedb_256_relu_norm_3.h5", "2d_vae_croppedb_256_relu_norm_4.h5", "2d_vae_croppedb_256_relu_norm_5.h5", \
+    # "2d_beta_vae_croppedb_128_relu_norm_1.h5", "2d_beta_vae_croppedb_128_relu_norm_2.h5", \
+    # "2d_beta_vae_croppedb_128_relu_norm_3.h5", "2d_beta_vae_croppedb_128_relu_norm_4.h5", "2d_beta_vae_croppedb_128_relu_norm_5.h5"}
 
     dataset = "droplet"
     title = '2D VAE: ' # for subtitle
@@ -295,9 +289,22 @@ def main():
     "2d_vae_croppedb_256_relu_norm", 
     "2d_beta_vae_croppedb_128_relu_norm"}
 
-    mod_nam = {"2d_vae_croppedb_128_relu_norm"}
+    # mod_nam = {"2d_vae_croppedb_128_relu_norm"}
 
-    model_names = models_metrics_stability(mod_nam, dataset)
+    # metrics stability add-on
+    stability_study = True
+    if (stability_study):
+        print("Stability Study")
+        model_names = models_metrics_stability(mod_nam, dataset)
+    else:
+        model_names_all = []
+        for m_n in mod_nam:
+            for i in range(5):    
+                m_n_index = m_n + "_" + str(i+1) + ".h5"
+                model_names_all.append(m_n_index)
+
+        model_names = model_names_all
+        print(model_names)
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -457,8 +464,13 @@ def main():
                     vae.summary(print_fn=lambda x: text_file.write(x + '\n'))
 
             try:
-                dir_model_name = os.path.join("weights", model_name)
-                f = open(dir_model_name)
+                # metrics stability add-on
+                if (stability_study):
+                    print("Stability Study")
+                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+                else:
+                    dir_model_name = os.path.join("weights", model_name)
+
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
             except IOError:
@@ -530,7 +542,13 @@ def main():
 
             # How convolutional neural networks see the world
 
-            test_data = x_test # x_test x_train
+            if (stability_study):
+                print("Stability Study")
+                test_data = x_test_
+                test_names = names_
+            else:
+                test_data = x_test # x_test x_train x_test_
+                test_names = names
             train_data = x_train
             
             # load_data = False # for now
@@ -608,7 +626,7 @@ def main():
             # project using UMAP and visualize the scatterplot
             print("UMAP projection")
             title_umap = title + 'Latent -> UMAP scatterplot'
-            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, names)
+            umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test_data, train_data, train_test_data, latent_vector, title_umap, dir_res_model, dataset, test_names)
 
         if (interpolation == True):
 

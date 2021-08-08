@@ -115,6 +115,7 @@ def load_labelled_data():
 
     data = data[:5400,...] # 5682 in total
     names = names[:5400]
+    # 3600 for saved
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
@@ -253,6 +254,7 @@ def main():
         print(train_data.shape)
 
         names = labels
+        test_names = names
         print(len(names))
 
         train_test_data = np.concatenate((train_data, test_data), axis=0)
@@ -283,32 +285,16 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    # model_names = {"3d_vae_cropped_256_relu_norm_1.h5", "3d_vae_cropped_256_relu_norm_2.h5", \
-    # "3d_vae_cropped_256_relu_norm_3.h5", "3d_vae_cropped_256_relu_norm_4.h5", "3d_vae_cropped_256_relu_norm_5.h5", \
-    # "3d_beta_vae_cropped_256_relu_norm_1.h5", "3d_beta_vae_cropped_256_relu_norm_2.h5", \
-    # "3d_beta_vae_cropped_256_relu_norm_3.h5", "3d_beta_vae_cropped_256_relu_norm_4.h5", "3d_beta_vae_cropped_256_relu_norm_5.h5", \
-    # "3d_beta2_vae_cropped_256_relu_norm_1.h5", "3d_beta2_vae_cropped_256_relu_norm_2.h5", \
-    # "3d_beta2_vae_cropped_256_relu_norm_3.h5", "3d_beta2_vae_cropped_256_relu_norm_4.h5", "3d_beta2_vae_cropped_256_relu_norm_5.h5", \
-    # "3d_beta10_vae_cropped_256_relu_norm_1.h5", "3d_beta10_vae_cropped_256_relu_norm_2.h5", \
-    # "3d_beta100_vae_cropped_256_relu_norm_1.h5", "3d_beta100_vae_cropped_256_relu_norm_2.h5", \
-    # "3d_beta100_vae_cropped_256_relu_norm_3.h5", "3d_beta100_vae_cropped_256_relu_norm_4.h5",  "3d_beta100_vae_cropped_256_relu_norm_5.h5", \
-    # "3d_vae_cropped_512_relu_norm_1.h5", "3d_vae_cropped_512_relu_norm_2.h5", \
-    # "3d_vae_cropped_512_relu_norm_3.h5", "3d_vae_cropped_512_relu_norm_4.h5", "3d_vae_cropped_512_relu_norm_5.h5", \
-    # "3d_beta0.5_vae_cropped_512_relu_norm_1.h5", "3d_beta0.5_vae_cropped_512_relu_norm_2.h5", \
-    # "3d_beta0.5_vae_cropped_512_relu_norm_3.h5", "3d_beta0.5_vae_cropped_512_relu_norm_4.h5", "3d_beta0.5_vae_cropped_512_relu_norm_5.h5", \
-    # "3d_beta0.1_vae_cropped_256_relu_norm_1.h5", "3d_beta0.1_vae_cropped_256_relu_norm_2.h5", \
-    # "3d_beta0.1_vae_cropped_256_relu_norm_3.h5", "3d_beta0.1_vae_cropped_256_relu_norm_4.h5", "3d_beta0.1_vae_cropped_256_relu_norm_5.h5"} # 20 ep
-
-    model_names = {"3d_beta0.1_vae_croppedb_256_relu_norm_1.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_2.h5", \
-    "3d_beta0.1_vae_croppedb_256_relu_norm_3.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_4.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_5.h5",
-    "3d_vae_croppedb_256_relu_norm_1.h5", "3d_vae_croppedb_256_relu_norm_2.h5",
-    "3d_vae_croppedb_256_relu_norm_3.h5", "3d_vae_croppedb_256_relu_norm_4.h5", "3d_vae_croppedb_256_relu_norm_5.h5",
-    "3d_beta2_vae_croppedb_256_relu_norm_1.h5", "3d_beta2_vae_croppedb_256_relu_norm_2.h5",
-    "3d_beta2_vae_croppedb_256_relu_norm_3.h5", "3d_beta2_vae_croppedb_256_relu_norm_4.h5", "3d_beta2_vae_croppedb_256_relu_norm_5.h5",
-    "3d_beta4_vae_croppedb_256_relu_norm_1.h5", "3d_beta4_vae_croppedb_256_relu_norm_2.h5",
-    "3d_beta4_vae_croppedb_256_relu_norm_3.h5", "3d_beta4_vae_croppedb_256_relu_norm_4.h5", "3d_beta4_vae_croppedb_256_relu_norm_5.h5",
-    "3d_beta10_vae_croppedb_256_relu_norm_1.h5", "3d_beta10_vae_croppedb_256_relu_norm_2.h5",
-    "3d_beta10_vae_croppedb_256_relu_norm_3.h5", "3d_beta10_vae_croppedb_256_relu_norm_4.h5", "3d_beta10_vae_croppedb_256_relu_norm_5.h5"}
+    # model_names = {"3d_beta0.1_vae_croppedb_256_relu_norm_1.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_2.h5", \
+    # "3d_beta0.1_vae_croppedb_256_relu_norm_3.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_4.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_5.h5",
+    # "3d_vae_croppedb_256_relu_norm_1.h5", "3d_vae_croppedb_256_relu_norm_2.h5",
+    # "3d_vae_croppedb_256_relu_norm_3.h5", "3d_vae_croppedb_256_relu_norm_4.h5", "3d_vae_croppedb_256_relu_norm_5.h5",
+    # "3d_beta2_vae_croppedb_256_relu_norm_1.h5", "3d_beta2_vae_croppedb_256_relu_norm_2.h5",
+    # "3d_beta2_vae_croppedb_256_relu_norm_3.h5", "3d_beta2_vae_croppedb_256_relu_norm_4.h5", "3d_beta2_vae_croppedb_256_relu_norm_5.h5",
+    # "3d_beta4_vae_croppedb_256_relu_norm_1.h5", "3d_beta4_vae_croppedb_256_relu_norm_2.h5",
+    # "3d_beta4_vae_croppedb_256_relu_norm_3.h5", "3d_beta4_vae_croppedb_256_relu_norm_4.h5", "3d_beta4_vae_croppedb_256_relu_norm_5.h5",
+    # "3d_beta10_vae_croppedb_256_relu_norm_1.h5", "3d_beta10_vae_croppedb_256_relu_norm_2.h5",
+    # "3d_beta10_vae_croppedb_256_relu_norm_3.h5", "3d_beta10_vae_croppedb_256_relu_norm_4.h5", "3d_beta10_vae_croppedb_256_relu_norm_5.h5"}
 
     dataset = "droplet"
     title = '3D VAE: ' # for subtitle
@@ -319,12 +305,13 @@ def main():
     "3d_beta4_vae_croppedb_256_relu_norm", 
     "3d_beta10_vae_croppedb_256_relu_norm"}
 
-    mod_nam = {"3d_vae_croppedb_256_relu_norm", "3d_beta4_vae_croppedb_256_relu_norm"}
+    # mod_nam = {"3d_beta0.1_vae_croppedb_256_relu_norm"}
 
     # metrics stability add-on
-    stability_study = True
+    stability_study = False
     if (stability_study):
         print("Stability Study")
+        mod_nam = {"3d_vae_croppedb_256_relu_norm", "3d_beta4_vae_croppedb_256_relu_norm"}
         model_names = models_metrics_stability(mod_nam, dataset)
     else:
         model_names_all = []
@@ -349,6 +336,16 @@ def main():
         if load_data:
             interpolation = False
         latent_vector = True
+
+        if (stability_study):
+            print("Stability Study")
+            model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, test_data, names, dataset)
+            test_data = x_test_
+            test_names = names_
+        else:
+            dir_model_name = os.path.join("weights", model_name)
+            test_data = x_test # x_test x_train x_test_
+            test_names = names
 
         if not load_data:
             # encoded_vec will be predicted with encoder
@@ -499,11 +496,6 @@ def main():
 
             try:
                 # metrics stability add-on
-                if (stability_study):
-                    print("Stability Study")
-                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                else:
-                    dir_model_name = os.path.join("weights", model_name)
 
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
@@ -573,13 +565,6 @@ def main():
                     text_file.write("loss_history: ")
                     text_file.write(str(np_loss_history))
 
-            if (stability_study):
-                print("Stability Study")
-                test_data = x_test_
-                test_names = names_
-            else:
-                test_data = x_test # x_test x_train x_test_
-                test_names = names
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test
@@ -658,8 +643,8 @@ def main():
             #pca_projection(encoded_vec, test_data, latent_vector, title, dataset)
 
             # project using t-sne and visualize the scatterplot
-            print("t-SNE projection")
-            title_tsne = title + 'Latent -> t-SNE scatterplot, perp='
+            # print("t-SNE projection")
+            # title_tsne = title + 'Latent -> t-SNE scatterplot, perp='
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=20)
             # tsne_projection(encoded_vec, test_data, latent_vector, title_tsne, dir_res_model, dataset, names, temporal=True, perp=30)
             #tsne_projection(encoded_vec, test_data, latent_vector, cylinder_names_test, title, perp=40)

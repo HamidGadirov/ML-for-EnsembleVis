@@ -192,8 +192,8 @@ def main():
     dir_res = "Results/2D_AE" # directory with all models
 
     # Load data and subsequently encoded vectors in 2D representation
-    # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    # for this, save x_test and encoded vec beforehad, after tsne/umap
+    load_data = True
     if load_data: 
         dir_res = "Results/2D_VAE" # test data is same for vae and ae
         # load test_data from pickle and later encoded_vec_2d
@@ -221,6 +221,7 @@ def main():
         print(train_data.shape)
 
         names = labels
+        test_names = names
         print(len(names))
 
         train_test_data = np.concatenate((train_data, test_data), axis=0)
@@ -255,12 +256,12 @@ def main():
     dataset = "mcmc"
     title = '2D AE: ' # for subtitle
 
-    model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5",
-    "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
-    "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
-    "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5",
-    "2d_ae_64_relu_reg_norm_1.h5", "2d_ae_64_relu_reg_norm_2.h5", "2d_ae_64_relu_reg_norm_3.h5",
-    "2d_ae_64_relu_reg_norm_4.h5", "2d_ae_64_relu_reg_norm_5.h5"} 
+    # model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5",
+    # "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
+    # "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
+    # "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5",
+    # "2d_ae_64_relu_reg_norm_1.h5", "2d_ae_64_relu_reg_norm_2.h5", "2d_ae_64_relu_reg_norm_3.h5",
+    # "2d_ae_64_relu_reg_norm_4.h5", "2d_ae_64_relu_reg_norm_5.h5"} 
 
     mod_nam = {"2d_ae_64_relu_reg_norm", "2d_ae_cropped_128_relu_reg_norm", "2d_ae_cropped_256_relu_reg_norm"}
     mod_nam = {"2d_ae_64_relu_reg_norm"}
@@ -295,6 +296,17 @@ def main():
 
         project = True
         latent_vector = True
+
+        # metrics stability add-on
+        if (stability_study):
+            print("Stability Study")
+            model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, test_data, names, dataset)
+            test_data = x_test_
+            test_names = names_
+        else:
+            test_data = x_test # x_test x_train x_test_
+            test_names = names
+            dir_model_name = os.path.join("weights", model_name)
 
         #load_data = False
         if not load_data:
@@ -443,13 +455,6 @@ def main():
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
             
             try:
-                # metrics stability add-on
-                if (stability_study):
-                    print("Stability Study")
-                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                else:
-                    dir_model_name = os.path.join("weights", model_name)
-
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
                 # continue # skip existing models
@@ -508,13 +513,6 @@ def main():
                     text_file.write("loss_history: ")
                     text_file.write(str(np_loss_history))
 
-            if (stability_study):
-                print("Stability Study")
-                test_data = x_test_
-                test_names = names_
-            else:
-                test_data = x_test # x_test x_train x_test_
-                test_names = names
             train_data = x_train[0:8000]
 
             encoded_vec = encoder.predict(test_data)

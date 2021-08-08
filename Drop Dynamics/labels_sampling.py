@@ -42,7 +42,7 @@ def func(path):
 def main():
 
     load_save_rand = False
-    display = False
+    display = True
     save_names = False
     show_names_data = True
 
@@ -123,6 +123,7 @@ def main():
         data = pickle.load(pkl_file)
 
         print(data.shape)
+        print("Displaying")
 
         # fig=plt.figure()
         # img = data[1,:,:,0]

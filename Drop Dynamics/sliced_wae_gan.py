@@ -141,6 +141,7 @@ def load_labelled_data():
 
     data = data[:5400,...] # 5682
     names = names[:5400]
+    # 3600 for saved
 
     data = np.concatenate((data, data_sampled), axis=0)
     names = names + names_sampled
@@ -250,7 +251,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this save before x_test and encoded vec after tsne and umap
-    load_data = True
+    load_data = False
     if load_data: 
         dir_res = "Results/3D_VAE" # directory with all models
         # load test_data from pickle and later encoded_vec_2d
@@ -314,7 +315,7 @@ def main():
 
     # model_names = {"2d_ae_2_relu_reg_norm_1.h5", "2d_ae_2_relu_reg_norm_2.h5", "2d_ae_2_relu_reg_norm_3.h5", \
 
-    mod_nam = {"3d_wae_256_lrelu_reg_norm", "3d_wae_128_lrelu_reg_norm", "3d_wae_64_lrelu_reg_norm", "3d_wae_32_lrelu_reg_norm"}
+    mod_nam = {"3d_wae_256_lrelu_reg_norm", "3d_wae_128_lrelu_reg_norm", "3d_wae_64_lrelu_reg_norm"}
     mod_nam = {"3d_wae_32_lrelu_reg_norm"}
 
     # metrics stability add-on
@@ -332,16 +333,16 @@ def main():
     # print(model_names)
     ###
 
-    # model_names_all = []
-    # for m_n in mod_nam:
-    #     for i in range(5):    
-    #         m_n_index = m_n + "_" + str(i+1) + ".h5"
-    #         model_names_all.append(m_n_index)
+    model_names_all = []
+    for m_n in mod_nam:
+        for i in range(5):    
+            m_n_index = m_n + "_" + str(i+1) + ".h5"
+            model_names_all.append(m_n_index)
 
-    # model_names = model_names_all
-    # print(model_names)
+    model_names = model_names_all
+    print(model_names)
 
-    model_names = {"3d_wae_128_lrelu_reg_norm_1.h5"}
+    # model_names = {"3d_wae_128_lrelu_reg_norm_1.h5"}
 
     for model_name in model_names:
         print("model_name:", model_name)
@@ -649,7 +650,8 @@ def main():
             #         text_file.write(str(np_loss_history))
             
             test_data = x_test # x_test x_train
-            train_data = x_train[0:8000]
+            # train_data = x_train[0:8000]
+            train_data = x_train
 
             # Test autoencoder
             # en=encoder.predict(x_train)# Encode the images
@@ -699,7 +701,7 @@ def main():
             # test_data = data_test_vis # visualize the original
 
             #draw original and reconstructed data
-            draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset, temporal)
+            # draw_orig_reconstr(test_data, decoded_imgs, title, dir_res_model, dataset, temporal)
 
             # test_data = data_test_vis # visualize the original
             # test_data = x_test

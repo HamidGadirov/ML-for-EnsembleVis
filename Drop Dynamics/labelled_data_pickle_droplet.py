@@ -61,6 +61,10 @@ def main():
     frame_names = []
     count = 0
 
+    # for 3D convs
+    data_size = 0
+    start_of_diff_member = []
+
     # Print the files
     with Bar("Loading the data...", max=len(listOfFiles)/2 ) as bar:
         for elem in listOfFiles:
@@ -111,6 +115,10 @@ def main():
                     dividible_range = a*3
                     start_from = tmp_data.shape[0] - dividible_range
                     print(start_from)
+                    # for 3D convs
+                    data_size += frame_num-start_from
+                    start_of_diff_member.append(int(data_size))
+
                     tmp_data = tmp_data[start_from:,...] # for 3d preprocessing
                     tmp_data = np.flip(tmp_data, 1)
                     data = np.append(data, tmp_data, axis=0)
@@ -132,6 +140,13 @@ def main():
                 except KeyError:
                     print("not in the json file") # not in the json file, no label
 
+    print("Data size:", data_size)
+    print('start_of_diff_members:', start_of_diff_member)
+    pkl_file = open("start_of_diff_member.pkl", 'wb')
+    pickle.dump(start_of_diff_member, pkl_file, protocol=4)
+    pkl_file.close
+    input('X')
+    input('X')
 
     print(frame_names)
     #print(data)

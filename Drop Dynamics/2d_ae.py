@@ -227,6 +227,7 @@ def main():
         print(train_data.shape)
 
         names = labels
+        test_names = names
         print(len(names))
 
         train_test_data = np.concatenate((train_data, test_data), axis=0)
@@ -237,6 +238,7 @@ def main():
     else:
         # preprocess the data and save test subset as pickle
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
+        #test_data = x_test #
 
         # fn = os.path.join(dir_res, "test_data.pkl")
         # pkl_file = open(fn, 'wb')
@@ -256,29 +258,24 @@ def main():
         # print("Test labels were saved as pickle")
         # pkl_file.close
 
-    # model_names = {"2d_ae_cropped_128_relu_reg_norm_1.h5", "2d_ae_cropped_128_relu_reg_norm_2.h5", \
-    # "2d_ae_cropped_128_relu_reg_norm_3.h5", "2d_ae_cropped_128_relu_reg_norm_4.h5", "2d_ae_cropped_128_relu_reg_norm_5.h5", \
-    # "2d_ae_cropped_256_relu_reg_norm_1.h5", "2d_ae_cropped_256_relu_reg_norm_2.h5", \
-    # "2d_ae_cropped_256_relu_reg_norm_3.h5", "2d_ae_cropped_256_relu_reg_norm_4.h5", "2d_ae_cropped_256_relu_reg_norm_5.h5"} 
-
-    model_names = {"2d_ae_croppedb_128_relu_reg_norm_1.h5", "2d_ae_croppedb_128_relu_reg_norm_2.h5", \
-    "2d_ae_croppedb_128_relu_reg_norm_3.h5", "2d_ae_croppedb_128_relu_reg_norm_4.h5", "2d_ae_croppedb_128_relu_reg_norm_5.h5", \
-    "2d_ae_croppedb_256_relu_reg_norm_1.h5", "2d_ae_croppedb_256_relu_reg_norm_2.h5", \
-    "2d_ae_croppedb_256_relu_reg_norm_3.h5", "2d_ae_croppedb_256_relu_reg_norm_4.h5", "2d_ae_croppedb_256_relu_reg_norm_5.h5",
-    "2d_ae_croppedb_64_relu_reg_norm_1.h5", "2d_ae_croppedb_64_relu_reg_norm_2.h5", \
-    "2d_ae_croppedb_64_relu_reg_norm_3.h5", "2d_ae_croppedb_64_relu_reg_norm_4.h5", "2d_ae_croppedb_64_relu_reg_norm_5.h5"}
+    # model_names = {"2d_ae_croppedb_128_relu_reg_norm_1.h5", "2d_ae_croppedb_128_relu_reg_norm_2.h5", \
+    # "2d_ae_croppedb_128_relu_reg_norm_3.h5", "2d_ae_croppedb_128_relu_reg_norm_4.h5", "2d_ae_croppedb_128_relu_reg_norm_5.h5", \
+    # "2d_ae_croppedb_256_relu_reg_norm_1.h5", "2d_ae_croppedb_256_relu_reg_norm_2.h5", \
+    # "2d_ae_croppedb_256_relu_reg_norm_3.h5", "2d_ae_croppedb_256_relu_reg_norm_4.h5", "2d_ae_croppedb_256_relu_reg_norm_5.h5",
+    # "2d_ae_croppedb_64_relu_reg_norm_1.h5", "2d_ae_croppedb_64_relu_reg_norm_2.h5", \
+    # "2d_ae_croppedb_64_relu_reg_norm_3.h5", "2d_ae_croppedb_64_relu_reg_norm_4.h5", "2d_ae_croppedb_64_relu_reg_norm_5.h5"}
 
     dir_res = "Results/2D_AE" # directory with all models
     dataset = "droplet"
     title = '2D AE: ' # for subtitle
 
     mod_nam = {"2d_ae_croppedb_128_relu_reg_norm", "2d_ae_croppedb_256_relu_reg_norm", "2d_ae_croppedb_64_relu_reg_norm"}
-    mod_nam = {"2d_ae_croppedb_64_relu_reg_norm"}
 
     # metrics stability add-on
     stability_study = True
     if (stability_study):
         print("Stability Study")
+        mod_nam = {"2d_ae_croppedb_64_relu_reg_norm"}
         model_names = models_metrics_stability(mod_nam, dataset)
     else:
         model_names_all = []
@@ -313,6 +310,17 @@ def main():
 
         project = True
         latent_vector = True
+
+        if (stability_study):
+            print("Stability Study")
+            model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
+            test_data = x_test_
+            test_names = names_
+            print("test shape:", test_data.shape)
+        else:
+            dir_model_name = os.path.join("weights", model_name)
+            test_data = x_test # x_test x_train x_test_
+            test_names = names
 
         #load_data = False
         if not load_data:
@@ -454,14 +462,8 @@ def main():
                     encoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
                     decoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
                     autoencoder.summary(print_fn=lambda x: text_file.write(x + '\n'))
+                    
             try:
-                # metrics stability add-on
-                if (stability_study):
-                    print("Stability Study")
-                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                else:
-                    dir_model_name = os.path.join("weights", model_name)
-
                 autoencoder.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
             except IOError:
@@ -520,13 +522,6 @@ def main():
             # Keract visualizations
             #visualize(x_train, encoder, decoder)
 
-            if (stability_study):
-                print("Stability Study")
-                test_data = x_test_
-                test_names = names_
-            else:
-                test_data = x_test # x_test x_train x_test_
-                test_names = names
             train_data = x_train
             # names = "" # no labels for x_train
             # test_data = x_train and x_test
@@ -549,13 +544,13 @@ def main():
             # plt.close(fig)
 
             # clustering in the feature space
-            from sklearn.cluster import KMeans
-            kmeans = KMeans(n_clusters=8, random_state=0).fit(encoded_vec)
+            # from sklearn.cluster import KMeans
+            # kmeans = KMeans(n_clusters=8, random_state=0).fit(encoded_vec)
             # print(kmeans.labels_)
 
             # clustering perf eval in the feature space
-            n_clusters = 8
-            kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
+            # n_clusters = 8
+            # kmeans_rand(n_clusters, encoded_vec, names_, dir_res_model)
             # continue
 
             decoded_imgs = autoencoder.predict(test_data)

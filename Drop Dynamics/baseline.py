@@ -263,7 +263,6 @@ def main():
         else:
             test_data = x_test # x_test x_train x_test_
             test_names = names
-        test_data = x_test_
         # print(test_data_vis.min(), test_data_vis.max())
         # test_data_vis = test_data_vis * data_std + data_mean
         # print(test_data_vis.min(), test_data_vis.max())

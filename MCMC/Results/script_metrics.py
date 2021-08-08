@@ -144,11 +144,13 @@ def load_metrics_from_folder():
         d[key] = {}
         temp_d[key] = {}
         d[key]['Neighborhood_hit'] = []
-        d[key]['Variance'] = []
-        d[key]['Separability'] = []
+        d[key]['Silhouette'] = []
+        # d[key]['Variance'] = []
+        # d[key]['Separability'] = []
         temp_d[key]['Neighborhood_hit'] = []
-        temp_d[key]['Variance'] = []
-        temp_d[key]['Separability'] = []
+        temp_d[key]['Silhouette'] = []
+        # temp_d[key]['Variance'] = []
+        # temp_d[key]['Separability'] = []
 
     # res[0].extend(np.unique(models))
     # print(res[0])
@@ -195,12 +197,13 @@ def load_metrics_from_folder():
                             # if words[0] == "Separability" or words[0] == "\n":
                             if words[0] == "\n":
                                 continue
-
-                            if words[1] == "UMAP":
-                                print(words[2])
-                                temp_d[key][words[0]].append(words[2][:-2])
-                                print("empty",d[key])
-                                print("not empty",temp_d[key])
+                            
+                            if words[0] == "Neighborhood_hit" or words[0] == "Silhouette":
+                                if words[1] == "UMAP":
+                                    print(words[2])
+                                    temp_d[key][words[0]].append(words[2])
+                                    print("empty",d[key])
+                                    print("not empty",temp_d[key])
                 # else:
                 #     print(d[key])
 
@@ -219,10 +222,12 @@ def load_metrics_from_folder():
 
         d[key]['Neighborhood_hit'].append(statistics.mean(list(map(float, temp_d[key]['Neighborhood_hit']))))
         d[key]['Neighborhood_hit'].append(statistics.stdev(list(map(float, temp_d[key]['Neighborhood_hit']))))
-        d[key]['Variance'].append(statistics.mean(list(map(float, temp_d[key]['Variance']))))
-        d[key]['Variance'].append(statistics.stdev(list(map(float, temp_d[key]['Variance']))))
-        d[key]['Separability'].append(statistics.mean(list(map(float, temp_d[key]['Separability']))))
-        d[key]['Separability'].append(statistics.stdev(list(map(float, temp_d[key]['Separability']))))
+        d[key]['Silhouette'].append(statistics.mean(list(map(float, temp_d[key]['Silhouette']))))
+        d[key]['Silhouette'].append(statistics.stdev(list(map(float, temp_d[key]['Silhouette']))))
+        # d[key]['Variance'].append(statistics.mean(list(map(float, temp_d[key]['Variance']))))
+        # d[key]['Variance'].append(statistics.stdev(list(map(float, temp_d[key]['Variance']))))
+        # d[key]['Separability'].append(statistics.mean(list(map(float, temp_d[key]['Separability']))))
+        # d[key]['Separability'].append(statistics.stdev(list(map(float, temp_d[key]['Separability']))))
         #d[key] = temp_d[key]
         print(d[key])
         print("++++++++++++++++++++++++")
@@ -263,13 +268,15 @@ for key, value in d.items():
         #print(type(d[key]["Neighborhood_hit"]))
         metrics_pareto.append([])
         metrics_pareto[i].append(d[key]["Neighborhood_hit"][0])
-        metrics_pareto[i].append(d[key]["Variance"][0])
-        metrics_pareto[i].append(d[key]["Separability"][0])
+        # metrics_pareto[i].append(d[key]["Variance"][0])
+        # metrics_pareto[i].append(d[key]["Separability"][0])
+        metrics_pareto[i].append(d[key]["Silhouette"][0])
 
         metrics_pareto_mean_std.append([]) # add variance
         metrics_pareto_mean_std[i].append(d[key]["Neighborhood_hit"][1])
-        metrics_pareto_mean_std[i].append(d[key]["Variance"][1])
-        metrics_pareto_mean_std[i].append(d[key]["Separability"][1])
+        # metrics_pareto_mean_std[i].append(d[key]["Variance"][1])
+        # metrics_pareto_mean_std[i].append(d[key]["Separability"][1])
+        metrics_pareto_mean_std[i].append(d[key]["Silhouette"][1])
 
         i += 1
 
@@ -288,7 +295,7 @@ y = metrics_pareto[:,1]
 metrics_pareto_mean_std = np.asarray(metrics_pareto_mean_std)
 xerr = metrics_pareto_mean_std[:,0]
 yerr = metrics_pareto_mean_std[:,1]
-zerr = metrics_pareto_mean_std[:,2]
+# zerr = metrics_pareto_mean_std[:,2]
 
 print(x,y)
 
@@ -307,7 +314,8 @@ plt.scatter(x, y)
 ax.errorbar(x, y, xerr=xerr, yerr=yerr, fmt='o')
 #plt.errorbar(x, y, e, linestyle='None', marker='^')
 plt.xlabel('Neighborhood_hit')
-plt.ylabel('Variance')
+# plt.ylabel('Variance')
+plt.ylabel('Silhouette')
 #plt.show()
 plt.close()
 
@@ -339,7 +347,7 @@ def identify_pareto(metrics_vals):
         # Loop through all other items
         for j in range(population_size):
             # Check if our 'i' pint is dominated by our 'j' point
-            if (metrics_vals[j][0] > metrics_vals[i][0]) and (metrics_vals[j][1] < metrics_vals[i][1]): # don't assume equal
+            if (metrics_vals[j][0] > metrics_vals[i][0]) and (metrics_vals[j][1] > metrics_vals[i][1]): # don't assume equal
                 # Label 'i' point as not on Pareto front
                 pareto_front[i] = 0
                 # Stop further comparisons with 'i' (no more comparisons needed)
@@ -367,7 +375,7 @@ y_all = metrics_pareto[:, 1]
 x_pareto = pareto_front[:, 0]
 y_pareto = pareto_front[:, 1]
 
-z_all = metrics_pareto[:, 2]
+# z_all = metrics_pareto[:, 2]
 
 # import csv
 # filename = "mcmc_metrics.csv"
@@ -383,10 +391,11 @@ z_all = metrics_pareto[:, 2]
 filename = "metrics.txt"
 
 with open(filename, "w") as text_file:
-    text_file.write("Method  Separability  Neighborhood hit  Spread  (± for uncertainty (std dev)) \n")
+    # text_file.write("Method  Separability  Neighborhood hit  Spread  (± for uncertainty (std dev)) \n")
+    text_file.write("Method  Neighborhood hit  Silhouette  (± for uncertainty (std dev)) \n")
     for i in range (len(x_all)):
         text_file.write(str(pareto_list[i]) + "  ")
-        text_file.write(str(round(z_all[i],4)) + "±" + str(round(zerr[i],3)) + "  ")
+        # text_file.write(str(round(z_all[i],4)) + "±" + str(round(zerr[i],3)) + "  ")
         text_file.write(str(round(x_all[i],4)) + "±" + str(round(xerr[i],3)) + "  ")
         text_file.write(str(round(y_all[i],4)) + "±" + str(round(yerr[i],3)) + "\n")
         
@@ -517,8 +526,8 @@ fs = 16
 plt.xticks(fontsize=fs)
 plt.yticks(fontsize=fs)
 
-plt.xlabel('Neighborhood hit', fontsize=fs)
-plt.ylabel('Spread', fontsize=fs)
+plt.xlabel('Neighborhood hit (n.h., higher is better)', fontsize=fs)
+plt.ylabel('Silhouette (s., higher is better)', fontsize=fs)
 # plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
 
 texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=13) for i in range(len(x_all))]
@@ -530,15 +539,12 @@ adjust_text(texts, lim=1, precision=0.001)
 # adjust_text(texts, x, y, arrowprops=dict(arrowstyle="-", color='black', lw=0.5), 
 #             autoalign='', only_move={'points':'y', 'text':'y'})
 
-# texts[4].set_y(0.1415) # beta2 VAE 128
-# texts[12].set_y(0.138) # beta4 VAE 128
-# texts[18].set_y(0.153) # beta4 VAE 128
-texts[4].set_x(0.9915) # beta2 VAE 128
-texts[4].set_y(0.144) # beta2 VAE 128
-texts[12].set_x(0.986) # b4 128
-texts[14].set_x(0.994) # 128
-texts[18].set_x(0.997) # SWAE 2
-texts[18].set_y(0.15) # SWAE 2
+# texts[4].set_x(0.9915) # beta2 VAE 128
+# texts[4].set_y(0.144) # beta2 VAE 128
+# texts[12].set_x(0.986) # b4 128
+# texts[14].set_x(0.994) # 128
+# texts[18].set_x(0.997) # SWAE 2
+# texts[18].set_y(0.15) # SWAE 2
 
 import matplotlib.lines as mlines
 purple_triangle = mlines.Line2D([], [], color=col[4], marker='v', linestyle='None',
@@ -557,14 +563,12 @@ plt.legend(handles=[purple_triangle, orange_square, blue_circle, red_circle, gre
 # fig.set_size_inches(16, 9)
 fig.set_size_inches(8, 8)
 plt.tight_layout()
-# plt.savefig('mcmc_ae_vae_wae_pareto.png', dpi=300)
+plt.savefig('mcmc_ae_vae_wae_pareto.png', dpi=300)
 plt.savefig('mcmc_ae_vae_wae_pareto.pdf')  
 plt.show()
 
-
 # Show the baseline: one point (red)
 #dirName = 'Baseline'
-
 
 # in the end to have a visualization with point for each dir (our analysis)
 # and correstonding folder (shown as a list or in the vis interactively)

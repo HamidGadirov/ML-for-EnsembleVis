@@ -208,8 +208,8 @@ def main():
     dir_res = "Results/2D_VAE" # directory with all models
 
     # Load data and subsequently encoded vectors in 2D representation
-    # for this save before x_test and encoded vec after tsne and umap
-    load_data = False
+    # for this, save x_test and encoded vec beforehad, after tsne/umap
+    load_data = True
     if load_data:
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -236,6 +236,7 @@ def main():
         print(train_data.shape)
 
         names = labels
+        test_names = names
         print(len(names))
 
         train_test_data = np.concatenate((train_data, test_data), axis=0)
@@ -350,6 +351,17 @@ def main():
         if load_data:
             interpolation = False
         latent_vector = True
+
+        # metrics stability add-on
+        if (stability_study):
+            print("Stability Study")
+            model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, test_data, names, dataset)
+            test_data = x_test_
+            test_names = names_
+        else:
+            test_data = x_test # x_test x_train x_test_
+            test_names = names
+            dir_model_name = os.path.join("weights", model_name)
 
         #load_data = False
         if not load_data:
@@ -503,13 +515,6 @@ def main():
                     vae.summary(print_fn=lambda x: text_file.write(x + '\n'))
 
             try:
-                # metrics stability add-on
-                if (stability_study):
-                    print("Stability Study")
-                    model_name, dir_model_name, x_test_, names_ = model_name_metrics_stability(model_name, x_test, names, dataset)
-                else:
-                    dir_model_name = os.path.join("weights", model_name)
-
                 vae.load_weights(dir_model_name)
                 print("Loaded", dir_model_name, "model from disk")
                 # input("!!!")
@@ -579,13 +584,6 @@ def main():
                     text_file.write("loss_history: ")
                     text_file.write(str(np_loss_history))
 
-            if (stability_study):
-                print("Stability Study")
-                test_data = x_test_
-                test_names = names_
-            else:
-                test_data = x_test # x_test x_train x_test_
-                test_names = names
             train_data = x_train[0:8000]
 
             latent_representation = encoder.predict(test_data)

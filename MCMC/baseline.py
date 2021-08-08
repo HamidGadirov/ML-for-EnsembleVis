@@ -170,7 +170,7 @@ def load_preprocess():
 def main():
 
     x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
-    dataset = "mcmc" 
+    dataset = "mcmc"
 
     # network parameters
     #input_shape = (image_size, image_size, 1)

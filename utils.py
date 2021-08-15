@@ -1,4 +1,5 @@
 import os, re
+import numpy as np
 
 def model_directories(dir_res, model_name):
     # create directory to save results
@@ -17,21 +18,42 @@ def model_directories(dir_res, model_name):
 
     return dir_res_model
 
+def get_num_of_labels(dataset):
+    if (dataset == "droplet"):
+        # start = 20 # 400   60 180 300
+        # end = 100 # 2400
+        # step = 40 # 400
+
+        step = 400
+        labels = np.arange(400, 2400+step, step)
+        labels = np.insert(labels, 0, 100)
+        labels = np.insert(labels, 0, 60)
+        labels = np.insert(labels, 0, 20)
+
+        # step = 40
+        # labels = np.arange(20, 100+step, step)
+
+    elif (dataset == "mcmc"):
+        # start = 250 # 500
+        # end = 2500 # 2500
+        # step = 250 # 250
+        step = 250
+        labels = np.arange(250, 2500+step, step)
+        labels = np.insert(labels, 0, 100)
+
+    return labels
+
 def models_metrics_stability(mod_nam, dataset):
     # for metrics stability evaluation
     model_names_all = []
     num_of_runs = 20
-    if (dataset == "droplet"):
-        start = 20 # 400   60 180 300
-        end = 100 # 2400
-        step = 40 # 400
-    if (dataset == "mcmc"):
-        start = 20 # 500
-        end = 50 # 2500
-        step = 30 # 250
-    for lab in range(start,end+step, step): # labels to consider
-        #print(i)
-
+    
+    labels = get_num_of_labels(dataset)
+    
+    # for lab in range(start,end+step, step): # labels to consider
+    for lab in labels:
+        # print(lab)
+        
         for m_n in mod_nam:
             for i in range(num_of_runs):    
                 m_n_index = m_n + "_" + str(lab) + "_" + str(i+1) + ".h5"
@@ -44,21 +66,20 @@ def models_metrics_stability(mod_nam, dataset):
 
 def model_name_metrics_stability(model_name, x_test, names, dataset):
     # metrics stability, remove numbers
-    if (dataset == "droplet"):
-        start = 20 # 400   60 180 300
-        end = 100 # 2400
-        step = 40 # 400
-    if (dataset == "mcmc"):
-        start = 20 # 500
-        end = 50 # 2500
-        step = 30 # 250
-    for lab in reversed(range(start,end+step, step)):
+
+    labels = get_num_of_labels(dataset)
+
+    # for lab in reversed(range(start,end+step, step)):
+    for lab in reversed(labels):
+        # print(lab)
+
         # print(lab)
         to_remove = "_" + str(lab)
         if to_remove in model_name[:-5]:
-            x_test_ = x_test[:lab,...] # #labels to consider
-            names_ = names[:lab] # #labels to consider
-            print("Labels considered:", x_test_.shape[0])
+            # if (temporal==False) # 2D case
+            x_test_ = x_test[:lab*3,...] # #labels to consider
+            names_ = names[:lab*3] # #labels to consider
+            # print("Labels considered:", x_test_.shape[0])
             model_name = model_name[:-5].replace(to_remove, '') + model_name[-5:]
     print(model_name)
 

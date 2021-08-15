@@ -264,12 +264,12 @@ def main():
     # "2d_ae_64_relu_reg_norm_4.h5", "2d_ae_64_relu_reg_norm_5.h5"} 
 
     mod_nam = {"2d_ae_64_relu_reg_norm", "2d_ae_cropped_128_relu_reg_norm", "2d_ae_cropped_256_relu_reg_norm"}
-    mod_nam = {"2d_ae_64_relu_reg_norm"}
 
     # metrics stability add-on
     stability_study = True
     if (stability_study):
         print("Stability Study")
+        mod_nam = {"2d_ae_64_relu_reg_norm"}
         model_names = models_metrics_stability(mod_nam, dataset)
     else:
         model_names_all = []

@@ -297,10 +297,10 @@ def main():
     "3d_ae_croppedb_256_relu_norm",
     "3d_ae_croppedb_256_relu_reg_norm",
     "3d_ae_croppedb_128_relu_norm",
-    "3d_ae_croppedb_64_relu_norm"
+    # "3d_ae_croppedb_64_relu_norm"
     } 
 
-    # mod_nam = {"3d_ae_croppedb_256_relu_norm"}
+    # mod_nam = {"3d_ae_croppedb_64_relu_norm"}
 
     # mod_nam = {"3d_ae_croppedb_16_relu_norm"}
 

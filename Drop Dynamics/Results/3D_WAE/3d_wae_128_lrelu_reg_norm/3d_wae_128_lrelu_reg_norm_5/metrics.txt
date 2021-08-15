@@ -1,0 +1,6 @@
+Separability UMAP 0.851 
+Neighborhood_hit UMAP 0.775 
+Variance UMAP 0.150 
+Silhouette UMAP -0.077 
+CH UMAP 657.0 
+DB UMAP 4.048 

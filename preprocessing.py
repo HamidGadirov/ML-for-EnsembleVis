@@ -184,17 +184,20 @@ def preprocess_3d(dataset, visualize, data, names=""):
 
     # sampled labels must be used, otherwise no column classes
     # 1800 sampled test set:
-    k += 1 #start in middle always
     step = 3
-    for k in range(count-sampled_size, count, step):
+    for k in range(count-sampled_size+1, count+1, step): # k starts in middle always
         # for _ in range(3): # repeat labels 3 times
-        for timestep in range(3):
-            data_timesteps[i,timestep,:,:,:] = data[k-1,:,:,:]
-            data_timesteps[i,timestep,:,:,:] = data[k,:,:,:]
-            data_timesteps[i,timestep,:,:,:] = data[k+1,:,:,:]
-        i += 1
-        names_timesteps.append(names[k]) # middle label
-        # print(names[k])
+            for timestep in range(3):
+                data_timesteps[i,timestep,:,:,:] = data[k-1+timestep,:,:,:] # data[-1,0,1]
+                # print(names[k-1+timestep])
+                # plt.figure()
+                # img = data_timesteps[i,timestep,:,:,:]
+                # plt.imshow(img) 
+                # plt.show() 
+            # print("End of loop")
+            i += 1
+            names_timesteps.append(names[k]) # middle label
+            # print(names[k])
 
     data_timesteps = data_timesteps[:i]
 

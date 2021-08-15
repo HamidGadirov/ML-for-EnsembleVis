@@ -162,7 +162,7 @@ def draw_movement(encoded_vec_2d, names, labels, title, dir_res_model):
     #plt.show()
     plt.tight_layout()
     #fig.set_size_inches(10, 8)
-    fig.savefig('{}/latent_umap_scatter_labels_movement.pdf'.format(dir_res_model), dpi=300)
+    fig.savefig('{}/latent_umap_scatter_labels_movement.pdf'.format(dir_res_model))
     plt.close(fig)
 
 def calculate_metrics(encoded_vec_2d, names, knn_title, filename):
@@ -452,7 +452,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #ax.set_title(knn_title, fontsize=17)
         plt.axis('off')
         plt.tight_layout()
-        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model))
         plt.close(fig)
 
         # full ensemble
@@ -546,7 +546,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #ax.set_title(knn_title, fontsize=17)
         plt.axis('off')
         plt.tight_layout()
-        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model))
         plt.close(fig)
 
         draw_movement(encoded_vec_2d, names, labels, title, dir_res_model)
@@ -673,7 +673,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model))
         plt.close(fig)
 
         # Full ensemble: encoded_vec_train_test
@@ -684,7 +684,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels_full.pdf'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels_full.pdf'.format(dir_res_model))
         plt.close(fig)
 
     if (dataset == "mnist"):
@@ -743,7 +743,7 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
         #plt.show()
         plt.tight_layout()
         #fig.set_size_inches(12, 9)
-        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model), dpi=300)
+        fig.savefig('{}/latent_umap_scatter_labels.pdf'.format(dir_res_model))
         plt.close(fig)
 
     # elapsed_time = time.time() - start_time
@@ -782,9 +782,9 @@ def umap_projection(encoded_vec, encoded_vec_train, encoded_vec_train_test, test
     # print(test_data.shape)
     # test_data[:600] = np.expand_dims(test_data[:600], axis=-1)
 
-    # print(encoded_vec_2d.shape)
-    # print(test_data.shape)
-    # grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, title, proj, temporal)
+    print(encoded_vec_2d.shape)
+    print(test_data.shape)
+    grid_projection(encoded_vec_2d, test_data, names, dataset, dir_res_model, title, proj, temporal)
 
     # if (temporal):
     #     model_name="3d_beta-vae"

@@ -145,10 +145,14 @@ def load_metrics_from_folder():
         temp_d[key] = {}
         d[key]['Neighborhood_hit'] = []
         d[key]['Silhouette'] = []
+        d[key]['CH'] = []
+        d[key]['DB'] = []
         # d[key]['Variance'] = []
         # d[key]['Separability'] = []
         temp_d[key]['Neighborhood_hit'] = []
         temp_d[key]['Silhouette'] = []
+        temp_d[key]['CH'] = []
+        temp_d[key]['DB'] = []
         # temp_d[key]['Variance'] = []
         # temp_d[key]['Separability'] = []
 
@@ -198,7 +202,8 @@ def load_metrics_from_folder():
                             if words[0] == "\n":
                                 continue
                             
-                            if words[0] == "Neighborhood_hit" or words[0] == "Silhouette":
+                            if words[0] == "Neighborhood_hit" or words[0] == "Silhouette" \
+                                or words[0] == "CH" or words[0] == "DB":
                                 if words[1] == "UMAP":
                                     print(words[2])
                                     temp_d[key][words[0]].append(words[2])
@@ -224,6 +229,11 @@ def load_metrics_from_folder():
         d[key]['Neighborhood_hit'].append(statistics.stdev(list(map(float, temp_d[key]['Neighborhood_hit']))))
         d[key]['Silhouette'].append(statistics.mean(list(map(float, temp_d[key]['Silhouette']))))
         d[key]['Silhouette'].append(statistics.stdev(list(map(float, temp_d[key]['Silhouette']))))
+
+        d[key]['CH'].append(statistics.mean(list(map(float, temp_d[key]['CH']))))
+        d[key]['CH'].append(statistics.stdev(list(map(float, temp_d[key]['CH']))))
+        d[key]['DB'].append(statistics.mean(list(map(float, temp_d[key]['DB']))))
+        d[key]['DB'].append(statistics.stdev(list(map(float, temp_d[key]['DB']))))
         # d[key]['Variance'].append(statistics.mean(list(map(float, temp_d[key]['Variance']))))
         # d[key]['Variance'].append(statistics.stdev(list(map(float, temp_d[key]['Variance']))))
         # d[key]['Separability'].append(statistics.mean(list(map(float, temp_d[key]['Separability']))))
@@ -254,14 +264,14 @@ pareto_list = []
 for key, value in d.items():
     if d[key]["Neighborhood_hit"]: # test
         print(key)
-        if("100" in key) or ("20" in key):
-            continue
-        if("beta2" in key) and ("32" in key):
-            continue
-        if("beta6" in key) and ("128" in key):
-            continue
-        if("beta10" in key) and ("256" in key):
-            continue
+        # if("100" in key) or ("20" in key):
+        #     continue
+        # if("beta2" in key) and ("32" in key):
+        #     continue
+        # if("beta6" in key) and ("128" in key):
+        #     continue
+        # if("beta10" in key) and ("256" in key):
+        #     continue
 
         print(d[key])
         pareto_list.append(key)
@@ -271,12 +281,16 @@ for key, value in d.items():
         # metrics_pareto[i].append(d[key]["Variance"][0])
         # metrics_pareto[i].append(d[key]["Separability"][0])
         metrics_pareto[i].append(d[key]["Silhouette"][0])
+        metrics_pareto[i].append(d[key]["CH"][0])
+        metrics_pareto[i].append(d[key]["DB"][0])
 
         metrics_pareto_mean_std.append([]) # add variance
         metrics_pareto_mean_std[i].append(d[key]["Neighborhood_hit"][1])
         # metrics_pareto_mean_std[i].append(d[key]["Variance"][1])
         # metrics_pareto_mean_std[i].append(d[key]["Separability"][1])
         metrics_pareto_mean_std[i].append(d[key]["Silhouette"][1])
+        metrics_pareto_mean_std[i].append(d[key]["CH"][1])
+        metrics_pareto_mean_std[i].append(d[key]["DB"][1])
 
         i += 1
 
@@ -291,11 +305,14 @@ print(metrics_pareto.shape)
 
 x = metrics_pareto[:,0]
 y = metrics_pareto[:,1]
+z = metrics_pareto[:,2] # CH
+k = metrics_pareto[:,3] # DB
 
 metrics_pareto_mean_std = np.asarray(metrics_pareto_mean_std)
 xerr = metrics_pareto_mean_std[:,0]
 yerr = metrics_pareto_mean_std[:,1]
-# zerr = metrics_pareto_mean_std[:,2]
+zerr = metrics_pareto_mean_std[:,2]
+kerr = metrics_pareto_mean_std[:,3]
 
 print(x,y)
 
@@ -375,7 +392,8 @@ y_all = metrics_pareto[:, 1]
 x_pareto = pareto_front[:, 0]
 y_pareto = pareto_front[:, 1]
 
-# z_all = metrics_pareto[:, 2]
+z_all = metrics_pareto[:, 2]
+k_all = metrics_pareto[:, 3]
 
 # import csv
 # filename = "mcmc_metrics.csv"
@@ -392,12 +410,13 @@ filename = "metrics.txt"
 
 with open(filename, "w") as text_file:
     # text_file.write("Method  Separability  Neighborhood hit  Spread  (± for uncertainty (std dev)) \n")
-    text_file.write("Method  Neighborhood hit  Silhouette  (± for uncertainty (std dev)) \n")
+    text_file.write("Method  Neighborhood hit  Silhouette  CH  DB  (± for uncertainty (std dev)) \n")
     for i in range (len(x_all)):
         text_file.write(str(pareto_list[i]) + "  ")
-        # text_file.write(str(round(z_all[i],4)) + "±" + str(round(zerr[i],3)) + "  ")
-        text_file.write(str(round(x_all[i],4)) + "±" + str(round(xerr[i],3)) + "  ")
-        text_file.write(str(round(y_all[i],4)) + "±" + str(round(yerr[i],3)) + "\n")
+        text_file.write(str(round(x_all[i],3)) + "±" + str(round(xerr[i],3)) + "  ")
+        text_file.write(str(round(y_all[i],3)) + "±" + str(round(yerr[i],3)) + "  ")
+        text_file.write(str(round(z_all[i],1)) + "±" + str(round(zerr[i],1)) + "  ")
+        text_file.write(str(round(k_all[i],1)) + "±" + str(round(kerr[i],1)) + "\n")
         
 # input("stop")
 
@@ -526,8 +545,8 @@ fs = 16
 plt.xticks(fontsize=fs)
 plt.yticks(fontsize=fs)
 
-plt.xlabel('Neighborhood hit (n.h., higher is better)', fontsize=fs)
-plt.ylabel('Silhouette (s., higher is better)', fontsize=fs)
+plt.xlabel('Neighborhood hit (n.h., higher is better)', fontsize=fs-2)
+plt.ylabel('Silhouette (s., higher is better)', fontsize=fs-2)
 # plt.suptitle("Drop Dynamics, Pareto frontier", fontsize=22)
 
 texts = [ax.text(x_all[i], y_all[i], models[i], fontsize=13) for i in range(len(x_all))]
@@ -542,7 +561,7 @@ adjust_text(texts, lim=1, precision=0.001)
 # texts[4].set_x(0.9915) # beta2 VAE 128
 # texts[4].set_y(0.144) # beta2 VAE 128
 # texts[12].set_x(0.986) # b4 128
-# texts[14].set_x(0.994) # 128
+texts[14].set_x(0.996) # 128
 # texts[18].set_x(0.997) # SWAE 2
 # texts[18].set_y(0.15) # SWAE 2
 
@@ -561,7 +580,7 @@ green_ = mlines.Line2D([], [], color="white", marker='o', markeredgecolor=col[2]
 plt.legend(handles=[purple_triangle, orange_square, blue_circle, red_circle, green_], prop={'size': 13})
 
 # fig.set_size_inches(16, 9)
-fig.set_size_inches(8, 8)
+fig.set_size_inches(8, 6)
 plt.tight_layout()
 plt.savefig('mcmc_ae_vae_wae_pareto.png', dpi=300)
 plt.savefig('mcmc_ae_vae_wae_pareto.pdf')  

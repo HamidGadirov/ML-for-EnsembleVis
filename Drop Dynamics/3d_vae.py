@@ -267,11 +267,11 @@ def main():
         x_train, x_test, x_val, names, data_mean, data_std, data_test_vis = load_preprocess()
 
         # save it only once
-        # fn = os.path.join(dir_res, "test_data.pkl")
-        # pkl_file = open(fn, 'wb')
-        # pickle.dump(x_test, pkl_file)
-        # print("Test data were saved as pickle")
-        # pkl_file.close
+        fn = os.path.join(dir_res, "test_data.pkl")
+        pkl_file = open(fn, 'wb')
+        pickle.dump(x_test, pkl_file)
+        print("Test data were saved as pickle")
+        pkl_file.close
 
         # fn = os.path.join(dir_res, "train_data.pkl")
         # pkl_file = open(fn, 'wb')
@@ -279,11 +279,12 @@ def main():
         # print("Train data were saved as pickle")
         # pkl_file.close
 
-        # fn = os.path.join(dir_res, "test_labels.pkl")
-        # pkl_file = open(fn, 'wb')
-        # pickle.dump(names, pkl_file)
-        # print("Test labels were saved as pickle")
-        # pkl_file.close
+        fn = os.path.join(dir_res, "test_labels.pkl")
+        pkl_file = open(fn, 'wb')
+        pickle.dump(names, pkl_file)
+        print("Test labels were saved as pickle")
+        pkl_file.close
+        input("X")
 
     # model_names = {"3d_beta0.1_vae_croppedb_256_relu_norm_1.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_2.h5", \
     # "3d_beta0.1_vae_croppedb_256_relu_norm_3.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_4.h5", "3d_beta0.1_vae_croppedb_256_relu_norm_5.h5",

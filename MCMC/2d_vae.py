@@ -318,12 +318,13 @@ def main():
     "2d_beta20_vae_cropped_128_relu_norm", "2d_beta20_vae_cropped_256_relu_norm",
     "2d_beta100_vae_cropped_128_relu_norm", "2d_beta100_vae_cropped_256_relu_norm"}
 
-    mod_nam = {"2d_beta8_vae_cropped_128_relu_norm", "2d_beta2_vae_cropped_128_relu_norm"}
+    mod_nam = {"2d_beta8_vae_cropped_32_relu_norm"}
 
     # metrics stability add-on
-    stability_study = True
+    stability_study = False
     if (stability_study):
         print("Stability Study")
+        mod_nam = {"2d_beta8_vae_cropped_128_relu_norm", "2d_beta2_vae_cropped_128_relu_norm"}
         model_names = models_metrics_stability(mod_nam, dataset)
     else:
         model_names_all = []
@@ -359,8 +360,8 @@ def main():
             test_data = x_test_
             test_names = names_
         else:
-            test_data = x_test # x_test x_train x_test_
-            test_names = names
+            # test_data = x_test # x_test x_train x_test_
+            # test_names = names
             dir_model_name = os.path.join("weights", model_name)
 
         #load_data = False

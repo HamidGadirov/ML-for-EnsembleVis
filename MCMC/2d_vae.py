@@ -1,15 +1,11 @@
 """
-27.02
-generate smth new - sample random vector from latent space and see +
-beta-VAE +-
-
-22.04
-try to add Dropout -
-
-such as interpolating between two samples +
+interpolation between two samples +
+generate: sample random vector from latent space +
 sampling in the vicinity of a sample -
 exploring differences between a pair of samples applied to a third sample -
 """
+
+# conda activate tf-gpu: tf 2.11 installed, with cudnn 8.1 and cuda 11.2
 
 import os,sys,inspect
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -42,13 +38,13 @@ from sklearn.model_selection import train_test_split
 
 import keras
 import tensorflow as tf
-config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.9  # 0.6 sometimes works better for folks
-keras.backend.tensorflow_backend.set_session(tf.Session(config=config))
+config = tf.compat.v1.ConfigProto # tf.ConfigProto()
+# config.gpu_options.per_process_gpu_memory_fraction = 0.9  # 0.6 sometimes works better for folks
+# keras.backend.tensorflow_backend.set_session(tf.Session(config=config))
 
 from keras.layers import Activation, Input, Dense, Conv2D, Conv2DTranspose
 from keras.layers import Flatten, Reshape, Cropping2D, Lambda, Dropout
-from keras.layers.normalization import BatchNormalization
+from tensorflow.keras.layers import BatchNormalization
 from keras.models import Model
 from keras import backend as K
 from keras import optimizers, regularizers   
@@ -209,7 +205,7 @@ def main():
 
     # Load data and subsequently encoded vectors in 2D representation
     # for this, save x_test and encoded vec beforehad, after tsne/umap
-    load_data = True
+    load_data = False
     if load_data:
         # load test_data from pickle and later encoded_vec_2d
         fn = os.path.join(dir_res, "test_data.pkl")
@@ -320,6 +316,9 @@ def main():
 
     mod_nam = {"2d_beta8_vae_cropped_32_relu_norm"}
 
+    # mod_nam = {"2d_beta8_vae_metrics_cropped_32_relu_norm"} # metrics need 2D ?
+    # mod_nam = {"2d_beta8_vae_metrics_cropped_2_relu_norm"}
+
     # metrics stability add-on
     stability_study = False
     if (stability_study):
@@ -427,6 +426,9 @@ def main():
             if("_32_" in model_name):
                 dense_dim = 256
                 latent_dim = 32
+            # if("_2_" in model_name):
+            #     dense_dim = 128
+            #     latent_dim = 2
 
             # build encoder model
             inputs = Input(shape=(x_train.shape[1], x_train.shape[2], 1), name='encoded_input')
@@ -549,7 +551,15 @@ def main():
             # kl_loss = K.sum(kl_loss, axis=-1)
             kl_loss = K.mean(kl_loss, axis=-1)
 
-            vae_loss = K.mean(reconstruction_loss + kl_loss)
+            if("metrics" in model_name):
+                # add metrics loss
+                from metrics import silhouette_coeff, kNN_fraction_droplet
+                # names = test_names # replace this with labels from classification net
+                silhouette_loss = silhouette_coeff(z, names)
+                neigh_hit_loss = kNN_fraction_droplet(z, names, title="")
+                vae_loss = K.mean(reconstruction_loss + kl_loss + silhouette_loss + neigh_hit_loss)
+            else:
+                vae_loss = K.mean(reconstruction_loss + kl_loss)
             vae.add_loss(vae_loss)
 
             vae.compile(optimizer=adam)
@@ -587,11 +597,12 @@ def main():
 
             train_data = x_train[0:8000]
 
-            latent_representation = encoder.predict(test_data)
+            latent_representation = encoder.predict(x_test) # x_test test_data
             encoded_vec = latent_representation[2]
             print('encoded_vec after reparam trick:', encoded_vec.shape) # (batch-size, latent_dim)
             print('encoded_vec max:', encoded_vec.max())
             print('encoded_vec min:', encoded_vec.min())
+            input("stop")
             # fig=plt.figure()
             # plt.tight_layout()
             # #fig.set_size_inches(8, 6)
